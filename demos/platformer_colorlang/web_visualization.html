@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platformer Visualization</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+        #controls {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Platformer Visualization</h1>
+    <canvas id="gameCanvas" width="600" height="300"></canvas>
+    <div id="controls">
+        <button id="prevFrame">Previous Frame</button>
+        <button id="nextFrame">Next Frame</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const frameCount = 120; // Total number of frames rendered
+        let currentFrame = 0;
+
+        function loadFrame(frameNumber) {
+            const img = new Image();
+            img.src = `out/frame_${String(frameNumber).padStart(3, '0')}.png`;
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+        }
+
+        document.getElementById('prevFrame').addEventListener('click', () => {
+            if (currentFrame > 0) {
+                currentFrame--;
+                loadFrame(currentFrame);
+            }
+        });
+
+        document.getElementById('nextFrame').addEventListener('click', () => {
+            if (currentFrame < frameCount - 1) {
+                currentFrame++;
+                loadFrame(currentFrame);
+            }
+        });
+
+        // Load the first frame initially
+        loadFrame(currentFrame);
+    </script>
+</body>
+</html>
