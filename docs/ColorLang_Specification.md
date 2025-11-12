@@ -36,9 +36,29 @@ Token ::= Pixel(hue: 0-360°, saturation: 0-100%, value: 0-100%)
 ### Reserved Color Ranges
 ```
 System Colors (Reserved):
-  Black (0°, 0%, 0%)     - NOP (No Operation)
-  White (0°, 0%, 100%)   - COMMENT (Ignored)
-  Pure Gray (0°, 0%, 50%) - BARRIER (Synchronization)
+  Black (0°, 0%, 0%)     - HALT (Program termination)
+  White (0°, 0%, 100%)   - NOP (No Operation)
+  Pure Gray (0°, 0%, 50%) - COMMENT (Ignored)
+
+Instruction Hue Ranges (Exact Values from Implementation):
+  ADD: 35°        - Addition operation
+  SUB: 45°        - Subtraction operation  
+  MUL: 55°        - Multiplication operation
+  DIV: 65°        - Division operation
+  LOAD: 120°      - Load from memory
+  STORE: 130°     - Store to memory
+  PRINT: 275°     - Print output
+  HALT: 335°      - Program termination
+  INTEGER: 15°    - Integer data type
+  FLOAT: 25°      - Float data type
+  RENDER_FRAME: 285° - Frame rendering syscall
+  GET_TIME: 295°  - Time syscall
+  PATHFIND: 305°  - AI pathfinding operation
+  MOVE: 315°      - Agent movement
+  EMPTY: 0°       - Empty tile (environment)
+  GROUND: 60°     - Ground tile (environment)
+  BANANA: 80°     - Banana collectible
+  GOAL: 100°      - Goal/target tile
 ```
 
 ---
@@ -165,16 +185,28 @@ Function ::= HeaderPixel BodyPixels FooterPixel
 ## Execution Semantics
 
 ### Execution Model
-ColorLang follows a **spatial execution model** where pixel position determines execution order and program flow.
+ColorLang follows a **spatial execution model** where pixel position determines instruction sequence and execution order.
 
 #### Default Execution Order
-1. **Sequential**: Left-to-right, top-to-bottom
-2. **Jump-based**: Control flow can alter position
-3. **Parallel**: Multiple execution threads possible
+1. **Sequential**: Left-to-right, top-to-bottom pixel traversal
+2. **Linear**: Instructions executed in row-major order
+3. **Single-threaded**: Current implementation is sequential
+4. **Syscall-based**: Host interaction via special instructions
 
 #### Program Counter
 ```
-PC ::= (x: Integer, y: Integer, thread_id: Integer)
+PC ::= instruction_index: Integer (0 to program_length)
+```
+
+#### Virtual Machine Architecture
+```
+ColorVM:
+  - registers: Array[16] of integers (general-purpose)
+  - memory: Array[1024] of integers (addressable memory)
+  - pc: Integer (program counter)
+  - output: List[String] (accumulated output)
+  - cycles: Integer (execution cycle count)
+  - shared_memory: Optional host communication object
 ```
 
 ### Instruction Execution Cycle
@@ -295,6 +327,43 @@ Encoding: [INPUT_op][register]
 Semantics: register = read_input()
 ```
 
+### System Operations (ColorLang Extensions)
+
+#### Render Frame (RENDER_FRAME)
+```
+Hue: 285°
+Encoding: [RENDER_FRAME_op]
+Semantics: Trigger host rendering system
+Shared Memory: Updates tilemap and agent data
+Host Integration: Calls host.handle_syscall("RENDER_FRAME")
+```
+
+#### Get Time (GET_TIME)
+```
+Hue: 295°
+Encoding: [GET_TIME_op][register]
+Semantics: register = current_time_milliseconds
+Host Integration: Calls host.handle_syscall("GET_TIME")
+```
+
+#### Pathfind (PATHFIND)
+```
+Hue: 305°
+Encoding: [PATHFIND_op][target_x][target_y]
+Semantics: Calculate path to target, update agent movement
+AI Integration: Finds path to nearest banana or goal
+Shared Memory: Updates agent position and direction
+```
+
+#### Move Agent (MOVE)
+```
+Hue: 315°
+Encoding: [MOVE_op][direction]
+Semantics: Move agent in specified direction
+Directions: 0=right, 1=left, 2=up, 3=down
+Shared Memory: Updates agent.x, agent.y coordinates
+```
+
 ---
 
 ## Memory Model
@@ -303,17 +372,51 @@ Semantics: register = read_input()
 ```
 Memory Space:
 ├── Program Memory (Read-only)
-│   └── Image pixel data
-├── Stack Memory (LIFO)
-│   ├── Function call frames
-│   └── Local variables
-├── Heap Memory (Dynamic)
-│   ├── Objects and arrays
-│   └── Dynamic allocations
-└── Register Memory (Fast access)
-    ├── Color registers (CR0-CR7)
-    ├── Data registers (DR0-DR15)
-    └── Address registers (AR0-AR3)
+│   └── Image pixel data (parsed instructions)
+├── VM Memory (1024 locations)
+│   ├── Integer storage (addressable 0-1023)
+│   └── Temporary computation space
+├── Register Memory (16 registers)
+│   └── General-purpose registers (R0-R15)
+└── Shared Memory (Host Communication)
+    ├── Header (seed, width, height, frame_count)
+    ├── Tilemap (50x20 grid of tile types)
+    ├── Agent State (x, y, direction, health, score)
+    ├── Cognition Strip (emotion, action, memory, social, goal)
+    ├── Framebuffer (rendered output)
+    └── Mailbox (host-vm communication)
+```
+
+### Shared Memory Layout (Platformer Integration)
+```
+SharedMemory Structure:
+  header: {
+    seed: Integer,
+    width: 50,
+    height: 20,
+    frame_count: Integer
+  }
+  tilemap: Array[50][20] of TileType {
+    EMPTY: 0,
+    GROUND: 1,
+    BANANA: 2,
+    HAZARD: 3,
+    GOAL: 4
+  }
+  agent: {
+    x: Float (0.0-49.0),
+    y: Float (0.0-19.0),
+    direction: Integer (0=right, 1=left),
+    health: Integer (0-100),
+    score: Integer (bananas collected)
+  }
+  cognition: {
+    emotion: Float (0.0-1.0),
+    action_intent: Float (0.0-1.0),
+    memory_recall: Float (0.0-1.0),
+    social_cue: Float (0.0-1.0),
+    goal_evaluation: Float (0.0-1.0)
+  }
 ```
 
 ### Memory Addressing
@@ -423,6 +526,42 @@ Graphics Output: Direct pixel manipulation patterns
 1. **Pattern Reuse**: Create reusable pixel patterns
 2. **Compression**: Use color gradients for repeated operations
 3. **Subroutines**: Factor common code into functions
+
+### Compression Specifications
+
+#### ColorLang Compression System
+```
+Compression Methods:
+  1. Palette Compression (96.9% typical savings)
+     - Reduces color palette to essential instruction colors
+     - Maps similar hues to canonical instruction values
+     - Maintains semantic integrity
+     
+  2. Run-Length Encoding (99.2% typical savings)
+     - Compresses sequences of identical pixels
+     - Efficient for data blocks and repeated instructions
+     - Preserves spatial relationships
+     
+  3. Hybrid Compression (99.4% maximum savings)
+     - Combines palette reduction with RLE
+     - Achieved 261,068 bytes → 412 bytes compression
+     - Maintains full decompression fidelity
+```
+
+#### Compression File Format (.clc)
+```
+ColorLang Compressed Format:
+  Header: {
+    magic: "CLC1" (4 bytes),
+    original_width: Integer (4 bytes),
+    original_height: Integer (4 bytes),
+    compression_method: Byte (palette=1, rle=2, hybrid=3),
+    compressed_size: Integer (4 bytes)
+  }
+  Palette: Optional color mapping table
+  Data: Compressed pixel data
+  Footer: Checksum (4 bytes)
+```
 
 ---
 

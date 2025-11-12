@@ -35,40 +35,41 @@ def hsv_to_rgb(h: float, s: float, v: float) -> Tuple[int, int, int]:
     r, g, b = colorsys.hsv_to_rgb(h_norm, s_norm, v_norm)
     return int(r * 255), int(g * 255), int(b * 255)
 
-# Fixed hue midpoints
+# Fixed hue midpoints - aligned with instruction_set.py ranges
 HUES = {
-    'INTEGER': 7.5,
-    'ADD': 35.0,
-    'MOVE': 115.0,
-    'PRINT': 275.0,
-    'HALT': 335.0,
-    'RENDER_FRAME': 350.0,  # Added RENDER_FRAME to the HUES dictionary
-    # Add new operations for procedural environment generation
-    'EMPTY': 10.0,  # Example hue for empty tiles
-    'GROUND': 20.0,  # Example hue for ground tiles
-    'BANANA': 30.0,  # Example hue for bananas
-    'GOAL': 40.0,  # Example hue for the goal
-    'PATHFIND': 50.0,  # Example hue for pathfinding
-    'UPDATE_TILEMAP': 360.0,  # Hue for updating tilemap
-    'INIT_AGENT': 370.0,  # Hue for initializing agent state
+    'INTEGER': 7.5,          # Data type (0-15)
+    'ADD': 35.5,             # Arithmetic (31-40)  
+    'MOVE': 115.5,           # Memory (111-120)
+    'PRINT': 275.5,          # I/O (271-280)
+    'HALT': 335.5,           # System (331-340)
+    'PRINT_NUM': 275.5,      # Same as PRINT for numeric output
+    # Simplified operations for platformer
+    'LOAD': 95.5,            # Memory (91-100)
+    'STORE': 105.5,          # Memory (101-110)
+    'IF': 155.5,             # Control (151-160)
 }
 
 def encode_integer(value: int) -> Tuple[int, int, int]:
-    magnitude = min(abs(value), 1000)
-    saturation = (magnitude / 1000) * 100
+    magnitude = min(abs(value), 100)
+    # Use a minimum saturation of 30% to ensure visibility, then scale up
+    saturation = 30 + (magnitude / 100) * 50  # Range: 30%-80%
     sign_value = 75 if value >= 0 else 25
     return hsv_to_rgb(HUES['INTEGER'], saturation, sign_value)
 
-# Adjust encoding to stabilize hues by ensuring saturation and value are non-zero for instructions.
+# Adjust encoding to stabilize hues by ensuring saturation and value are high enough for distinct colors.
 def encode_op(op: str, operand_a: int = 0, operand_b: int = 0) -> Tuple[int, int, int]:
     if op not in HUES:
         raise ValueError(f"Unsupported op {op} in micro assembler")
 
-    # Clamp operands to 0-100 range for saturation/value immediate usage
-    a = max(1, min(100, operand_a))  # Ensure saturation is at least 1
-    b = max(1, min(100, operand_b))  # Ensure value is at least 1
+    # Use higher base values to ensure colors are distinct, with operands as modifiers
+    base_saturation = 50  # High enough to avoid black/gray
+    base_value = 80       # High enough for clear colors
+    
+    # Add operands as small adjustments to base values
+    saturation = min(100, base_saturation + (operand_a % 30))
+    value = min(100, base_value + (operand_b % 20))
 
-    return hsv_to_rgb(HUES[op], a, b)
+    return hsv_to_rgb(HUES[op], saturation, value)
 
 def build_linear_kernel(counter_start: int = 0, steps: int = 5) -> List[Tuple[int, int, int]]:
     """Build a kernel that alternates INTEGER and PRINT, ending with HALT."""

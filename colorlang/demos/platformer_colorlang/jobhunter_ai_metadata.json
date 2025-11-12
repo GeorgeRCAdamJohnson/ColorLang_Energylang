@@ -1,0 +1,31 @@
+{
+  "program_name": "JobHunter AI",
+  "version": "1.0",
+  "total_instructions": 270,
+  "subsystems": {
+    "user_profile_system": 39,
+    "job_search_engine": 55,
+    "reasoning_engine": 48,
+    "learning_system": 40,
+    "communication_system": 32,
+    "strategic_planning": 32,
+    "market_intelligence": 24
+  },
+  "capabilities": {
+    "reasoning_operations": 65,
+    "learning_operations": 59,
+    "web_io_operations": 30,
+    "planning_operations": 16,
+    "evaluation_operations": 43,
+    "communication_operations": 8,
+    "memory_operations": 25,
+    "search_operations": 11,
+    "data_operations": 13
+  },
+  "complexity_metrics": {
+    "total_pixels": 2073600,
+    "instruction_density": 0.00013020833333333333,
+    "cognitive_complexity": 140,
+    "agentic_capabilities": 49
+  }
+}

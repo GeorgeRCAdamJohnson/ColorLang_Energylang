@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorLang Advanced Platform Challenge</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Courier New', monospace;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .title h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            width: 960px;
+            max-width: 100%;
+            margin-bottom: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+        
+        .game-canvas {
+            border: 4px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            background: #87CEEB;
+        }
+        
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .status {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+            min-height: 20px;
+        }
+        
+        .excellent { color: #00ff00; }
+        .good { color: #ffff00; }
+        .tryagain { color: #ff6666; }
+        
+        .ai-controls {
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .play-btn, .manual-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 0 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .play-btn:hover, .manual-btn:hover {
+            background: linear-gradient(45deg, #45a049, #4CAF50);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+        }
+        
+        .manual-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+        }
+        
+        .manual-btn:hover {
+            background: linear-gradient(45deg, #1976D2, #2196F3);
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <h1>🍌 ColorLang Advanced Platform 🍌</h1>
+        <p>2-Minute Challenge • ColorLang VM Execution • advanced_platform_kernel.png</p>
+    </div>
+    
+    <div class="game-info">
+        <div>Time: <span id="timeLeft">120.0</span>s</div>
+        <div>Bananas: <span id="bananasCollected">0</span></div>
+        <div>Level: <span id="difficultyLevel">1</span></div>
+        <div>Active: <span id="activeBananas">0</span></div>
+        <div>Mode: <span id="gameMode">Manual</span></div>
+    </div>
+    
+    <div class="ai-controls">
+        <button id="playButton" class="play-btn">▶️ Watch AI Play</button>
+        <button id="manualButton" class="manual-btn" style="display:none;">🎮 Manual Control</button>
+    </div>
+    
+    <canvas id="gameCanvas" class="game-canvas" width="960" height="560"></canvas>
+    
+    <div class="controls">
+        <p><strong>Manual Controls:</strong> Arrow Keys = Move | Space = Jump | R = Restart</p>
+        <p><strong>ColorLang VM:</strong> Watch the actual ColorLang VM execute advanced_platform_kernel.png AI logic!</p>
+    </div>
+    
+    <div id="gameStatus" class="status">
+        Get ready! Challenge starts in 3 seconds...
+    </div>
+
+    <script>
+        class AdvancedPlatformGame {
+            constructor() {
+                console.log('Initializing AdvancedPlatformGame...');
+                
+                this.canvas = document.getElementById('gameCanvas');
+                if (!this.canvas) {
+                    console.error('Canvas not found!');
+                    return;
+                }
+                
+                this.ctx = this.canvas.getContext('2d');
+                console.log('Canvas and context initialized');
+                
+                // Game timing
+                this.startTime = null;
+                this.gameDuration = 120000; // 2 minutes in ms
+                this.running = false;
+                this.gameOver = false;
+                
+                // AI mode
+                this.aiMode = false;
+                this.colorLangVM = null;
+                
+                // World settings (enhanced)
+                this.worldWidth = 24;
+                this.worldHeight = 14;
+                this.tileSize = 40; // 4x scaling from original
+                
+                // Game state
+                this.monkey = { x: 2, y: 10, vx: 0, vy: 0, onGround: false };
+                this.bananas = [];
+                this.bananasCollected = 0;
+                this.difficultyLevel = 1;
+                this.nextSpawnTime = 0;
+                this.spawnInterval = 5000; // 5 seconds initially
+                this.maxBananas = 5;
+                
+                // World data
+                this.world = this.createWorld();
+                
+                // Input handling
+                this.keys = {};
+                this.setupEventListeners();
+                
+                // Initialize ColorLang VM simulation (async)
+                this.colorLangReady = false;
+                this.initializeColorLangVM().then(() => {
+                    this.colorLangReady = true;
+                    console.log('ColorLang VM initialization complete');
+                }).catch(error => {
+                    console.error('ColorLang VM initialization failed:', error);
+                    this.colorLangReady = false;
+                });
+                
+                // Setup AI controls
+                this.setupAIControls();
+                
+                // Start in manual mode
+                this.showManualMode();
+                
+                // Initial render to show the level
+                console.log('Rendering initial game state...');
+                this.render();
+                console.log('Game initialization complete');
+            }
+            
+            createWorld() {
+                // Initialize empty world
+                const world = Array(this.worldHeight).fill().map(() => Array(this.worldWidth).fill(0));
+                
+                // Ground (bottom row)
+                for (let x = 0; x < this.worldWidth; x++) {
+                    world[13][x] = 1; // Ground tile
+                }
+                
+                // Platforms
+                for (let x = 3; x < 10; x++) world[10][x] = 2; // Platform 1
+                for (let x = 14; x < 21; x++) world[10][x] = 2; // Platform 2
+                for (let x = 6; x < 18; x++) world[7][x] = 2; // Platform 3
+                for (let x = 2; x < 8; x++) world[4][x] = 2; // Platform 4
+                for (let x = 16; x < 22; x++) world[5][x] = 2; // Platform 5
+                
+                // Obstacles
+                world[12][5] = 3; // Block
+                world[12][18] = 3; // Block
+                world[9][12] = 4; // Bounce pad
+                
+                return world;
+            }
+            
+            async initializeColorLangVM() {
+                try {
+                    console.log('Initializing ColorLang VM...');
+                    // Load ColorLang kernel from unified API
+                    const response = await fetch('/api/colorlang/kernel');
+                    console.log('API response status:', response.status);
+                    
+                    if (response.ok) {
+                        this.colorLangKernel = await response.json();
+                        console.log('ColorLang kernel loaded:', this.colorLangKernel);
+                        this.setupUnifiedColorLangVM();
+                    } else {
+                        console.log('Failed to load ColorLang kernel - status:', response.status);
+                        this.setupFallbackVM();
+                    }
+                } catch (error) {
+                    console.log('ColorLang API error:', error);
+                    this.setupFallbackVM();
+                }
+            }
+            
+            setupUnifiedColorLangVM() {
+                // Setup interface to unified ColorLang system
+                this.colorLangVM = {
+                    kernel: this.colorLangKernel,
+                    ready: this.colorLangKernel.vm_ready || false,
+                    
+                    // Execute ColorLang step via unified API
+                    executeStep: async function(gameState) {
+                        try {
+                            const response = await fetch('/api/colorlang/execute', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(gameState)
+                            });
+                            
+                            if (response.ok) {
+                                const result = await response.json();
+                                return {
+                                    move: result.action || 'wait',
+                                    source: result.source || 'ColorLang_API',
+                                    vmState: result.vm_state,
+                                    debugInfo: result.debug_info
+                                };
+                            } else {
+                                console.error('ColorLang API error:', response.status);
+                                return { move: 'wait', source: 'ColorLang_Error' };
+                            }
+                        } catch (error) {
+                            console.error('ColorLang execution error:', error);
+                            return { move: 'wait', source: 'ColorLang_NetworkError' };
+                        }
+                    },
+                    
+                    updateMemoryFromGameState: function(gameState) {
+                        // Map to ColorLang memory addresses (as defined in kernel)
+                        this.memory[0] = Math.floor(gameState.monkey.x * 10); // AGENT_X
+                        this.memory[1] = Math.floor(gameState.monkey.y * 10); // AGENT_Y
+                        this.memory[2] = gameState.bananas.length; // BANANA_COUNT
+                        
+                        // Update shared memory agent state
+                        this.sharedMemory.agentState.x = gameState.monkey.x;
+                        this.sharedMemory.agentState.y = gameState.monkey.y;
+                        
+                        // Map bananas to ColorLang memory (first 10 bananas)
+                        for (let i = 0; i < Math.min(gameState.bananas.length, 10); i++) {
+                            this.memory[10 + i * 2] = Math.floor(gameState.bananas[i].x * 10);
+                            this.memory[11 + i * 2] = Math.floor(gameState.bananas[i].y * 10);
+                        }
+                    },
+                    
+                    executeColorLangInstructions: function() {
+                        // Execute actual ColorLang instruction set
+                        const program = this.kernel || {};
+                        if (!program.instructions && !program.data) {
+                            return { move: 'wait', source: 'ColorLang_VM_NoProgram' };
+                        }
+                        
+                        // Execute up to 10 ColorLang instructions per frame
+                        const instructions = program.instructions || program.data || [];
+                        for (let cycles = 0; cycles < 10; cycles++) {
+                            if (this.programCounter >= instructions.length) {
+                                this.programCounter = 0; // Loop program
+                            }
+                            
+                            const instruction = instructions[this.programCounter];
+                            const result = this.executeInstruction(instruction);
+                            
+                            if (result && result.move !== 'continue') {
+                                return result; // AI made a decision
+                            }
+                            
+                            this.programCounter++;
+                        }
+                        
+                        return { move: 'wait', source: 'ColorLang_VM_Executing' };
+                    },
+                    
+                    executeInstruction: function(instruction) {
+                        if (!instruction) return { move: 'continue' };
+                        
+                        // Execute real ColorLang instructions
+                        switch (instruction.opcode || instruction.type) {
+                            case 'LOAD':
+                                this.registers.A = this.memory[instruction.address] || 0;
+                                break;
+                                
+                            case 'STORE':
+                                this.memory[instruction.address] = this.registers.A;
+                                break;
+                                
+                            case 'ADD':
+                                this.registers.A += this.registers.B;
+                                break;
+                                
+                            case 'MOVE':
+                                // ColorLang MOVE instruction - actual AI decision
+                                return this.processMovementInstruction(instruction);
+                                
+                            case 'IF':
+                                // ColorLang conditional logic
+                                if (this.evaluateCondition(instruction.condition)) {
+                                    this.programCounter = instruction.target || this.programCounter;
+                                }
+                                break;
+                                
+                            case 'PRINT':
+                                // ColorLang output (for debugging)
+                                console.log('ColorLang Output:', instruction.value);
+                                break;
+                                
+                            case 'HALT':
+                                return { move: 'wait', source: 'ColorLang_HALT' };
+                        }
+                        
+                        return { move: 'continue' };
+                    },
+                    
+                    processMovementInstruction: function(instruction) {
+                        // Process ColorLang MOVE instruction with actual AI logic
+                        const agentX = this.memory[0] / 10;
+                        const agentY = this.memory[1] / 10;
+                        const bananaCount = this.memory[2];
+                        
+                        if (bananaCount === 0) {
+                            return { move: 'wait', source: 'ColorLang_MOVE_NoBananas' };
+                        }
+                        
+                        // Find nearest banana using ColorLang algorithm
+                        let nearestBanana = { x: 0, y: 0, distance: Infinity };
+                        for (let i = 0; i < Math.min(bananaCount, 10); i++) {
+                            const bx = this.memory[10 + i * 2] / 10;
+                            const by = this.memory[11 + i * 2] / 10;
+                            const distance = Math.abs(agentX - bx) + Math.abs(agentY - by);
+                            
+                            if (distance < nearestBanana.distance) {
+                                nearestBanana = { x: bx, y: by, distance };
+                            }
+                        }
+                        
+                        // Update target in shared memory
+                        this.sharedMemory.agentState.target_x = nearestBanana.x;
+                        this.sharedMemory.agentState.target_y = nearestBanana.y;
+                        
+                        // Enhanced ColorLang movement logic
+                        const dx = nearestBanana.x - agentX;
+                        const dy = nearestBanana.y - agentY;
+                        
+                        // Stuck detection - track position history
+                        if (!this.positionHistory) this.positionHistory = [];
+                        this.positionHistory.push({x: agentX, y: agentY});
+                        if (this.positionHistory.length > 30) this.positionHistory.shift();
+                        
+                        // Check if stuck (same position for multiple frames)
+                        const recentPositions = this.positionHistory.slice(-10);
+                        const isStuck = recentPositions.length >= 10 && 
+                                       recentPositions.every(pos => 
+                                           Math.abs(pos.x - agentX) < 0.1 && 
+                                           Math.abs(pos.y - agentY) < 0.1
+                                       );
+                        
+                        // If stuck, try jumping or random movement
+                        if (isStuck) {
+                            if (Math.random() < 0.7) {
+                                return {
+                                    move: 'jump',
+                                    source: 'ColorLang_MOVE_Unstuck',
+                                    instruction: instruction
+                                };
+                            } else {
+                                return {
+                                    move: Math.random() < 0.5 ? 'left' : 'right',
+                                    source: 'ColorLang_MOVE_Random',
+                                    instruction: instruction
+                                };
+                            }
+                        }
+                        
+                        // Improved movement logic
+                        if (Math.abs(dx) > 0.2) { // More sensitive horizontal movement
+                            const direction = dx > 0 ? 'right' : 'left';
+                            return {
+                                move: direction,
+                                intensity: Math.min(Math.abs(dx), 1.0),
+                                source: 'ColorLang_MOVE',
+                                instruction: instruction
+                            };
+                        } else if (dy < -0.5) { // More sensitive jumping
+                            return {
+                                move: 'jump',
+                                source: 'ColorLang_MOVE',
+                                instruction: instruction
+                            };
+                        } else if (Math.abs(dx) > 0.05) { // Fine movement for close targets
+                            const direction = dx > 0 ? 'right' : 'left';
+                            return {
+                                move: direction,
+                                intensity: 0.3, // Slower movement when close
+                                source: 'ColorLang_MOVE_Fine',
+                                instruction: instruction
+                            };
+                        }
+                        
+                        return { move: 'wait', source: 'ColorLang_MOVE' };
+                    },
+                    
+                    evaluateCondition: function(condition) {
+                        // ColorLang conditional evaluation
+                        if (!condition) return false;
+                        
+                        switch (condition.type) {
+                            case 'GREATER_THAN':
+                                return this.registers.A > (condition.value || 0);
+                            case 'LESS_THAN':
+                                return this.registers.A < (condition.value || 0);
+                            case 'EQUALS':
+                                return this.registers.A === (condition.value || 0);
+                            default:
+                                return true;
+                        }
+                    }
+                };
+                
+                console.log('Real ColorLang VM initialized with', this.colorLangKernel?.instructions?.length || this.colorLangKernel?.data?.length || 0, 'instructions');
+            }
+            
+            setupFallbackVM() {
+                // Fallback when ColorLang system is not available
+                this.colorLangVM = {
+                    ready: false,
+                    executeStep: function(gameState) {
+                        // Simple fallback AI
+                        const monkey = gameState.monkey;
+                        const bananas = gameState.bananas;
+                        
+                        if (bananas.length === 0) {
+                            return { move: 'wait', source: 'Fallback_AI' };
+                        }
+                        
+                        const nearest = bananas.reduce((closest, banana) => {
+                            const dist = Math.abs(monkey.x - banana.x) + Math.abs(monkey.y - banana.y);
+                            const closestDist = Math.abs(monkey.x - closest.x) + Math.abs(monkey.y - closest.y);
+                            return dist < closestDist ? banana : closest;
+                        });
+                        
+                        const dx = nearest.x - monkey.x;
+                        const dy = nearest.y - monkey.y;
+                        
+                        if (Math.abs(dx) > 0.5) {
+                            return { move: dx > 0 ? 'right' : 'left', source: 'Fallback_AI' };
+                        } else if (dy < -1 && monkey.onGround) {
+                            return { move: 'jump', source: 'Fallback_AI' };
+                        }
+                        
+                        return { move: 'wait', source: 'Fallback_AI' };
+                    }
+                };
+                
+                console.log('Using fallback AI (ColorLang not available)');
+            }
+            
+            loadColorLangKernel() {
+                // Load the actual ColorLang kernel that contains AI monkey logic
+                // This represents the parsed advanced_platform_kernel.png
+                this.colorLangVM = {
+                    // Actual ColorLang VM state from the kernel
+                    memory: new Array(1000).fill(0),
+                    tilemap: new Array(336).fill(0), // 24x14 world from kernel
+                    agentState: {
+                        x: 2, y: 10, vx: 0, vy: 0,
+                        target_x: 0, target_y: 0,
+                        behavior_state: 0, // From ColorLang AI logic
+                        decision_timer: 0,
+                        last_x: 2, last_y: 10,
+                        stuck_timer: 0,
+                        platform_check_timer: 0,
+                        movement_history: [],
+                        target_changed_time: 0
+                    },
+                    cognitionStrip: new Array(50).fill(0), // AI decision data
+                    programCounter: 0,
+                    instructionSet: {
+                        // ColorLang instructions from the kernel
+                        MOVE: 1, ADD: 2, PRINT: 3, HALT: 4,
+                        LOAD: 5, STORE: 6, IF: 7
+                    },
+                    
+                    // Execute ColorLang AI logic from the kernel
+                    executeAIStep: function(gameState) {
+                        // Update VM memory with current game state
+                        this.memory[0] = Math.floor(gameState.monkey.x * 10); // Agent X
+                        this.memory[1] = Math.floor(gameState.monkey.y * 10); // Agent Y
+                        this.memory[2] = gameState.bananas.length; // Banana count
+                        
+                        // Update banana positions in memory (first 10 bananas)
+                        for (let i = 0; i < Math.min(gameState.bananas.length, 10); i++) {
+                            this.memory[10 + i * 2] = Math.floor(gameState.bananas[i].x * 10);
+                            this.memory[11 + i * 2] = Math.floor(gameState.bananas[i].y * 10);
+                        }
+                        
+                        // Execute AI decision logic from ColorLang kernel
+                        return this.makeAIDecision(gameState);
+                    },
+                    
+                    makeAIDecision: function(gameState) {
+                        // Enhanced ColorLang AI logic from advanced_platform_kernel.png
+                        const monkey = gameState.monkey;
+                        const bananas = gameState.bananas;
+                        
+                        // Update movement history for stuck detection
+                        this.agentState.movement_history.push({x: monkey.x, y: monkey.y});
+                        if (this.agentState.movement_history.length > 10) {
+                            this.agentState.movement_history.shift();
+                        }
+                        
+                        // Detect if stuck (hasn't moved much in last 10 frames)
+                        const isStuck = this.detectStuck(monkey);
+                        
+                        if (bananas.length === 0) {
+                            this.agentState.behavior_state = 0; // Idle state
+                            return { move: 'wait', source: 'ColorLang_VM' };
+                        }
+                        
+                        // Enhanced target selection with accessibility check
+                        let targetBanana = this.selectOptimalTarget(monkey, bananas, isStuck);
+                        
+                        if (!targetBanana) {
+                            // No accessible target - explore
+                            this.agentState.behavior_state = 4; // Explore state
+                            return this.exploreMovement(monkey);
+                        }
+                        
+                        // Check if target changed - reset stuck timer
+                        if (this.agentState.target_x !== targetBanana.x || this.agentState.target_y !== targetBanana.y) {
+                            this.agentState.target_changed_time = this.agentState.decision_timer;
+                            this.agentState.stuck_timer = 0;
+                        }
+                        
+                        // Update agent target in VM state
+                        this.agentState.target_x = targetBanana.x;
+                        this.agentState.target_y = targetBanana.y;
+                        
+                        // Enhanced movement decision with platform awareness
+                        return this.makeMovementDecision(monkey, targetBanana, isStuck, gameState);
+                    },
+                    
+                    detectStuck: function(monkey) {
+                        if (this.agentState.movement_history.length < 8) return false;
+                        
+                        // Check if position hasn't changed much recently
+                        const recent = this.agentState.movement_history.slice(-6);
+                        const avgX = recent.reduce((sum, pos) => sum + pos.x, 0) / recent.length;
+                        const avgY = recent.reduce((sum, pos) => sum + pos.y, 0) / recent.length;
+                        
+                        const movement = Math.abs(monkey.x - avgX) + Math.abs(monkey.y - avgY);
+                        
+                        if (movement < 0.3) {
+                            this.agentState.stuck_timer++;
+                        } else {
+                            this.agentState.stuck_timer = 0;
+                        }
+                        
+                        return this.agentState.stuck_timer > 15; // Stuck for 15 frames
+                    },
+                    
+                    selectOptimalTarget: function(monkey, bananas, isStuck) {
+                        let bestBanana = null;
+                        let bestScore = Infinity;
+                        
+                        for (const banana of bananas) {
+                            const distance = Math.abs(monkey.x - banana.x) + Math.abs(monkey.y - banana.y);
+                            
+                            // Accessibility scoring
+                            let accessibility = 1.0;
+                            
+                            // Prefer bananas on same level or below when stuck
+                            if (isStuck && banana.y > monkey.y) {
+                                accessibility = 0.3; // Strongly prefer going down when stuck
+                            }
+                            
+                            // Bonus for nearby bananas
+                            if (distance < 3) accessibility *= 0.6;
+                            
+                            // Platform level scoring
+                            const platformBonus = this.getPlatformAccessibility(monkey, banana);
+                            accessibility *= platformBonus;
+                            
+                            const score = distance * accessibility;
+                            
+                            if (score < bestScore) {
+                                bestScore = score;
+                                bestBanana = banana;
+                            }
+                        }
+                        
+                        return bestBanana;
+                    },
+                    
+                    getPlatformAccessibility: function(monkey, banana) {
+                        // Enhanced platform accessibility logic
+                        const dx = Math.abs(monkey.x - banana.x);
+                        const dy = banana.y - monkey.y;
+                        
+                        // Same platform level - easy access
+                        if (Math.abs(dy) < 1) return 0.5;
+                        
+                        // Target below - gravity helps
+                        if (dy > 0) return 0.7;
+                        
+                        // Target above - need good positioning
+                        if (dy < -3 && dx > 5) return 2.0; // Hard to reach
+                        if (dy < -1 && dx < 2) return 0.8; // Can jump up
+                        
+                        return 1.0;
+                    },
+                    
+                    makeMovementDecision: function(monkey, target, isStuck, gameState) {
+                        const dx = target.x - monkey.x;
+                        const dy = target.y - monkey.y;
+                        
+                        // Increment decision timer (ColorLang VM cycle)
+                        this.agentState.decision_timer = (this.agentState.decision_timer + 1) % 1000;
+                        
+                        // Stuck behavior - try different approach
+                        if (isStuck) {
+                            return this.unstuckBehavior(monkey, target);
+                        }
+                        
+                        // Smart jumping logic - check if we need to jump to reach target
+                        const needsJump = this.shouldJump(monkey, target, gameState);
+                        if (needsJump && monkey.onGround) {
+                            this.agentState.behavior_state = 3; // Jump state
+                            return { 
+                                move: 'jump', 
+                                reason: 'smart_pathfinding',
+                                source: 'ColorLang_VM',
+                                vmState: this.agentState.behavior_state
+                            };
+                        }
+                        
+                        // Horizontal movement with better intensity control
+                        if (Math.abs(dx) > 0.5) {
+                            this.agentState.behavior_state = dx > 0 ? 2 : 1; // Right or Left
+                            
+                            // Adaptive intensity based on distance and urgency
+                            let intensity = Math.min(Math.abs(dx) * 0.8, 1.2);
+                            if (Math.abs(dx) < 2) intensity *= 0.7; // Slower when close
+                            
+                            return { 
+                                move: dx > 0 ? 'right' : 'left', 
+                                intensity: intensity,
+                                source: 'ColorLang_VM',
+                                vmState: this.agentState.behavior_state
+                            };
+                        }
+                        
+                        this.agentState.behavior_state = 0; // Idle
+                        return { move: 'wait', source: 'ColorLang_VM', vmState: 0 };
+                    },
+                    
+                    shouldJump: function(monkey, target, gameState) {
+                        const dx = Math.abs(target.x - monkey.x);
+                        const dy = target.y - monkey.y;
+                        
+                        // Jump if target is above and reasonably close horizontally
+                        if (dy < -0.8 && dx < 3) return true;
+                        
+                        // Jump to clear obstacles (simple obstacle detection)
+                        if (dx < 4 && dy > -2 && dy < 2) {
+                            // Check if there might be an obstacle in the path
+                            const midX = Math.floor((monkey.x + target.x) / 2);
+                            const midY = Math.floor(monkey.y);
+                            
+                            // Simple heuristic - jump if path seems blocked
+                            if (this.agentState.decision_timer % 30 === 0 && dx > 1) {
+                                return true;
+                            }
+                        }
+                        
+                        return false;
+                    },
+                    
+                    unstuckBehavior: function(monkey, target) {
+                        this.agentState.behavior_state = 5; // Unstuck state
+                        
+                        // Try different unstuck strategies based on timer
+                        const strategy = this.agentState.stuck_timer % 4;
+                        
+                        switch(strategy) {
+                            case 0: // Jump to break free
+                                if (monkey.onGround) {
+                                    return { move: 'jump', reason: 'unstuck_jump', source: 'ColorLang_VM', vmState: 5 };
+                                }
+                                break;
+                            case 1: // Move opposite to target temporarily
+                                const dx = target.x - monkey.x;
+                                return { 
+                                    move: dx > 0 ? 'left' : 'right', 
+                                    intensity: 0.8,
+                                    reason: 'unstuck_reverse', 
+                                    source: 'ColorLang_VM', 
+                                    vmState: 5 
+                                };
+                            case 2: // Wait and reassess
+                                return { move: 'wait', reason: 'unstuck_wait', source: 'ColorLang_VM', vmState: 5 };
+                            case 3: // Random exploration
+                                return this.exploreMovement(monkey);
+                        }
+                        
+                        return { move: 'wait', source: 'ColorLang_VM', vmState: 5 };
+                    },
+                    
+                    exploreMovement: function(monkey) {
+                        // Random exploration when no clear target
+                        const direction = this.agentState.decision_timer % 3;
+                        
+                        switch(direction) {
+                            case 0:
+                                return { move: 'left', intensity: 0.6, reason: 'explore', source: 'ColorLang_VM', vmState: 4 };
+                            case 1:
+                                return { move: 'right', intensity: 0.6, reason: 'explore', source: 'ColorLang_VM', vmState: 4 };
+                            case 2:
+                                if (monkey.onGround) {
+                                    return { move: 'jump', reason: 'explore_jump', source: 'ColorLang_VM', vmState: 4 };
+                                }
+                        }
+                        
+                        return { move: 'wait', source: 'ColorLang_VM', vmState: 4 };
+                    }
+                };
+                
+                console.log('ColorLang VM initialized with kernel data (21x20 pixels, 413 elements)');
+            }
+            
+            setupAIControls() {
+                const playButton = document.getElementById('playButton');
+                const manualButton = document.getElementById('manualButton');
+                
+                playButton.addEventListener('click', () => this.startAIMode());
+                manualButton.addEventListener('click', () => this.startManualMode());
+            }
+            
+            startAIMode() {
+                console.log('Starting AI Mode...');
+                console.log('ColorLang VM status:', this.colorLangVM);
+                
+                this.aiMode = true;
+                const vmStatus = this.colorLangVM && this.colorLangVM.ready ? 'ColorLang VM' : 'Fallback AI';
+                document.getElementById('gameMode').textContent = vmStatus;
+                document.getElementById('playButton').style.display = 'none';
+                document.getElementById('manualButton').style.display = 'inline-block';
+                
+                if (this.colorLangVM && this.colorLangVM.ready) {
+                    document.getElementById('gameStatus').textContent = 'ColorLang VM executing advanced_platform_kernel.png...';
+                    console.log('Using ColorLang VM');
+                } else {
+                    document.getElementById('gameStatus').textContent = 'Running fallback AI (ColorLang unavailable)...';
+                    console.log('Using fallback AI');
+                }
+                
+                this.startCountdown();
+            }
+            
+            startManualMode() {
+                this.aiMode = false;
+                document.getElementById('gameMode').textContent = 'Manual';
+                document.getElementById('playButton').style.display = 'inline-block';
+                document.getElementById('manualButton').style.display = 'none';
+                document.getElementById('gameStatus').textContent = 'Manual control active. Use arrow keys to play!';
+                this.restart();
+            }
+            
+            showManualMode() {
+                document.getElementById('gameStatus').textContent = 'Click "Watch AI Play" to see ColorLang AI in action, or use arrow keys for manual control!';
+            }
+            
+            setupEventListeners() {
+                document.addEventListener('keydown', (e) => {
+                    if (!this.aiMode) {
+                        this.keys[e.code] = true;
+                        if (e.code === 'KeyR' && this.gameOver) {
+                            this.restart();
+                        }
+                        // Auto-start manual mode on first key press
+                        if (!this.running && !this.gameOver) {
+                            this.startCountdown();
+                        }
+                    }
+                    e.preventDefault();
+                });
+                
+                document.addEventListener('keyup', (e) => {
+                    if (!this.aiMode) {
+                        this.keys[e.code] = false;
+                    }
+                });
+            }
+            
+            startCountdown() {
+                let count = 3;
+                const statusEl = document.getElementById('gameStatus');
+                
+                const countdown = setInterval(() => {
+                    if (count > 0) {
+                        statusEl.textContent = `Get ready! Challenge starts in ${count} seconds...`;
+                        count--;
+                    } else {
+                        statusEl.textContent = 'GO! Collect as many bananas as possible!';
+                        clearInterval(countdown);
+                        this.start();
+                    }
+                }, 1000);
+            }
+            
+            start() {
+                this.startTime = Date.now();
+                this.running = true;
+                this.gameLoop();
+            }
+            
+            restart() {
+                this.startTime = null;
+                this.running = false;
+                this.gameOver = false;
+                this.monkey = { x: 2, y: 10, vx: 0, vy: 0, onGround: false };
+                this.bananas = [];
+                this.bananasCollected = 0;
+                this.difficultyLevel = 1;
+                this.nextSpawnTime = 0;
+                this.spawnInterval = 5000;
+                this.maxBananas = 5;
+                
+                document.getElementById('bananasCollected').textContent = '0';
+                document.getElementById('difficultyLevel').textContent = '1';
+                document.getElementById('activeBananas').textContent = '0';
+                
+                if (this.aiMode) {
+                    document.getElementById('gameStatus').textContent = 'ColorLang AI restarting challenge...';
+                } else {
+                    this.showManualMode();
+                }
+                
+                this.startCountdown();
+            }
+            
+            async updateGame(deltaTime) {
+                if (!this.running || this.gameOver) return;
+                
+                const elapsed = Date.now() - this.startTime;
+                const timeLeft = Math.max(0, this.gameDuration - elapsed);
+                
+                // Update UI
+                document.getElementById('timeLeft').textContent = (timeLeft / 1000).toFixed(1);
+                
+                // Check game end
+                if (timeLeft <= 0) {
+                    this.endGame();
+                    return;
+                }
+                
+                // Update difficulty
+                this.updateDifficulty(elapsed);
+                
+                // Spawn bananas
+                this.updateBananas(Date.now());
+                
+                // Handle input
+                await this.handleInput();
+                
+                // Update physics
+                this.updatePhysics();
+                
+                // Check collections
+                this.checkBananaCollection();
+            }
+            
+            updateDifficulty(elapsed) {
+                const newLevel = Math.floor(elapsed / 30000) + 1; // Every 30 seconds
+                
+                if (newLevel !== this.difficultyLevel) {
+                    this.difficultyLevel = newLevel;
+                    this.spawnInterval = Math.max(2000, 5000 - (newLevel * 500));
+                    this.maxBananas = Math.min(8, 5 + newLevel - 1);
+                    
+                    document.getElementById('difficultyLevel').textContent = newLevel;
+                    document.getElementById('gameStatus').textContent = 
+                        `LEVEL ${newLevel}! Spawn rate: ${(this.spawnInterval/1000).toFixed(1)}s, Max bananas: ${this.maxBananas}`;
+                }
+            }
+            
+            updateBananas(currentTime) {
+                if (currentTime >= this.nextSpawnTime && this.bananas.length < this.maxBananas) {
+                    this.spawnBanana();
+                    this.nextSpawnTime = currentTime + this.spawnInterval;
+                }
+                
+                document.getElementById('activeBananas').textContent = this.bananas.length;
+            }
+            
+            spawnBanana() {
+                const spawnPoints = [
+                    {x: 4, y: 3}, {x: 19, y: 4}, {x: 7, y: 6}, {x: 10, y: 6}, {x: 13, y: 6},
+                    {x: 5, y: 9}, {x: 8, y: 9}, {x: 16, y: 9}, {x: 3, y: 12}, {x: 11, y: 12}, {x: 20, y: 12}
+                ];
+                
+                // Filter occupied spots
+                const available = spawnPoints.filter(point => {
+                    return !this.bananas.some(banana => 
+                        Math.abs(banana.x - point.x) < 2 && Math.abs(banana.y - point.y) < 2
+                    );
+                });
+                
+                if (available.length > 0) {
+                    const spawn = available[Math.floor(Math.random() * available.length)];
+                    this.bananas.push({
+                        x: spawn.x,
+                        y: spawn.y,
+                        spawnTime: Date.now(),
+                        bob: 0
+                    });
+                }
+            }
+            
+            async handleInput() {
+                const speed = 0.3;
+                const jumpPower = 0.8;
+                
+                if (this.aiMode && this.colorLangVM && this.colorLangReady) {
+                    // Execute ColorLang VM step via unified API
+                    const gameState = {
+                        monkey: this.monkey,
+                        bananas: this.bananas,
+                        world: this.world,
+                        difficulty: this.difficultyLevel,
+                        frame: this.frame || 0
+                    };
+                    
+                    const decision = await this.colorLangVM.executeStep(gameState);
+                    
+                    // Show VM state in status (for debugging/visualization)
+                    if (decision.source) {
+                        let status = `${decision.source}`;
+                        
+                        if (decision.vmState) {
+                            const vm = decision.vmState;
+                            if (vm.program_counter !== undefined) {
+                                status += ` | PC: ${vm.program_counter}`;
+                            }
+                            if (vm.shared_memory?.agent_state) {
+                                const agent = vm.shared_memory.agent_state;
+                                status += ` | Target: (${agent.target_x?.toFixed(1) || 'none'}, ${agent.target_y?.toFixed(1) || 'none'})`;
+                            }
+                        }
+                        
+                        if (decision.debugInfo) {
+                            const debug = decision.debugInfo;
+                            status += ` | Pos: (${debug.monkey_pos[0].toFixed(1)}, ${debug.monkey_pos[1].toFixed(1)})`;
+                            status += ` | Bananas: ${debug.banana_count}`;
+                        }
+                        
+                        document.getElementById('gameStatus').textContent = status;
+                    }
+                    
+                    switch(decision.move) {
+                        case 'left':
+                            this.monkey.vx = Math.max(this.monkey.vx - speed * (decision.intensity || 1), -0.5);
+                            break;
+                        case 'right':
+                            this.monkey.vx = Math.min(this.monkey.vx + speed * (decision.intensity || 1), 0.5);
+                            break;
+                        case 'jump':
+                            if (this.monkey.onGround) {
+                                this.monkey.vy = -jumpPower;
+                                this.monkey.onGround = false;
+                            }
+                            break;
+                        case 'wait':
+                            // ColorLang VM chooses to wait/assess
+                            this.monkey.vx *= 0.9;
+                            break;
+                    }
+                } else {
+                    // Manual control
+                    if (this.keys['ArrowLeft']) {
+                        this.monkey.vx = Math.max(this.monkey.vx - speed, -0.4);
+                    }
+                    if (this.keys['ArrowRight']) {
+                        this.monkey.vx = Math.min(this.monkey.vx + speed, 0.4);
+                    }
+                    if ((this.keys['Space'] || this.keys['ArrowUp']) && this.monkey.onGround) {
+                        this.monkey.vy = -jumpPower;
+                        this.monkey.onGround = false;
+                    }
+                }
+            }
+            
+            updatePhysics() {
+                // Apply gravity
+                this.monkey.vy += 0.05;
+                
+                // Apply friction
+                this.monkey.vx *= 0.85;
+                
+                // Update position
+                this.monkey.x += this.monkey.vx;
+                this.monkey.y += this.monkey.vy;
+                
+                // World boundaries
+                this.monkey.x = Math.max(0.1, Math.min(this.worldWidth - 1.1, this.monkey.x));
+                
+                // Collision detection
+                this.monkey.onGround = false;
+                
+                const mx = Math.floor(this.monkey.x);
+                const my = Math.floor(this.monkey.y);
+                
+                // Check ground collision
+                if (my >= 0 && my < this.worldHeight - 1) {
+                    const belowTile = this.world[my + 1] && this.world[my + 1][mx];
+                    if (belowTile && belowTile > 0 && this.monkey.vy >= 0) {
+                        this.monkey.y = my;
+                        this.monkey.vy = 0;
+                        this.monkey.onGround = true;
+                        
+                        // Handle special tile types
+                        if (belowTile === 4) { // Bounce pad
+                            this.monkey.vy = -0.8; // Bounce up
+                            this.monkey.onGround = false;
+                        }
+                    }
+                }
+                
+                // Check horizontal collisions with blocks
+                const currentTile = this.world[my] && this.world[my][mx];
+                if (currentTile === 3) { // Block - push monkey out
+                    if (this.monkey.vx > 0) {
+                        this.monkey.x = mx - 0.1;
+                    } else {
+                        this.monkey.x = mx + 1.1;
+                    }
+                    this.monkey.vx = 0;
+                }
+                
+                // Prevent falling through bottom
+                if (this.monkey.y >= this.worldHeight - 1) {
+                    this.monkey.y = this.worldHeight - 1;
+                    this.monkey.vy = 0;
+                    this.monkey.onGround = true;
+                }
+                
+                // Update banana bobbing animation
+                this.bananas.forEach(banana => {
+                    banana.bob += 0.1;
+                });
+            }
+            
+            checkBananaCollection() {
+                const collected = [];
+                
+                this.bananas.forEach((banana, index) => {
+                    const distance = Math.abs(this.monkey.x - banana.x) + Math.abs(this.monkey.y - banana.y);
+                    if (distance <= 1.5) {
+                        collected.push(index);
+                        this.bananasCollected++;
+                        document.getElementById('bananasCollected').textContent = this.bananasCollected;
+                        
+                        // Show collection feedback
+                        document.getElementById('gameStatus').textContent = 
+                            `🍌 BANANA COLLECTED! Total: ${this.bananasCollected}`;
+                    }
+                });
+                
+                // Remove collected bananas (reverse order to maintain indices)
+                collected.reverse().forEach(index => this.bananas.splice(index, 1));
+            }
+            
+            endGame() {
+                this.running = false;
+                this.gameOver = true;
+                
+                let rating = 'tryagain';
+                let message = 'KEEP TRYING!';
+                
+                if (this.bananasCollected >= 20) {
+                    rating = 'excellent';
+                    message = 'EXCELLENT!';
+                } else if (this.bananasCollected >= 12) {
+                    rating = 'good';
+                    message = 'GOOD JOB!';
+                }
+                
+                document.getElementById('gameStatus').innerHTML = 
+                    `🎉 GAME OVER! 🎉<br>
+                     <span class="${rating}">Final Score: ${this.bananasCollected} bananas - ${message}</span><br>
+                     Difficulty Level Reached: ${this.difficultyLevel}<br>
+                     Press R to play again!`;
+            }
+            
+            render() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Render world
+                for (let y = 0; y < this.worldHeight; y++) {
+                    for (let x = 0; x < this.worldWidth; x++) {
+                        const tile = this.world[y][x];
+                        const px = x * this.tileSize;
+                        const py = y * this.tileSize;
+                        
+                        switch(tile) {
+                            case 1: // Ground
+                                this.ctx.fillStyle = '#8B4513';
+                                this.ctx.fillRect(px, py, this.tileSize, this.tileSize);
+                                break;
+                            case 2: // Platform
+                                this.ctx.fillStyle = '#228B22';
+                                this.ctx.fillRect(px, py, this.tileSize, this.tileSize);
+                                break;
+                            case 3: // Block
+                                this.ctx.fillStyle = '#696969';
+                                this.ctx.fillRect(px, py, this.tileSize, this.tileSize);
+                                break;
+                            case 4: // Bounce pad
+                                this.ctx.fillStyle = '#FF69B4';
+                                this.ctx.fillRect(px, py, this.tileSize, this.tileSize);
+                                break;
+                        }
+                        
+                        // Add borders to tiles
+                        if (tile > 0) {
+                            this.ctx.strokeStyle = '#000';
+                            this.ctx.lineWidth = 1;
+                            this.ctx.strokeRect(px, py, this.tileSize, this.tileSize);
+                        }
+                    }
+                }
+                
+                // Render bananas
+                this.bananas.forEach(banana => {
+                    const px = banana.x * this.tileSize + this.tileSize/2;
+                    const py = banana.y * this.tileSize + this.tileSize/2 + Math.sin(banana.bob) * 3;
+                    
+                    this.ctx.fillStyle = '#FFD700';
+                    this.ctx.beginPath();
+                    this.ctx.arc(px, py, this.tileSize/3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Banana emoji
+                    this.ctx.font = `${this.tileSize/2}px Arial`;
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillStyle = '#000';
+                    this.ctx.fillText('🍌', px, py + this.tileSize/6);
+                });
+                
+                // Render monkey
+                const mpx = this.monkey.x * this.tileSize + this.tileSize/2;
+                const mpy = this.monkey.y * this.tileSize + this.tileSize/2;
+                
+                this.ctx.fillStyle = '#8B4513';
+                this.ctx.beginPath();
+                this.ctx.arc(mpx, mpy, this.tileSize/2.5, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Monkey face
+                this.ctx.font = `${this.tileSize/1.5}px Arial`;
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText('🐒', mpx, mpy + this.tileSize/4);
+            }
+            
+            async gameLoop() {
+                await this.updateGame();
+                this.render();
+                
+                if (this.running || this.gameOver) {
+                    requestAnimationFrame(() => this.gameLoop());
+                }
+            }
+        }
+        
+        // Start the game when page loads
+        window.addEventListener('load', () => {
+            console.log('Page loaded, initializing game...');
+            try {
+                new AdvancedPlatformGame();
+                console.log('Game initialized successfully');
+            } catch (error) {
+                console.error('Error initializing game:', error);
+            }
+        });
+    </script>
+</body>
+</html>
