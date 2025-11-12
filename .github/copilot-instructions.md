@@ -65,18 +65,21 @@ python examples/validate_examples.py
 - **Host Applications**: The VM integrates with host runtimes via shared memory.
 - **Demos**: Example applications (e.g., platformer game) demonstrate integration.
 
-## Tips for AI Agents
-- **Primary Focus**: Implement all program logic in ColorLang using HSV pixel grids as the programming medium.
-- **ColorLang Directory**: Focus on the `colorlang/` directory for core functionality and VM implementation.
-- **Example Programs**: Refer to `examples/` for prebuilt ColorLang programs and testing workflows.
-- **Infrastructure Only**: Use Python/JavaScript only for VM implementation, parsing, web interfaces, and system integration - never for core program logic.
-- **Shared Memory**: Use shared memory to simulate communication between the ColorLang VM and host applications.
-- **Instruction Set**: Follow the instruction set definitions in `colorlang/instruction_set.py` for adding new ColorLang operations.
-- **Program Creation**: When building new functionality, first create the ColorLang program as an HSV image, then integrate it via the VM.
+
+## Tips for AI Agents (Updated for Evolution)
+- **Primary Focus**: Implement all program logic in the most appropriate tech stack/language for the current project direction (e.g., energy-efficient, constraint-native, or hardware-optimized systems). ColorLang is now considered a legacy/experimental path.
+- **ColorLang Directory**: (Deprecated) Use only if working on legacy ColorLang code. For new work, follow the structure and language of the new system.
+- **Example Programs**: (Generalized) Refer to the relevant examples/tests for the current tech stack.
+- **Infrastructure Only**: Use Python/JavaScript or other suitable languages for infrastructure, VM, parsing, web, or system integration as needed by the new direction.
+- **Shared Memory**: Use shared memory or equivalent IPC as appropriate for the new architecture.
+- **Instruction Set**: (Deprecated for ColorLang) For new systems, follow the instruction set or API conventions of the chosen stack.
+- **Program Creation**: (Generalized) Build new functionality using the best-fit language and tools for the project’s goals (e.g., energy efficiency, hardware support).
 - **Critical Assessment**: Always challenge claims about uniqueness or market impact; research competitive solutions thoroughly.
 - **Performance Validation**: Measure real performance vs theoretical projections; distinguish between simulation and reality.
-- **Market Focus**: When extending concepts, prioritize energy efficiency, constraint-driven innovation, and genuine market needs.
-- **Evolution Mindset**: Apply ColorLang lessons to new opportunities rather than expanding ColorLang beyond its validated use cases.
+- **Market Focus**: Prioritize energy efficiency, constraint-driven innovation, and genuine market needs in all new work.
+- **Evolution Mindset**: Apply lessons learned from ColorLang and other experiments to new opportunities, and do not expand ColorLang beyond its validated use cases.
+- **Analytics & Dashboards**: Regularly collect, review, and analyze analytics on language/toolchain usage, performance, and energy efficiency. Build and maintain dashboards to visualize improvements and efficiency gains over time. Use these insights to guide development priorities and communicate progress to stakeholders.
+- **Cybersecurity Best Practices**: Prioritize security in language and toolchain design. Proactively identify and mitigate potential exploits, follow secure coding standards, and incorporate cybersecurity best practices (e.g., input validation, sandboxing, memory safety, secure defaults). Regularly review for vulnerabilities and update documentation to reflect secure design principles.
 
 ## Known Issues
 - Debugging relies on indirect methods like analyzing rendered frames.
@@ -132,3 +135,4 @@ ColorLang is not a Python module. Scripts like `validate_examples.py` dynamicall
 - **Research Methodology**: Literature review → expert interviews → proof-of-concept → validation → scale
 - **Positioning Strategy**: Focus on incremental excellence in right context vs revolutionary claims
 - **Market Validation**: Solve $100M+ problems with measurable ROI vs academic exercises
+
