@@ -37,3 +37,9 @@ out/
 # Local development
 local_test*
 scratch*
+
+# EnergyLang knowledge base environment variables
+energy_lang/knowledge_base/.env
+
+# Repository root environment file (sensitive)
+.env
