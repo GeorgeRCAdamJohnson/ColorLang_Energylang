@@ -20,9 +20,10 @@ try{
 // This makes the loader work whether the site is served as the server root
 // or nested under a path (e.g., /site/). We look for the script tag
 // that loaded this file and compute its directory.
-// Use a `var` on the global object so repeated loads won't throw a redeclare SyntaxError.
-var SCRIPT_BASE = (typeof window !== 'undefined' && window.SCRIPT_BASE) ? window.SCRIPT_BASE : '/';
-if (typeof window !== 'undefined') window.SCRIPT_BASE = SCRIPT_BASE;
+// Compute a local `scriptBase` and only set a global `window.SCRIPT_BASE` if
+// one does not already exist. Avoid introducing a top-level identifier named
+// `SCRIPT_BASE` so other scripts can't cause redeclare SyntaxErrors.
+var scriptBase = (typeof window !== 'undefined' && window.SCRIPT_BASE) ? window.SCRIPT_BASE : '/';
 try{
   if (typeof document !== 'undefined'){
     const scripts = Array.from(document.getElementsByTagName('script'));
@@ -32,15 +33,16 @@ try{
       try{
         const url = new URL(scriptEl.src, location.href);
         // keep the path up to the directory containing the script
-        SCRIPT_BASE = url.pathname.replace(/[^\/]*include-fragment\.js$/,'');
-        if (!SCRIPT_BASE.endsWith('/')) SCRIPT_BASE += '/';
+        scriptBase = url.pathname.replace(/[^\/]*include-fragment\.js$/,'');
+        if (!scriptBase.endsWith('/')) scriptBase += '/';
       }catch(e){
         // fallback to '/'
-        SCRIPT_BASE = '/';
+        scriptBase = '/';
       }
     }
   }
 }catch(e){/* ignore */}
+if (typeof window !== 'undefined' && !window.SCRIPT_BASE) window.SCRIPT_BASE = scriptBase;
 
 function fetchWithFallback(urls) {
   // urls: array of candidate URLs in order
@@ -63,9 +65,9 @@ function makeCandidates(url) {
   const rel = url.replace(/^\/*/, '');
   if (!candidates.includes(rel)) candidates.push(rel);
   // Also try resolving relative to the script base (handles different server roots)
-  try{
+    try{
     const normalized = url.replace(/^\//, '');
-    const basePref = (SCRIPT_BASE || '/') + normalized;
+    const basePref = (scriptBase || '/') + normalized;
     if (!candidates.includes(basePref)) candidates.push(basePref);
   }catch(e){/* ignore */}
   return candidates;
