@@ -109,6 +109,7 @@ function initIncludeFragments(){
   placeholders.forEach(el => {
     const url = el.getAttribute('data-include');
     const candidates = makeCandidates(url);
+    const silent = el.hasAttribute('data-include-silent') || (typeof window !== 'undefined' && window.INCLUDE_FRAGMENT_SILENT);
     tasks.push(
       fetchWithFallback(candidates).then(html => {
         injectHTMLInto(el, html);
@@ -123,18 +124,19 @@ function initIncludeFragments(){
           }
         }catch(e){/* ignore measurement errors */}
       }).catch(err => {
-        console.error('include-fragment error for', url, err);
+        if (!silent) console.error('include-fragment error for', url, err);
       })
     );
   });
 
   // If there were no placeholders, perform a sweep replacement of existing header/footer elements
   Promise.all(tasks).finally(() => {
-    if (placeholders.length === 0) {
+      if (placeholders.length === 0) {
       // Replace <header>
       const headerEl = document.querySelector('header');
       if (headerEl) {
         const candidates = makeCandidates('/_header.html');
+        const globalSilent = (typeof window !== 'undefined' && window.INCLUDE_FRAGMENT_SILENT);
         fetchWithFallback(candidates).then(html => {
           try {
             injectHTMLInto(headerEl, html);
@@ -150,9 +152,9 @@ function initIncludeFragments(){
               }
             }catch(e){/* ignore */}
           }
-          catch (e) { console.error('Failed to inject header fragment:', e); }
+          catch (e) { if(!globalSilent) console.error('Failed to inject header fragment:', e); }
         }).catch(err => {
-          console.warn('Header fragment fetch failed, leaving existing header in place:', err);
+          if(!globalSilent) console.warn('Header fragment fetch failed, leaving existing header in place:', err);
         });
       }
 
@@ -160,14 +162,15 @@ function initIncludeFragments(){
       const footerEl = document.querySelector('footer');
       if (footerEl) {
         const candidates = makeCandidates('/_footer.html');
+        const globalSilent = (typeof window !== 'undefined' && window.INCLUDE_FRAGMENT_SILENT);
         fetchWithFallback(candidates).then(html => {
           try {
             injectHTMLInto(footerEl, html);
             executeInjectedScripts(document);
           }
-          catch (e) { console.error('Failed to inject footer fragment:', e); }
+          catch (e) { if(!globalSilent) console.error('Failed to inject footer fragment:', e); }
         }).catch(err => {
-          console.warn('Footer fragment fetch failed, leaving existing footer in place:', err);
+          if(!globalSilent) console.warn('Footer fragment fetch failed, leaving existing footer in place:', err);
         });
       }
     }
