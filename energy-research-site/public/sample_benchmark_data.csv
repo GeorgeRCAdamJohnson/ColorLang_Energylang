@@ -1,0 +1,11 @@
+benchmark,iteration,total_iterations,avg_cpu_power_W,total_cpu_energy_J,avg_gpu_power_W,runtime_ms,bench_start_ts,bench_start_path,generated_path,live_profile_file,result_ids
+benchmarks\matrix_multiply.cpp,1,50,27.24,49.04,2.51,1860,1763278664038,C:\diagnostics\bench_start_matrix_multiply_1.txt,C:\uprofile_output\run1,C:\uprofile_output\run1\timechart.csv,[]
+benchmarks\matrix_multiply.cpp,2,50,25.83,45.32,2.69,1750,1763278665302,C:\diagnostics\bench_start_matrix_multiply_2.txt,C:\uprofile_output\run2,C:\uprofile_output\run2\timechart.csv,[]
+benchmarks\matrix_multiply.cpp,3,50,26.71,48.76,2.41,1825,1763278668014,C:\diagnostics\bench_start_matrix_multiply_3.txt,C:\uprofile_output\run3,C:\uprofile_output\run3\timechart.csv,[]
+python_matrix_multiply_benchmark.py,1,50,155.42,310.84,0.0,2000,1763278670000,C:\diagnostics\bench_start_python_1.txt,C:\uprofile_output\python1,C:\uprofile_output\python1\timechart.csv,[]
+python_matrix_multiply_benchmark.py,2,50,148.67,297.34,0.0,2100,1763278672000,C:\diagnostics\bench_start_python_2.txt,C:\uprofile_output\python2,C:\uprofile_output\python2\timechart.csv,[]
+python_matrix_multiply_benchmark.py,3,50,152.89,305.78,0.0,1950,1763278674000,C:\diagnostics\bench_start_python_3.txt,C:\uprofile_output\python3,C:\uprofile_output\python3\timechart.csv,[]
+benchmarks\matrix_multiply.rs,1,50,28.45,51.21,1.89,1800,1763278676000,C:\diagnostics\bench_start_rust_1.txt,C:\uprofile_output\rust1,C:\uprofile_output\rust1\timechart.csv,[]
+benchmarks\matrix_multiply.rs,2,50,29.12,52.42,1.95,1820,1763278678000,C:\diagnostics\bench_start_rust_2.txt,C:\uprofile_output\rust2,C:\uprofile_output\rust2\timechart.csv,[]
+benchmarks\matrix_multiply.go,1,50,45.67,91.34,0.0,2000,1763278680000,C:\diagnostics\bench_start_go_1.txt,C:\uprofile_output\go1,C:\uprofile_output\go1\timechart.csv,[]
+benchmarks\matrix_multiply.go,2,50,44.23,88.46,0.0,2050,1763278682000,C:\diagnostics\bench_start_go_2.txt,C:\uprofile_output\go2,C:\uprofile_output\go2\timechart.csv,[]

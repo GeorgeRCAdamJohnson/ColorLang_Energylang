@@ -1,0 +1,150 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: energy-research-site/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./energy-research-site
+      run: npm ci
+      
+    - name: Run type checking
+      working-directory: ./energy-research-site
+      run: npm run type-check:strict
+      
+    - name: Run linting
+      working-directory: ./energy-research-site
+      run: npm run lint:strict
+      
+    - name: Check code formatting
+      working-directory: ./energy-research-site
+      run: npm run format:check
+      
+    - name: Run tests
+      working-directory: ./energy-research-site
+      run: npm run test -- --coverage --watchAll=false
+      
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./energy-research-site/coverage
+        flags: unittests
+        name: codecov-umbrella
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        cache-dependency-path: energy-research-site/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./energy-research-site
+      run: npm ci
+      
+    - name: Generate SEO files
+      working-directory: ./energy-research-site
+      run: npm run generate-seo
+      
+    - name: Build application
+      working-directory: ./energy-research-site
+      run: npm run build
+      
+    - name: Run performance audit
+      working-directory: ./energy-research-site
+      run: npm run audit
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: energy-research-site/dist/
+        retention-days: 30
+
+  lighthouse:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+        path: energy-research-site/dist/
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        
+    - name: Install Lighthouse CI
+      run: npm install -g @lhci/cli@0.12.x
+      
+    - name: Run Lighthouse CI
+      working-directory: ./energy-research-site
+      run: |
+        lhci autorun --upload.target=temporary-public-storage --collect.staticDistDir=./dist
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  deploy:
+    needs: [test, build, lighthouse]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+        path: energy-research-site/dist/
+        
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v2.0
+      with:
+        publish-dir: './energy-research-site/dist'
+        production-branch: main
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      timeout-minutes: 1

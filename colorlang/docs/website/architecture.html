@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - ColorLang</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="/site/_header.html"></div>
+    <div class="container">
+        <h2>Architecture</h2>
+        <p>ColorLang is a machine-native programming language designed to encode programs as HSV pixel grids. The system architecture consists of several key components that work together to parse, execute, and communicate ColorLang programs.</p>
+        <h3>High-Level Components</h3>
+        <ul>
+            <li><strong>Color Parser:</strong> Converts HSV pixel grids into executable instructions.</li>
+            <li><strong>Virtual Machine (VM):</strong> Executes parsed ColorLang programs.</li>
+            <li><strong>Shared Memory:</strong> Facilitates communication between the VM and host runtime.</li>
+            <li><strong>Host Applications:</strong> Integrate with the VM to showcase ColorLang's capabilities.</li>
+        </ul>
+        <h3>Data Flow</h3>
+        <ol>
+            <li>The user provides a ColorLang program as an image file.</li>
+            <li>The Color Parser decodes the image into instructions.</li>
+            <li>The VM executes the instructions, updating registers and shared memory.</li>
+            <li>The host application renders the results or communicates them to other systems.</li>
+        </ol>
+    </div>
+    <div data-include="/site/_footer.html"></div>
+</body>
+</html>

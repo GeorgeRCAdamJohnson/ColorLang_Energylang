@@ -48,6 +48,10 @@ energy_lang/knowledge_base/.env
 colorlang/demos/platformer/output/
 uprofiler_output/
 uprofile_output/
+uprofile_output_backup_*/
+uprofile_mm/
+uprofile_test/
+uprofile_test_instr/
 
 # Netlify local state
 .netlify/
@@ -76,3 +80,30 @@ pip-wheel-metadata/
 # Keys and certs
 *.pem
 *.key
+
+# Research data and benchmark outputs
+nvidia_power_log*.csv
+matrix_multiply_*.csv
+benchmark_runs*.log
+benchmark_runs*.bak
+*_stderr.txt
+*_stdout.txt
+*.pdb
+*.exe
+failures_*/
+diagnostics/
+diagnostics_small/
+publish_tmp/
+publish_tmp.zip
+parse_out.txt
+nvidia_test_energylang.csv
+amduprof_*.txt
+db_energy_audit.csv
+
+# Archive and backup directories
+*_backup_*/
+*_archive/
+
+# Site builds (keeping only energy-research-site)
+site/
+site-react/

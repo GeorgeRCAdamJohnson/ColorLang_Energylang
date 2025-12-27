@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instruction Set - ColorLang</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div data-include="/site/_header.html"></div>
+    <div class="container">
+        <h2>Instruction Set</h2>
+        <p>The ColorLang instruction set defines the operations that can be encoded as HSV pixel values and executed by the Virtual Machine (VM). Each instruction corresponds to a specific hue range, with saturation and value providing additional operands or parameters.</p>
+        <h3>Instruction Categories</h3>
+        <ul>
+            <li><strong>Arithmetic Instructions:</strong> ADD, SUB, MUL, DIV, MOD, POW.</li>
+            <li><strong>Memory Instructions:</strong> LOAD, STORE, MOVE, COPY, ALLOC, FREE.</li>
+            <li><strong>Control Flow Instructions:</strong> IF, WHILE, FOR, BREAK, CONTINUE.</li>
+            <li><strong>Function Instructions:</strong> CALL, RETURN, FUNC_DEF, PARAM, LOCAL.</li>
+            <li><strong>I/O Instructions:</strong> PRINT, INPUT, READ_FILE, WRITE_FILE, NETWORK_SEND, NETWORK_RECV.</li>
+            <li><strong>System Instructions:</strong> HALT, DEBUG, THREAD_SPAWN, THREAD_JOIN, MUTEX_LOCK, MUTEX_UNLOCK.</li>
+        </ul>
+        <h3>Encoding Details</h3>
+        <p>Each instruction is encoded using HSV values:</p>
+        <ul>
+            <li><strong>Hue:</strong> Determines the instruction category.</li>
+            <li><strong>Saturation:</strong> Encodes the first operand.</li>
+            <li><strong>Value:</strong> Encodes the second operand.</li>
+        </ul>
+    </div>
+    <div data-include="/site/_footer.html"></div>
+</body>
+</html>

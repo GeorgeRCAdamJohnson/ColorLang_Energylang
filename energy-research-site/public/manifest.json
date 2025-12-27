@@ -1,0 +1,30 @@
+{
+  "name": "Energy Research Showcase",
+  "short_name": "Energy Research",
+  "description": "Comprehensive research into programming language energy efficiency and visual programming paradigms",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": [
+    "education",
+    "productivity",
+    "developer"
+  ],
+  "lang": "en-US",
+  "orientation": "portrait-primary"
+}

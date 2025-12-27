@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Handling - ColorLang</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="shared_styles.css">
+</head>
+<body>
+  <div data-include="/site/_header.html"></div>
+    <div class="container">
+        <h2>Error Handling</h2>
+        <p>Error handling in ColorLang ensures that issues encountered during parsing, execution, or communication are managed gracefully. This document outlines the strategy for handling errors consistently across the system.</p>
+        <h3>Key Principles</h3>
+        <ul>
+            <li><strong>Fail Fast:</strong> Detect and report errors as early as possible.</li>
+            <li><strong>Descriptive Errors:</strong> Provide clear and actionable error messages.</li>
+            <li><strong>Custom Exceptions:</strong> Use specific exception classes to categorize errors.</li>
+            <li><strong>Graceful Recovery:</strong> Allow the system to recover from non-critical errors where possible.</li>
+        </ul>
+        <h3>Common Error Types</h3>
+        <ul>
+            <li><strong>Parsing Errors:</strong> Issues during image decoding or instruction validation.</li>
+            <li><strong>Execution Errors:</strong> Issues during program execution, such as division by zero.</li>
+            <li><strong>Shared Memory Errors:</strong> Issues with synchronization or data consistency.</li>
+            <li><strong>System Errors:</strong> Resource exhaustion or unexpected failures.</li>
+        </ul>
+    </div>
+    <div data-include="/site/_footer.html"></div>
+</body>
+</html>

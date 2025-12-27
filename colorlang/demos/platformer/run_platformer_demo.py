@@ -57,6 +57,7 @@ def main():
     agent = Agent(grid, start)
 
     frames = []
+    trace = []
     for step in range(MAX_STEPS):
         sensors = agent.sense()
         action = agent.decide_action(sensors)
@@ -72,6 +73,16 @@ def main():
             "bananas": agent.state.bananas_collected,
             "action": action,
         })
+        trace.append({
+            "step": step,
+            "sx": int(agent.state.x),
+            "sy": int(agent.state.y),
+            "x": agent.state.x,
+            "y": agent.state.y,
+            "bananas": agent.state.bananas_collected,
+            "action": action,
+            "sensors": sensors,
+        })
         # Early exit if goal reached
         gx, gy = sensors["goal"]
         if int(agent.state.x) == gx and int(agent.state.y) == gy:
@@ -83,6 +94,7 @@ def main():
         "goal_reached": int(agent.state.x) == gx and int(agent.state.y) == gy,
     }
     (OUTPUT_DIR / "summary.json").write_text(json.dumps(summary, indent=2))
+    (OUTPUT_DIR / "trace.json").write_text(json.dumps(trace, indent=2))
     print("Platformer demo complete", summary)
 
 
