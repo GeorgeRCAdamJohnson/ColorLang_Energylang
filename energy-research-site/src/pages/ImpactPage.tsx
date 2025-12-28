@@ -202,7 +202,7 @@ export function ImpactPage() {
 
             {/* Call to Action */}
             <section className="text-center">
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 border border-blue-200">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-8 border border-blue-200 dark:border-blue-700">
                 <h2 className="heading-lg mb-4">Ready to Optimize Your Applications?</h2>
                 <p className="text-body mb-6 max-w-2xl mx-auto">
                   Start implementing energy-efficient practices in your development workflow. Every
