@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { ToastProvider } from '../ui/ToastProvider'
-import { ExplorationFAB } from '../ui/ExplorationFAB'
-import { SecurityMonitor } from '../security/SecurityMonitor'
+import { UnifiedFAB } from '../ui/UnifiedFAB'
 import { SEOHead } from '../seo/SEOHead'
 import { getSEOConfig } from '../../data/seoConfig'
 
@@ -88,8 +87,7 @@ export function Layout({ children }: LayoutProps) {
         </main>
 
         <Footer />
-        <ExplorationFAB />
-        <SecurityMonitor isAdmin={process.env.NODE_ENV === 'development'} />
+        <UnifiedFAB isAdmin={process.env.NODE_ENV === 'development'} />
       </div>
     </ToastProvider>
   )
