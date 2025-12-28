@@ -248,7 +248,7 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
               />
 
               <BenchmarkChart
-                data={aggregatedData}
+                data={data}
                 chartType="scatter"
                 metric="efficiency"
                 title="Efficiency Distribution"

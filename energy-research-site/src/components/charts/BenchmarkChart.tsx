@@ -76,6 +76,21 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
       filteredData = filteredData.filter(item => filters.benchmarks.includes(item.benchmark))
     }
 
+    // Debug logging
+    console.log(
+      `BenchmarkChart: Processing ${filteredData.length} items for metric ${filters.metric}`
+    )
+    if (filters.metric === 'efficiency') {
+      const withEfficiency = filteredData.filter(item => {
+        if ('meanEnergyJ' in item) {
+          return item.jPerFlop > 0
+        } else {
+          return item.jPerFlop && item.jPerFlop > 0
+        }
+      })
+      console.log(`Items with efficiency data: ${withEfficiency.length}/${filteredData.length}`)
+    }
+
     // Convert to chart data points
     const chartPoints: ChartDataPoint[] = filteredData.map(item => {
       let yValue: number
@@ -123,6 +138,11 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
         metadata: item,
       }
     })
+
+    // Debug: Log chart points for efficiency
+    if (filters.metric === 'efficiency') {
+      console.log('Chart points for efficiency:', chartPoints.slice(0, 5))
+    }
 
     return chartPoints
   }, [data, filters])

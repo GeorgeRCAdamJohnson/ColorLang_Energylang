@@ -90,6 +90,26 @@ export const useDataLoader = (): UseDataLoaderResult => {
         )
         processedData = CSVDataLoader.processData(rawData)
         console.log(`Loaded ${processedData.length} benchmark records from real CSV data`)
+
+        // Debug: Log sample of processed data
+        console.log('Sample processed data:', processedData.slice(0, 5))
+        console.log('Languages found:', [...new Set(processedData.map(d => d.language))])
+        console.log('Benchmarks found:', [...new Set(processedData.map(d => d.benchmark))])
+
+        // Debug: Check efficiency values
+        const withEfficiency = processedData.filter(d => d.jPerFlop && d.jPerFlop > 0)
+        console.log(
+          `Records with efficiency data: ${withEfficiency.length}/${processedData.length}`
+        )
+        if (withEfficiency.length > 0) {
+          console.log(
+            'Sample efficiency values:',
+            withEfficiency.slice(0, 3).map(d => ({
+              language: d.language,
+              jPerFlop: d.jPerFlop,
+            }))
+          )
+        }
       } catch (dataError) {
         console.warn('Failed to load CSV data:', dataError)
         // Fallback to empty array if CSV loading fails
@@ -100,6 +120,7 @@ export const useDataLoader = (): UseDataLoaderResult => {
 
       // Load aggregated data
       const aggregated = CSVDataLoader.aggregateData(processedData)
+      console.log('Aggregated data:', aggregated)
       setAggregatedData(aggregated)
 
       // Extract available options
