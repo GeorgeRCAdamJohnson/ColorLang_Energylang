@@ -18,8 +18,8 @@ function CompressionTechnique({
 }: CompressionTechniqueProps) {
   return (
     <div className="card">
-      <h4 className="font-semibold text-gray-900 mb-2">{title}</h4>
-      <p className="text-gray-700 text-sm mb-3">{description}</p>
+      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{title}</h4>
+      <p className="text-gray-700 dark:text-gray-300 text-sm mb-3">{description}</p>
       <div className="space-y-2 text-xs">
         <div className="flex justify-between">
           <span className="text-gray-600">Efficiency:</span>
@@ -53,10 +53,10 @@ function CompressionDemo({
   const compressionRatio = (((originalSize - compressedSize) / originalSize) * 100).toFixed(1)
 
   return (
-    <div className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-lg">
+    <div className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
       <div className="text-center">
-        <div className="text-2xl font-bold text-gray-900">{originalSize}KB</div>
-        <div className="text-xs text-gray-500">Original</div>
+        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{originalSize}KB</div>
+        <div className="text-xs text-gray-500 dark:text-gray-400">Original</div>
       </div>
 
       <ArrowRight className="text-gray-400" size={20} />

@@ -291,8 +291,8 @@ function ExpandableCategory({ category, isExpanded, onToggle }: ExpandableCatego
       >
         <div className="flex items-center gap-3">
           <div className={`w-4 h-4 rounded ${category.color}`} />
-          <span className="font-medium text-gray-900">{category.name}</span>
-          <span className="text-sm text-gray-500">({category.hueRange})</span>
+          <span className="font-medium text-gray-900 dark:text-gray-100">{category.name}</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">({category.hueRange})</span>
         </div>
         {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
       </button>
@@ -301,11 +301,11 @@ function ExpandableCategory({ category, isExpanded, onToggle }: ExpandableCatego
         <div className="p-4 bg-white">
           <div className="space-y-3">
             {category.operations.map((op, index) => (
-              <div key={index} className="border-l-4 border-gray-200 pl-4">
+              <div key={index} className="border-l-4 border-gray-200 dark:border-gray-600 pl-4">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-mono text-sm font-semibold text-gray-900">{op.name}</span>
-                  <span className="text-xs text-gray-500">({op.hueRange})</span>
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">
+                  <span className="font-mono text-sm font-semibold text-gray-900 dark:text-gray-100">{op.name}</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">({op.hueRange})</span>
+                  <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-0.5 rounded">
                     {op.operands} operand{op.operands !== 1 ? 's' : ''}
                   </span>
                 </div>
@@ -379,8 +379,8 @@ export function HSVInstructionMapping() {
         ))}
       </div>
 
-      <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-        <h3 className="font-medium text-gray-900 mb-3">Data Type Encoding</h3>
+      <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Data Type Encoding</h3>
         <div className="grid md:grid-cols-2 gap-4 text-sm">
           <div>
             <h4 className="font-medium text-gray-800 mb-2">Primitive Types</h4>

@@ -209,8 +209,8 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
   return (
     <div className="space-y-4">
       <div className="text-center">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">🐵 Monkey Banana Collector</h3>
-        <p className="text-sm text-gray-600 mb-4">{gameState.message}</p>
+        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">🐵 Monkey Banana Collector</h3>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{gameState.message}</p>
       </div>
 
       {/* Game Controls */}
@@ -260,7 +260,7 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
           <button
             onClick={() => moveMonkey(0, -1)}
             disabled={!gameState.gameRunning || gameState.gameOver}
-            className="p-2 bg-blue-100 hover:bg-blue-200 disabled:bg-gray-100 disabled:text-gray-400 rounded transition-colors"
+            className="p-2 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:text-gray-400 dark:disabled:text-gray-500 rounded transition-colors"
             title="Move Up (W)"
           >
             <ArrowUp size={16} />

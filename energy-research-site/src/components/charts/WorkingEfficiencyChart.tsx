@@ -22,6 +22,7 @@ ChartJS.register(
 /**
  * Working Efficiency Chart - Guaranteed to render
  * Shows C++ vs Python efficiency comparison with hardcoded data
+ * Cache bust: 2025-12-28-v2 - Python should show 15.16e-8 consistently
  */
 export const WorkingEfficiencyChart: React.FC = () => {
   console.log('🎯 WorkingEfficiencyChart: Rendering with hardcoded data - UPDATED')
