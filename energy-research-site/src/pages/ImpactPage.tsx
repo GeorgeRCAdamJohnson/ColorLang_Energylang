@@ -168,14 +168,14 @@ export function ImpactPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="card">
                   <div className="flex items-center mb-4">
-                    <Lightbulb className="text-orange-600 mr-3" size={24} />
+                    <Lightbulb className="text-orange-600 dark:text-orange-400 mr-3" size={24} />
                     <h3 className="heading-sm">Compiler Optimizations</h3>
                   </div>
                   <p className="text-body mb-4">
                     Investigate energy-aware compiler optimizations that prioritize energy
                     efficiency alongside traditional performance metrics.
                   </p>
-                  <ul className="space-y-1 text-sm text-gray-600">
+                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
                     <li>• Energy-guided instruction selection</li>
                     <li>• Power-aware memory management</li>
                     <li>• Dynamic voltage scaling integration</li>
@@ -184,14 +184,14 @@ export function ImpactPage() {
 
                 <div className="card">
                   <div className="flex items-center mb-4">
-                    <Globe className="text-cyan-600 mr-3" size={24} />
+                    <Globe className="text-cyan-600 dark:text-cyan-400 mr-3" size={24} />
                     <h3 className="heading-sm">Distributed Systems</h3>
                   </div>
                   <p className="text-body mb-4">
                     Extend energy efficiency research to distributed computing environments and
                     cloud-native architectures.
                   </p>
-                  <ul className="space-y-1 text-sm text-gray-600">
+                  <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
                     <li>• Container energy profiling</li>
                     <li>• Microservice optimization</li>
                     <li>• Edge computing efficiency</li>

@@ -42,8 +42,8 @@ export function AICollaborationShowcase() {
       {/* Introduction */}
       <div className="text-center">
         <div className="flex justify-center mb-6">
-          <div className="p-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl">
-            <Lightbulb className="w-12 h-12 text-blue-600" />
+          <div className="p-4 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/40 dark:to-purple-900/40 rounded-2xl">
+            <Lightbulb className="w-12 h-12 text-blue-600 dark:text-blue-400" />
           </div>
         </div>
         <h1 className="heading-xl mb-6">AI Collaboration Showcase</h1>
@@ -57,21 +57,21 @@ export function AICollaborationShowcase() {
 
         {/* Key Achievements */}
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <div className="bg-blue-50 p-6 rounded-lg">
-            <div className="text-2xl font-bold text-blue-600 mb-2">5 Languages</div>
-            <p className="text-sm text-blue-800">
+          <div className="bg-blue-50 dark:bg-blue-900/40 p-6 rounded-lg">
+            <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">5 Languages</div>
+            <p className="text-sm text-blue-800 dark:text-blue-300">
               Cross-language benchmark implementations with AI assistance
             </p>
           </div>
-          <div className="bg-green-50 p-6 rounded-lg">
-            <div className="text-2xl font-bold text-green-600 mb-2">99.9%</div>
-            <p className="text-sm text-green-800">
+          <div className="bg-green-50 dark:bg-green-900/40 p-6 rounded-lg">
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">99.9%</div>
+            <p className="text-sm text-green-800 dark:text-green-300">
               Measurement reliability through AI-designed protocols
             </p>
           </div>
-          <div className="bg-purple-50 p-6 rounded-lg">
-            <div className="text-2xl font-bold text-purple-600 mb-2">6 Instructions</div>
-            <p className="text-sm text-purple-800">
+          <div className="bg-purple-50 dark:bg-purple-900/40 p-6 rounded-lg">
+            <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">6 Instructions</div>
+            <p className="text-sm text-purple-800 dark:text-purple-300">
               Visual programming language with AI-designed HSV mapping
             </p>
           </div>
@@ -84,14 +84,14 @@ export function AICollaborationShowcase() {
           <a
             key={section.id}
             href={`#${section.id}`}
-            className="flex items-center gap-3 px-6 py-3 bg-white border border-gray-200 rounded-lg hover:border-primary hover:shadow-md transition-all group"
+            className="flex items-center gap-3 px-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary dark:hover:border-primary hover:shadow-md transition-all group"
           >
             <div className="text-primary group-hover:scale-110 transition-transform">
               {section.icon}
             </div>
             <div className="text-left">
-              <div className="font-medium text-gray-900">{section.title}</div>
-              <div className="text-sm text-gray-600">{section.description}</div>
+              <div className="font-medium text-gray-900 dark:text-gray-100">{section.title}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">{section.description}</div>
             </div>
           </a>
         ))}
@@ -105,48 +105,48 @@ export function AICollaborationShowcase() {
       ))}
 
       {/* Conclusion */}
-      <div className="card bg-gradient-to-br from-blue-50 to-purple-50 border-blue-200">
+      <div className="card bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-700">
         <div className="text-center">
           <h2 className="heading-lg mb-4">Key Takeaways for AI Collaboration</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <div className="text-left">
-              <h3 className="font-semibold text-gray-900 mb-3">What Worked Exceptionally Well</h3>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">What Worked Exceptionally Well</h3>
+              <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" />
                   Multi-persona reviews surfaced critical blind spots early
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" />
                   Three-layer verification caught AI hallucinations and edge cases
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" />
                   Domain-specific AI assistance accelerated complex implementations
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" />
                   "Begin with the End in Mind" prevented scope creep and iteration loops
                 </li>
               </ul>
             </div>
             <div className="text-left">
-              <h3 className="font-semibold text-gray-900 mb-3">Critical Success Factors</h3>
-              <ul className="space-y-2 text-sm text-gray-700">
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Critical Success Factors</h3>
+              <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <Target className="w-4 h-4 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                   Human judgment reserved for architectural and strategic decisions
                 </li>
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <Target className="w-4 h-4 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                   AI used for boilerplate, humans for creative problem-solving
                 </li>
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <Target className="w-4 h-4 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                   Systematic documentation enabled reproducible collaboration patterns
                 </li>
                 <li className="flex items-start gap-2">
-                  <Target className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <Target className="w-4 h-4 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                   Evidence-based decision making with comprehensive research validation
                 </li>
               </ul>

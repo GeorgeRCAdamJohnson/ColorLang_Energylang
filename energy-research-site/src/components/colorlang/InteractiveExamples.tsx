@@ -54,25 +54,25 @@ function ExampleCard({ program, isActive, onClick }: ExampleCardProps) {
       onClick={onClick}
       className={`w-full text-left p-4 rounded-lg border transition-all duration-200 ${
         isActive
-          ? 'border-blue-500 bg-blue-50 shadow-md'
-          : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
+          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-md'
+          : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm'
       }`}
     >
       <div className="flex items-start gap-3">
         <div
-          className={`p-2 rounded-lg ${isActive ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'}`}
+          className={`p-2 rounded-lg ${isActive ? 'bg-blue-100 dark:bg-blue-800/50 text-blue-600 dark:text-blue-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'}`}
         >
           {getIcon(program.id)}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-medium text-gray-900 truncate">{program.name}</h3>
+            <h3 className="font-medium text-gray-900 dark:text-gray-100 truncate">{program.name}</h3>
             <span className={`text-xs px-2 py-0.5 rounded-full ${complexityColor}`}>
               {complexity}
             </span>
           </div>
-          <p className="text-sm text-gray-600 line-clamp-2">{program.description}</p>
-          <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
+          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{program.description}</p>
+          <div className="flex items-center gap-4 mt-2 text-xs text-gray-500 dark:text-gray-500">
             <span>
               Size: {program.width}×{program.height}
             </span>
@@ -131,21 +131,21 @@ export function InteractiveExamples() {
         <div className="lg:col-span-1">
           <div className="sticky top-4">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-gray-900">Example Programs</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100">Example Programs</h3>
               <div className="flex items-center gap-1">
                 <button
                   onClick={handlePrevious}
-                  className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                   title="Previous program"
                 >
                   <ChevronLeft size={20} />
                 </button>
-                <span className="text-sm text-gray-500 px-2">
+                <span className="text-sm text-gray-500 dark:text-gray-400 px-2">
                   {selectedProgramIndex + 1} / {programs.length}
                 </span>
                 <button
                   onClick={handleNext}
-                  className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                   title="Next program"
                 >
                   <ChevronRight size={20} />
@@ -165,12 +165,12 @@ export function InteractiveExamples() {
             </div>
 
             {modifiedPrograms[selectedProgram.id] && (
-              <div className="mt-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
+              <div className="mt-4 p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-orange-800">Program modified</span>
+                  <span className="text-sm text-orange-800 dark:text-orange-200">Program modified</span>
                   <button
                     onClick={resetProgram}
-                    className="text-xs text-orange-600 hover:text-orange-800 underline"
+                    className="text-xs text-orange-600 dark:text-orange-300 hover:text-orange-800 dark:hover:text-orange-100 underline"
                   >
                     Reset to original
                   </button>
@@ -195,26 +195,26 @@ export function InteractiveExamples() {
       {/* Usage Instructions */}
       <div className="mt-8 grid md:grid-cols-3 gap-4">
         <div className="card text-center">
-          <Code className="mx-auto mb-3 text-blue-600" size={32} />
-          <h3 className="font-semibold text-gray-900 mb-2">Select Programs</h3>
-          <p className="text-sm text-gray-600">
+          <Code className="mx-auto mb-3 text-blue-600 dark:text-blue-400" size={32} />
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Select Programs</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             Choose from example programs ranging from simple arithmetic to neural network
             demonstrations
           </p>
         </div>
 
         <div className="card text-center">
-          <Cpu className="mx-auto mb-3 text-green-600" size={32} />
-          <h3 className="font-semibold text-gray-900 mb-2">Execute & Debug</h3>
-          <p className="text-sm text-gray-600">
+          <Cpu className="mx-auto mb-3 text-green-600 dark:text-green-400" size={32} />
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Execute & Debug</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             Run programs step-by-step, watch the program counter, and observe register states
           </p>
         </div>
 
         <div className="card text-center">
-          <Palette className="mx-auto mb-3 text-purple-600" size={32} />
-          <h3 className="font-semibold text-gray-900 mb-2">Modify & Experiment</h3>
-          <p className="text-sm text-gray-600">
+          <Palette className="mx-auto mb-3 text-purple-600 dark:text-purple-400" size={32} />
+          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Modify & Experiment</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             Click pixels in edit mode to change instructions and see how it affects program behavior
           </p>
         </div>

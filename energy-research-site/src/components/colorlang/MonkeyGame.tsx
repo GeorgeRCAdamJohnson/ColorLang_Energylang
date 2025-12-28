@@ -214,11 +214,11 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
       </div>
 
       {/* Game Controls */}
-      <div className="flex items-center justify-center gap-4 p-4 bg-gray-50 rounded-lg">
+      <div className="flex items-center justify-center gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
         <button
           onClick={gameState.gameRunning ? pauseGame : startGame}
           disabled={gameState.gameOver}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400 dark:disabled:bg-gray-600 transition-colors"
         >
           {gameState.gameRunning ? <Pause size={16} /> : <Play size={16} />}
           {gameState.gameRunning ? 'Pause' : 'Start'}
@@ -226,24 +226,24 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
 
         <button
           onClick={resetGame}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-600 transition-colors"
         >
           <RotateCcw size={16} />
           Reset
         </button>
 
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 dark:text-gray-300">
           Score: <span className="font-bold">{gameState.score}</span>
         </div>
 
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 dark:text-gray-300">
           Bananas left: <span className="font-bold">{remainingBananas}</span>
         </div>
       </div>
 
       {/* Game Board */}
       <div className="flex justify-center">
-        <div className="inline-block border-2 border-gray-400 bg-white rounded-lg overflow-hidden">
+        <div className="inline-block border-2 border-gray-400 dark:border-gray-500 bg-white dark:bg-gray-700 rounded-lg overflow-hidden">
           {Array.from({ length: height }, (_, y) => (
             <div key={y} className="flex">
               {Array.from({ length: width }, (_, x) => renderCell(x, y))}
@@ -254,7 +254,7 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
 
       {/* Movement Controls */}
       <div className="flex flex-col items-center gap-2">
-        <div className="text-sm text-gray-600 mb-2">Movement Controls:</div>
+        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">Movement Controls:</div>
         <div className="grid grid-cols-3 gap-1 w-32">
           <div></div>
           <button
@@ -269,18 +269,18 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
           <button
             onClick={() => moveMonkey(-1, 0)}
             disabled={!gameState.gameRunning || gameState.gameOver}
-            className="p-2 bg-blue-100 hover:bg-blue-200 disabled:bg-gray-100 disabled:text-gray-400 rounded transition-colors"
+            className="p-2 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:text-gray-400 dark:disabled:text-gray-500 rounded transition-colors"
             title="Move Left (A)"
           >
             <ArrowLeft size={16} />
           </button>
-          <div className="p-2 bg-gray-100 rounded flex items-center justify-center">
-            <span className="text-xs text-gray-500">WASD</span>
+          <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
+            <span className="text-xs text-gray-500 dark:text-gray-400">WASD</span>
           </div>
           <button
             onClick={() => moveMonkey(1, 0)}
             disabled={!gameState.gameRunning || gameState.gameOver}
-            className="p-2 bg-blue-100 hover:bg-blue-200 disabled:bg-gray-100 disabled:text-gray-400 rounded transition-colors"
+            className="p-2 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:text-gray-400 dark:disabled:text-gray-500 rounded transition-colors"
             title="Move Right (D)"
           >
             <ArrowRight size={16} />
@@ -289,48 +289,48 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
           <button
             onClick={() => moveMonkey(0, 1)}
             disabled={!gameState.gameRunning || gameState.gameOver}
-            className="p-2 bg-blue-100 hover:bg-blue-200 disabled:bg-gray-100 disabled:text-gray-400 rounded transition-colors"
+            className="p-2 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:text-gray-400 dark:disabled:text-gray-500 rounded transition-colors"
             title="Move Down (S)"
           >
             <ArrowDown size={16} />
           </button>
           <div></div>
         </div>
-        <div className="text-xs text-gray-500 text-center mt-2">
+        <div className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
           Use WASD keys or click the arrow buttons to move
         </div>
       </div>
 
       {/* Game Legend */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg text-sm">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-sm">
         <div className="flex items-center gap-2">
           <span className="text-lg">🐵</span>
-          <span>Monkey (You)</span>
+          <span className="text-gray-700 dark:text-gray-300">Monkey (You)</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-lg">🍌</span>
-          <span>Banana (+10 points)</span>
+          <span className="text-gray-700 dark:text-gray-300">Banana (+10 points)</span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-lg">🪨</span>
-          <span>Obstacle (Avoid!)</span>
+          <span className="text-gray-700 dark:text-gray-300">Obstacle (Avoid!)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-green-100 border border-gray-300 rounded"></div>
-          <span>Safe ground</span>
+          <div className="w-4 h-4 bg-green-100 border border-gray-300 dark:border-gray-500 rounded"></div>
+          <span className="text-gray-700 dark:text-gray-300">Safe ground</span>
         </div>
       </div>
 
       {/* ColorLang Connection */}
-      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <h4 className="font-semibold text-blue-900 mb-2">🎨 ColorLang Implementation</h4>
-        <p className="text-sm text-blue-800">
+      <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">🎨 ColorLang Implementation</h4>
+        <p className="text-sm text-blue-800 dark:text-blue-200">
           This interactive monkey game demonstrates how ColorLang programs can create engaging
           experiences. The game logic includes position tracking, collision detection, scoring
           systems, and user input handling - all concepts that would be encoded in ColorLang's
           HSV-based instruction system.
         </p>
-        <div className="mt-2 text-xs text-blue-700">
+        <div className="mt-2 text-xs text-blue-700 dark:text-blue-300">
           <strong>Key ColorLang concepts demonstrated:</strong> INPUT instructions for movement,
           COMPARE for collision detection, ADD for scoring, conditional JUMP for game loops, and
           PRINT for status updates.

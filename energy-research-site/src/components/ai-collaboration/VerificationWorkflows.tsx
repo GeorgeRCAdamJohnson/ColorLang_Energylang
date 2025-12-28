@@ -230,7 +230,7 @@ export function VerificationWorkflows() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               selectedExample === example.id
                 ? 'bg-primary text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
             {example.title}
@@ -244,9 +244,9 @@ export function VerificationWorkflows() {
           <h3 className="heading-md mb-2">{currentExample.title}</h3>
           <p className="text-body mb-4">{currentExample.context}</p>
 
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <h4 className="font-medium text-blue-900 mb-2">AI Prompt Used:</h4>
-            <p className="text-sm text-blue-800 font-mono bg-blue-100 p-2 rounded">
+          <div className="bg-blue-50 dark:bg-blue-900/40 p-4 rounded-lg">
+            <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">AI Prompt Used:</h4>
+            <p className="text-sm text-blue-800 dark:text-blue-300 font-mono bg-blue-100 dark:bg-blue-800/40 p-2 rounded">
               "{currentExample.aiPrompt}"
             </p>
           </div>
@@ -259,8 +259,8 @@ export function VerificationWorkflows() {
               onClick={() => setShowCode('before')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 showCode === 'before'
-                  ? 'bg-red-100 text-red-800'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-200'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
               Before (AI Initial)
@@ -269,8 +269,8 @@ export function VerificationWorkflows() {
               onClick={() => setShowCode('after')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 showCode === 'after'
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-200'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
               After (Verified & Improved)
@@ -288,18 +288,18 @@ export function VerificationWorkflows() {
 
         {/* Verification Steps */}
         <div className="mb-6">
-          <h4 className="font-medium text-gray-900 mb-4">Verification Process</h4>
+          <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Verification Process</h4>
           <div className="space-y-4">
             {currentExample.verificationSteps.map((step, index) => (
-              <div key={index} className="flex gap-4 p-4 bg-gray-50 rounded-lg">
+              <div key={index} className="flex gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                 <div className="flex-shrink-0">
                   <div
                     className={`p-2 rounded-lg ${
                       step.type === 'automated'
-                        ? 'bg-purple-100 text-purple-600'
+                        ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400'
                         : step.type === 'review'
-                          ? 'bg-blue-100 text-blue-600'
-                          : 'bg-green-100 text-green-600'
+                          ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400'
+                          : 'bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400'
                     }`}
                   >
                     {getStepIcon(step.type)}
@@ -307,10 +307,10 @@ export function VerificationWorkflows() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h5 className="font-medium text-gray-900">{step.description}</h5>
+                    <h5 className="font-medium text-gray-900 dark:text-gray-100">{step.description}</h5>
                     {getResultIcon(step.result)}
                   </div>
-                  <p className="text-sm text-gray-600">{step.details}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{step.details}</p>
                 </div>
               </div>
             ))}
@@ -320,15 +320,15 @@ export function VerificationWorkflows() {
         {/* Outcome and Lessons */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Final Outcome</h4>
-            <p className="text-sm text-gray-600">{currentExample.outcome}</p>
+            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Final Outcome</h4>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{currentExample.outcome}</p>
           </div>
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Lessons Learned</h4>
+            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Lessons Learned</h4>
             <ul className="space-y-1">
               {currentExample.lessonsLearned.map((lesson, index) => (
-                <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                <li key={index} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" />
                   {lesson}
                 </li>
               ))}

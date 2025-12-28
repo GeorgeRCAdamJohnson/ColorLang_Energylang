@@ -169,47 +169,47 @@ export function AIMethodologyShowcase() {
         </h3>
         <div className="space-y-4">
           {methodologyPrinciples.map(principle => (
-            <div key={principle.id} className="border border-gray-200 rounded-lg">
+            <div key={principle.id} className="border border-gray-200 dark:border-gray-700 rounded-lg">
               <button
                 onClick={() =>
                   setExpandedPrinciple(expandedPrinciple === principle.id ? null : principle.id)
                 }
-                className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-primary">{principle.icon}</div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">{principle.title}</h4>
-                    <p className="text-sm text-gray-600">{principle.description}</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">{principle.title}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{principle.description}</p>
                   </div>
                 </div>
                 {expandedPrinciple === principle.id ? (
-                  <ChevronDown className="w-5 h-5 text-gray-400" />
+                  <ChevronDown className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                 ) : (
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                  <ChevronRight className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                 )}
               </button>
 
               {expandedPrinciple === principle.id && (
-                <div className="px-4 pb-4 border-t border-gray-100">
+                <div className="px-4 pb-4 border-t border-gray-100 dark:border-gray-700">
                   <div className="grid md:grid-cols-2 gap-6 mt-4">
                     <div>
-                      <h5 className="font-medium text-gray-900 mb-2">Concrete Examples</h5>
+                      <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Concrete Examples</h5>
                       <ul className="space-y-2">
                         {principle.examples.map((example, index) => (
-                          <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-                            <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                          <li key={index} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-green-500 dark:text-green-400 mt-0.5 flex-shrink-0" />
                             {example}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h5 className="font-medium text-gray-900 mb-2">Key Benefits</h5>
+                      <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Key Benefits</h5>
                       <ul className="space-y-2">
                         {principle.benefits.map((benefit, index) => (
-                          <li key={index} className="text-sm text-gray-600 flex items-start gap-2">
-                            <Zap className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                          <li key={index} className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2">
+                            <Zap className="w-4 h-4 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                             {benefit}
                           </li>
                         ))}
@@ -236,52 +236,52 @@ export function AIMethodologyShowcase() {
 
         <div className="space-y-4">
           {personaExamples.map((persona, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg">
+            <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg">
               <button
                 onClick={() =>
                   setExpandedPersona(expandedPersona === persona.persona ? null : persona.persona)
                 }
-                className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
               >
                 <div>
-                  <h4 className="font-semibold text-gray-900">{persona.persona}</h4>
-                  <p className="text-sm text-gray-600">{persona.focus}</p>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">{persona.persona}</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{persona.focus}</p>
                 </div>
                 {expandedPersona === persona.persona ? (
-                  <ChevronDown className="w-5 h-5 text-gray-400" />
+                  <ChevronDown className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                 ) : (
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                  <ChevronRight className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                 )}
               </button>
 
               {expandedPersona === persona.persona && (
-                <div className="px-4 pb-4 border-t border-gray-100">
+                <div className="px-4 pb-4 border-t border-gray-100 dark:border-gray-700">
                   <div className="mt-4 space-y-4">
                     <div>
-                      <h5 className="font-medium text-gray-900 mb-2">Key Questions Asked</h5>
+                      <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Key Questions Asked</h5>
                       <ul className="space-y-1">
                         {persona.questions.map((question, qIndex) => (
-                          <li key={qIndex} className="text-sm text-gray-600">
+                          <li key={qIndex} className="text-sm text-gray-600 dark:text-gray-400">
                             • {question}
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <h5 className="font-medium text-gray-900 mb-2">Real Project Example</h5>
+                    <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                      <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Real Project Example</h5>
                       <div className="space-y-2 text-sm">
                         <div>
-                          <span className="font-medium text-gray-700">Context:</span>
-                          <span className="text-gray-600 ml-2">{persona.realExample.context}</span>
+                          <span className="font-medium text-gray-700 dark:text-gray-300">Context:</span>
+                          <span className="text-gray-600 dark:text-gray-400 ml-2">{persona.realExample.context}</span>
                         </div>
                         <div>
-                          <span className="font-medium text-gray-700">Analysis:</span>
-                          <span className="text-gray-600 ml-2">{persona.realExample.analysis}</span>
+                          <span className="font-medium text-gray-700 dark:text-gray-300">Analysis:</span>
+                          <span className="text-gray-600 dark:text-gray-400 ml-2">{persona.realExample.analysis}</span>
                         </div>
                         <div>
-                          <span className="font-medium text-gray-700">Outcome:</span>
-                          <span className="text-gray-600 ml-2">{persona.realExample.outcome}</span>
+                          <span className="font-medium text-gray-700 dark:text-gray-300">Outcome:</span>
+                          <span className="text-gray-600 dark:text-gray-400 ml-2">{persona.realExample.outcome}</span>
                         </div>
                       </div>
                     </div>

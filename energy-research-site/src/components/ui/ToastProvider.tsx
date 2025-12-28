@@ -51,38 +51,38 @@ export function ToastProvider({ children }: ToastProviderProps) {
   const getIcon = (type: Toast['type']) => {
     switch (type) {
       case 'success':
-        return <CheckCircle className="text-green-500" size={20} />
+        return <CheckCircle className="text-green-500 dark:text-green-400" size={20} />
       case 'error':
-        return <AlertCircle className="text-red-500" size={20} />
+        return <AlertCircle className="text-red-500 dark:text-red-400" size={20} />
       case 'info':
-        return <Info className="text-blue-500" size={20} />
+        return <Info className="text-blue-500 dark:text-blue-400" size={20} />
       case 'warning':
-        return <AlertCircle className="text-yellow-500" size={20} />
+        return <AlertCircle className="text-yellow-500 dark:text-yellow-400" size={20} />
       case 'discovery':
-        return <Star className="text-purple-500" size={20} />
+        return <Star className="text-purple-500 dark:text-purple-400" size={20} />
       case 'achievement':
-        return <Trophy className="text-yellow-500" size={20} />
+        return <Trophy className="text-yellow-500 dark:text-yellow-400" size={20} />
       case 'guidance':
-        return <Lightbulb className="text-indigo-500" size={20} />
+        return <Lightbulb className="text-indigo-500 dark:text-indigo-400" size={20} />
     }
   }
 
   const getStyles = (type: Toast['type']) => {
     switch (type) {
       case 'success':
-        return 'border-green-200 bg-green-50 shadow-green-100'
+        return 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/40 shadow-green-100 dark:shadow-green-900/20'
       case 'error':
-        return 'border-red-200 bg-red-50 shadow-red-100'
+        return 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/40 shadow-red-100 dark:shadow-red-900/20'
       case 'info':
-        return 'border-blue-200 bg-blue-50 shadow-blue-100'
+        return 'border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/40 shadow-blue-100 dark:shadow-blue-900/20'
       case 'warning':
-        return 'border-yellow-200 bg-yellow-50 shadow-yellow-100'
+        return 'border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/40 shadow-yellow-100 dark:shadow-yellow-900/20'
       case 'discovery':
-        return 'border-purple-200 bg-purple-50 shadow-purple-100'
+        return 'border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-900/40 shadow-purple-100 dark:shadow-purple-900/20'
       case 'achievement':
-        return 'border-yellow-200 bg-yellow-50 shadow-yellow-100'
+        return 'border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-900/40 shadow-yellow-100 dark:shadow-yellow-900/20'
       case 'guidance':
-        return 'border-indigo-200 bg-indigo-50 shadow-indigo-100'
+        return 'border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-900/40 shadow-indigo-100 dark:shadow-indigo-900/20'
     }
   }
 

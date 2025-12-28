@@ -22,13 +22,13 @@ export function LessonsPage() {
 
           {/* Section Navigation */}
           <div className="flex justify-center">
-            <div className="bg-gray-100 p-1 rounded-lg">
+            <div className="bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
               <button
                 onClick={() => setActiveSection('ai-collaboration')}
                 className={`flex items-center gap-2 px-6 py-3 rounded-md font-medium transition-colors ${
                   activeSection === 'ai-collaboration'
-                    ? 'bg-white text-blue-700 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'bg-white dark:bg-gray-700 text-blue-700 dark:text-blue-400 shadow-sm'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
                 <Brain className="w-5 h-5" />
@@ -38,8 +38,8 @@ export function LessonsPage() {
                 onClick={() => setActiveSection('strategic-decisions')}
                 className={`flex items-center gap-2 px-6 py-3 rounded-md font-medium transition-colors ${
                   activeSection === 'strategic-decisions'
-                    ? 'bg-white text-purple-700 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'bg-white dark:bg-gray-700 text-purple-700 dark:text-purple-400 shadow-sm'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
                 <Compass className="w-5 h-5" />

@@ -99,21 +99,21 @@ export function QuickReferenceModal({ isOpen, onClose }: QuickReferenceProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h3 className="text-lg font-semibold text-gray-900">ColorLang Quick Reference</h3>
-          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded transition-colors">
-            <X size={20} />
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
+        <div className="flex items-center justify-between p-4 border-b dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">ColorLang Quick Reference</h3>
+          <button onClick={onClose} className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors">
+            <X size={20} className="text-gray-600 dark:text-gray-400" />
           </button>
         </div>
 
-        <div className="flex border-b">
+        <div className="flex border-b dark:border-gray-700">
           <button
             onClick={() => setActiveTab('colors')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               activeTab === 'colors'
-                ? 'border-b-2 border-blue-500 text-blue-600'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
             <Palette className="inline mr-2" size={16} />
@@ -123,8 +123,8 @@ export function QuickReferenceModal({ isOpen, onClose }: QuickReferenceProps) {
             onClick={() => setActiveTab('ascii')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               activeTab === 'ascii'
-                ? 'border-b-2 border-blue-500 text-blue-600'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
             <Hash className="inline mr-2" size={16} />
@@ -134,8 +134,8 @@ export function QuickReferenceModal({ isOpen, onClose }: QuickReferenceProps) {
             onClick={() => setActiveTab('patterns')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               activeTab === 'patterns'
-                ? 'border-b-2 border-blue-500 text-blue-600'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
             }`}
           >
             <Code className="inline mr-2" size={16} />
@@ -146,26 +146,26 @@ export function QuickReferenceModal({ isOpen, onClose }: QuickReferenceProps) {
         <div className="p-4 overflow-y-auto max-h-96">
           {activeTab === 'colors' && (
             <div className="space-y-3">
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 Common instruction colors with standard saturation (80%) and value (70%)
               </p>
               {colorReferences.map((ref, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 p-2 border border-gray-200 rounded"
+                  className="flex items-center gap-3 p-2 border border-gray-200 dark:border-gray-700 rounded"
                 >
                   <div
-                    className="w-8 h-8 border border-gray-300 rounded"
+                    className="w-8 h-8 border border-gray-300 dark:border-gray-600 rounded"
                     style={{ backgroundColor: ref.color }}
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-semibold text-sm">{ref.instruction}</span>
-                      <span className="text-xs text-gray-500">({ref.hue}°)</span>
+                      <span className="font-mono font-semibold text-sm text-gray-900 dark:text-gray-100">{ref.instruction}</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400">({ref.hue}°)</span>
                     </div>
-                    <div className="text-xs text-gray-600">{ref.description}</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-400">{ref.description}</div>
                   </div>
-                  <div className="text-xs font-mono bg-gray-100 px-2 py-1 rounded">
+                  <div className="text-xs font-mono bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded">
                     {ref.example}
                   </div>
                 </div>
@@ -175,24 +175,24 @@ export function QuickReferenceModal({ isOpen, onClose }: QuickReferenceProps) {
 
           {activeTab === 'ascii' && (
             <div>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 Common ASCII character codes for text output
               </p>
               <div className="grid grid-cols-3 gap-2">
                 {commonAscii.map((ascii, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between p-2 border border-gray-200 rounded"
+                    className="flex items-center justify-between p-2 border border-gray-200 dark:border-gray-700 rounded"
                   >
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-semibold text-gray-900 dark:text-gray-100">
                       {ascii.char === 'Space' ? '␣' : ascii.char}
                     </span>
-                    <span className="text-sm text-gray-600">{ascii.code}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">{ascii.code}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
-                <div className="text-sm text-blue-800">
+              <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
+                <div className="text-sm text-blue-800 dark:text-blue-200">
                   <strong>Tip:</strong> Use PRINT(ascii_code) to output characters. For example,
                   PRINT(72) outputs "H".
                 </div>
@@ -202,20 +202,20 @@ export function QuickReferenceModal({ isOpen, onClose }: QuickReferenceProps) {
 
           {activeTab === 'patterns' && (
             <div className="space-y-4">
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 Common programming patterns to get you started
               </p>
               {quickPatterns.map((pattern, index) => (
-                <div key={index} className="border border-gray-200 rounded p-3">
-                  <h4 className="font-semibold text-gray-900 mb-2">{pattern.name}</h4>
-                  <div className="font-mono text-sm bg-gray-100 p-2 rounded mb-2">
+                <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-3">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{pattern.name}</h4>
+                  <div className="font-mono text-sm bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 p-2 rounded mb-2">
                     {pattern.pattern}
                   </div>
-                  <p className="text-sm text-gray-600">{pattern.description}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{pattern.description}</p>
                 </div>
               ))}
-              <div className="p-3 bg-green-50 border border-green-200 rounded">
-                <div className="text-sm text-green-800">
+              <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded">
+                <div className="text-sm text-green-800 dark:text-green-200">
                   <strong>Remember:</strong> Always end your programs with HALT(0) to prevent
                   undefined behavior. Use data=0 in operations to work with register values.
                 </div>

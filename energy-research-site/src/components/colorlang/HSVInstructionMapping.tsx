@@ -284,21 +284,23 @@ interface ExpandableCategoryProps {
 
 function ExpandableCategory({ category, isExpanded, onToggle }: ExpandableCategoryProps) {
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden">
+    <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 flex items-center justify-between"
+        className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-between"
       >
         <div className="flex items-center gap-3">
           <div className={`w-4 h-4 rounded ${category.color}`} />
           <span className="font-medium text-gray-900 dark:text-gray-100">{category.name}</span>
           <span className="text-sm text-gray-500 dark:text-gray-400">({category.hueRange})</span>
         </div>
-        {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+        <div className="text-gray-600 dark:text-gray-400">
+          {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
+        </div>
       </button>
 
       {isExpanded && (
-        <div className="p-4 bg-white">
+        <div className="p-4 bg-white dark:bg-gray-800">
           <div className="space-y-3">
             {category.operations.map((op, index) => (
               <div key={index} className="border-l-4 border-gray-200 dark:border-gray-600 pl-4">
@@ -309,9 +311,9 @@ function ExpandableCategory({ category, isExpanded, onToggle }: ExpandableCatego
                     {op.operands} operand{op.operands !== 1 ? 's' : ''}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 mb-1">{op.description}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{op.description}</p>
                 {op.example && (
-                  <code className="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded font-mono">
+                  <code className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded font-mono">
                     {op.example}
                   </code>
                 )}
@@ -348,12 +350,12 @@ export function HSVInstructionMapping() {
         </p>
       </div>
 
-      <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+      <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
         <div className="flex items-start gap-3">
-          <Info className="text-blue-600 mt-0.5" size={20} />
+          <Info className="text-blue-600 dark:text-blue-400 mt-0.5" size={20} />
           <div>
-            <h3 className="font-medium text-blue-900 mb-2">Color Encoding System</h3>
-            <div className="grid md:grid-cols-3 gap-4 text-sm text-blue-800">
+            <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Color Encoding System</h3>
+            <div className="grid md:grid-cols-3 gap-4 text-sm text-blue-800 dark:text-blue-200">
               <div>
                 <strong>Hue (0-360°):</strong> Operation type and data category
               </div>
@@ -383,8 +385,8 @@ export function HSVInstructionMapping() {
         <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Data Type Encoding</h3>
         <div className="grid md:grid-cols-2 gap-4 text-sm">
           <div>
-            <h4 className="font-medium text-gray-800 mb-2">Primitive Types</h4>
-            <ul className="space-y-1 text-gray-600">
+            <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-2">Primitive Types</h4>
+            <ul className="space-y-1 text-gray-600 dark:text-gray-400">
               <li>
                 <strong>Integer (0-15°):</strong> Saturation = magnitude, Value = sign
               </li>
@@ -397,8 +399,8 @@ export function HSVInstructionMapping() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium text-gray-800 mb-2">Complex Types</h4>
-            <ul className="space-y-1 text-gray-600">
+            <h4 className="font-medium text-gray-800 dark:text-gray-200 mb-2">Complex Types</h4>
+            <ul className="space-y-1 text-gray-600 dark:text-gray-400">
               <li>
                 <strong>Arrays:</strong> Horizontal sequences of colored pixels
               </li>
