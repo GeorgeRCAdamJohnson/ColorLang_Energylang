@@ -13,7 +13,7 @@ import {
 import { useDataLoader } from '../../hooks/useDataLoader'
 import { BenchmarkChart } from './BenchmarkChart'
 import { BoxPlotChart } from './BoxPlotChart'
-import type { ProcessedBenchmarkData, AggregatedBenchmarkData, ChartDataPoint } from '../../types'
+import type { ProcessedBenchmarkData, AggregatedBenchmarkData } from '../../types'
 
 interface BenchmarkDashboardProps {
   className?: string
@@ -63,43 +63,6 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
       jFlopSavings: ((pythonData.jPerFlop - cppData.jPerFlop) / pythonData.jPerFlop) * 100,
     }
   }, [aggregatedData])
-
-  // Prepare data for different chart types (removed unused variable)
-  useMemo(() => {
-    const baseData = activeTab === 'raw' ? data : aggregatedData
-
-    return {
-      efficiency: baseData.map(
-        item =>
-          ({
-            x: `${item.language}\n${item.benchmark}`,
-            y: 'jPerFlop' in item ? item.jPerFlop : item.jPerFlop || 0,
-            label: `${item.language} - ${item.benchmark}`,
-            metadata: item,
-          }) as ChartDataPoint
-      ),
-
-      energy: baseData.map(
-        item =>
-          ({
-            x: `${item.language}\n${item.benchmark}`,
-            y: 'meanEnergyJ' in item ? item.meanEnergyJ : item.totalEnergyJ,
-            label: `${item.language} - ${item.benchmark}`,
-            metadata: item,
-          }) as ChartDataPoint
-      ),
-
-      runtime: baseData.map(
-        item =>
-          ({
-            x: `${item.language}\n${item.benchmark}`,
-            y: 'meanRuntimeMs' in item ? item.meanRuntimeMs : item.runtimeMs,
-            label: `${item.language} - ${item.benchmark}`,
-            metadata: item,
-          }) as ChartDataPoint
-      ),
-    }
-  }, [data, aggregatedData, activeTab])
 
   // Handle data point selection
   const handleDataPointClick = (data: ProcessedBenchmarkData | AggregatedBenchmarkData) => {

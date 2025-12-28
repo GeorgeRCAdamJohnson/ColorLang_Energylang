@@ -263,7 +263,10 @@ export class CSVDataLoader {
   private static estimateFlops(benchmark: string, _runtimeMs: number): number {
     const benchmarkName = benchmark.toLowerCase()
 
-    if (benchmarkName.includes('matrix_multiply')) {
+    if (
+      benchmarkName.includes('matrix_multiply') ||
+      benchmarkName.includes('energylang_matrix_multiply')
+    ) {
       // For matrix multiplication, assume standard 1000x1000 matrices
       // Matrix multiplication complexity: O(n^3) for n×n matrices
       // For 1000×1000 matrices: 2 * n^3 = 2 * 1000^3 = 2 billion FLOPs
