@@ -6,6 +6,10 @@ export { Breadcrumbs } from './Breadcrumbs'
 export { SectionProgress } from './SectionProgress'
 export { ContentSuggestions } from './ContentSuggestions'
 export { ProgressiveDisclosure } from './ProgressiveDisclosure'
+export { UnifiedDashboard } from './UnifiedDashboard'
+export { UnifiedFAB } from './UnifiedFAB'
+export { ThemeToggle } from './ThemeToggle'
+
+// Legacy exports for backward compatibility (deprecated)
 export { ExplorationDashboard } from './ExplorationDashboard'
 export { ExplorationFAB } from './ExplorationFAB'
-export { ThemeToggle } from './ThemeToggle'

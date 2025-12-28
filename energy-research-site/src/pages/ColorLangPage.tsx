@@ -5,7 +5,6 @@ import {
   CompressionFramework,
   InteractiveExamples,
   ProgrammingGuide,
-  QuickReferenceButton,
 } from '../components/colorlang'
 import { useProgressTracking } from '../hooks/useProgressTracking'
 
@@ -154,8 +153,7 @@ export function ColorLangPage() {
         </div>
       </div>
 
-      {/* Quick Reference Button */}
-      <QuickReferenceButton />
+      {/* Note: Quick Reference is now available via the unified dashboard FAB */}
     </div>
   )
 }
