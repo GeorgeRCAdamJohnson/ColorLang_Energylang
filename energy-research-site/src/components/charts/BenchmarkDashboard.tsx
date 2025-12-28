@@ -35,7 +35,7 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
   className = '',
   showKeyFinding = true,
 }) => {
-  const { data, aggregatedData, loading, error, availableLanguages, availableBenchmarks, reload } =
+  const { data, aggregatedData, loading, error, availableLanguages, reload } =
     useDataLoader()
 
   const [activeTab, setActiveTab] = useState<'efficiency' | 'raw' | 'comparison' | 'distribution'>(
