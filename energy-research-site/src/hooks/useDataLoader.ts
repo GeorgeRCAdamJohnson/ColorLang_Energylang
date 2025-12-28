@@ -76,17 +76,20 @@ export const useDataLoader = (): UseDataLoaderResult => {
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([])
   const [availableBenchmarks, setAvailableBenchmarks] = useState<string[]>([])
 
-  const loadData = useCallback(async (_forceReload = false) => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
 
-      // Load data from CSV file
+      // Load data from the correct CSV file
       let processedData: ProcessedBenchmarkData[]
       try {
-        // Load the CSV data from the public folder
-        const rawData = await CSVDataLoader.loadCSV('/sample_benchmark_data.csv')
+        // Load the actual benchmark results CSV file
+        const rawData = await CSVDataLoader.loadCSV(
+          '/matrix_multiply_benchmark_results_summary.csv'
+        )
         processedData = CSVDataLoader.processData(rawData)
+        console.log(`Loaded ${processedData.length} benchmark records from real CSV data`)
       } catch (dataError) {
         console.warn('Failed to load CSV data:', dataError)
         // Fallback to empty array if CSV loading fails
@@ -115,7 +118,7 @@ export const useDataLoader = (): UseDataLoaderResult => {
   }, [])
 
   const reload = useCallback(async () => {
-    await loadData(true)
+    await loadData()
   }, [loadData])
 
   const filterData = useCallback(
@@ -193,7 +196,9 @@ export const useEfficiencyComparison = () => {
         setLoading(true)
 
         // Load CSV data and calculate efficiency comparison
-        const rawData = await CSVDataLoader.loadCSV('/sample_benchmark_data.csv')
+        const rawData = await CSVDataLoader.loadCSV(
+          '/matrix_multiply_benchmark_results_summary.csv'
+        )
         const processedData = CSVDataLoader.processData(rawData)
 
         // Group by language and calculate averages
