@@ -43,27 +43,34 @@ function PageLoader() {
   )
 }
 
-function App() {
-  // Automatically track section visits
+// Component that uses section tracking inside providers
+function AppContent() {
+  // Automatically track section visits - now inside providers
   useSectionTracking()
 
   return (
+    <Layout>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/research" element={<ResearchPage />} />
+          <Route path="/findings" element={<FindingsPage />} />
+          <Route path="/colorlang" element={<ColorLangPage />} />
+          <Route path="/methods" element={<MethodsPage />} />
+          <Route path="/lessons" element={<LessonsPage />} />
+          <Route path="/impact" element={<ImpactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+    </Layout>
+  )
+}
+
+function App() {
+  return (
     <ThemeProvider>
       <ErrorBoundary>
-        <Layout>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/research" element={<ResearchPage />} />
-              <Route path="/findings" element={<FindingsPage />} />
-              <Route path="/colorlang" element={<ColorLangPage />} />
-              <Route path="/methods" element={<MethodsPage />} />
-              <Route path="/lessons" element={<LessonsPage />} />
-              <Route path="/impact" element={<ImpactPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
-        </Layout>
+        <AppContent />
       </ErrorBoundary>
     </ThemeProvider>
   )

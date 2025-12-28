@@ -107,3 +107,6 @@ db_energy_audit.csv
 # Site builds (keeping only energy-research-site)
 site/
 site-react/
+
+# Professional assessment documents (private)
+PROFESSIONAL_ASSESSMENT_REPORT.md

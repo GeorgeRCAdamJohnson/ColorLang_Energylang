@@ -2,7 +2,6 @@ import { ReactNode, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { ToastProvider } from '../ui/ToastProvider'
 import { UnifiedFAB } from '../ui/UnifiedFAB'
 import { SEOHead } from '../seo/SEOHead'
 import { getSEOConfig } from '../../data/seoConfig'
@@ -52,7 +51,7 @@ export function Layout({ children }: LayoutProps) {
   }, [location.pathname])
 
   return (
-    <ToastProvider>
+    <>
       {/* SEO Head with dynamic content */}
       <SEOHead
         title={seoConfig.title}
@@ -89,6 +88,6 @@ export function Layout({ children }: LayoutProps) {
         <Footer />
         <UnifiedFAB isAdmin={process.env.NODE_ENV === 'development'} />
       </div>
-    </ToastProvider>
+    </>
   )
 }
