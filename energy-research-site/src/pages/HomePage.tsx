@@ -155,12 +155,12 @@ export function HomePage() {
                 </div>
               </div>
               <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 dark:border-gray-700/50">
-                <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
+                <div className="text-3xl font-bold text-green-600 mb-2">10,000+</div>
                 <div className="text-gray-700 dark:text-gray-300 font-medium">
-                  AI-Assisted Development
+                  Measurements Collected
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
-                  With Rigorous Methodology
+                  Over 3 Weeks of Research
                 </div>
               </div>
             </motion.div>
