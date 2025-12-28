@@ -12,7 +12,12 @@ import {
 } from 'lucide-react'
 import { useDataLoader } from '../../hooks/useDataLoader'
 import { BenchmarkChart } from './BenchmarkChart'
-import { BoxPlotChart } from './BoxPlotChart'
+import { MinimalChart } from './MinimalChart'
+import { TestChart } from './TestChart'
+import { WorkingEfficiencyChart } from './WorkingEfficiencyChart'
+import { WorkingRuntimeChart } from './WorkingRuntimeChart'
+import { UltraSimpleChart } from './UltraSimpleChart'
+import { DataDebugger } from '../debug/DataDebugger'
 import type { ProcessedBenchmarkData, AggregatedBenchmarkData } from '../../types'
 
 interface BenchmarkDashboardProps {
@@ -237,29 +242,38 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
         {/* Chart Content */}
         <div className="space-y-6">
           {activeTab === 'efficiency' && (
-            <div className="grid lg:grid-cols-2 gap-6">
-              <BenchmarkChart
-                data={aggregatedData}
-                chartType="bar"
-                metric="efficiency"
-                title="Energy Efficiency by Language"
-                onDataPointClick={handleDataPointClick}
-                onFilterChange={handleFilterChange}
-              />
+            <div className="space-y-6">
+              {/* Working Efficiency Chart - Guaranteed to render */}
+              <WorkingEfficiencyChart />
+              
+              {/* Original charts for comparison - commented out temporarily */}
+              {/* 
+              <div className="grid lg:grid-cols-2 gap-6">
+                <BenchmarkChart
+                  data={aggregatedData}
+                  chartType="bar"
+                  metric="efficiency"
+                  title="Energy Efficiency by Language"
+                  onDataPointClick={handleDataPointClick}
+                  onFilterChange={handleFilterChange}
+                />
 
-              <BenchmarkChart
-                data={data}
-                chartType="scatter"
-                metric="efficiency"
-                title="Efficiency Distribution"
-                showFilters={false}
-                onDataPointClick={handleDataPointClick}
-              />
+                <BenchmarkChart
+                  data={data}
+                  chartType="scatter"
+                  metric="efficiency"
+                  title="Efficiency Distribution"
+                  showFilters={false}
+                  onDataPointClick={handleDataPointClick}
+                />
+              </div>
+              */}
             </div>
           )}
 
           {activeTab === 'raw' && (
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="space-y-6">
+              {/* Raw Energy Measurements - Working */}
               <BenchmarkChart
                 data={data}
                 chartType="bar"
@@ -269,14 +283,8 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
                 onFilterChange={handleFilterChange}
               />
 
-              <BenchmarkChart
-                data={data}
-                chartType="scatter"
-                metric="runtime"
-                title="Runtime vs Energy"
-                showFilters={false}
-                onDataPointClick={handleDataPointClick}
-              />
+              {/* Runtime vs Energy - Working Version */}
+              <WorkingRuntimeChart />
             </div>
           )}
 
@@ -362,28 +370,20 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
 
           {activeTab === 'distribution' && (
             <div className="space-y-6">
-              <div className="grid lg:grid-cols-2 gap-6">
-                <BoxPlotChart
-                  data={aggregatedData}
-                  metric="energy"
-                  title="Energy Distribution by Language"
-                  onDataPointClick={_boxData => {}}
-                />
+              {/* Ultra Simple Test - Should definitely show */}
+              <UltraSimpleChart />
+              
+              {/* Working Efficiency Chart - Guaranteed to render - Updated */}
+              <WorkingEfficiencyChart />
+              
+              {/* Minimal Chart - Should definitely work */}
+              <MinimalChart />
+              
+              {/* Test Chart to verify Chart.js is working */}
+              <TestChart />
 
-                <BoxPlotChart
-                  data={aggregatedData}
-                  metric="efficiency"
-                  title="Efficiency Distribution by Language"
-                  onDataPointClick={_boxData => {}}
-                />
-              </div>
-
-              <BoxPlotChart
-                data={aggregatedData}
-                metric="runtime"
-                title="Runtime Distribution by Language"
-                onDataPointClick={_boxData => {}}
-              />
+              {/* Debug Information */}
+              <DataDebugger />
             </div>
           )}
         </div>

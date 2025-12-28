@@ -89,10 +89,10 @@ export const BaseChart: React.FC<BaseChartProps> = ({
       {
         label: yLabel,
         data: data.map(point => point.y),
-        backgroundColor: colors[0] + '80', // Add transparency
-        borderColor: colors[0],
+        backgroundColor: colors.map(color => color + '80'), // Add transparency
+        borderColor: colors,
         borderWidth: 2,
-        pointBackgroundColor: colors[0],
+        pointBackgroundColor: colors,
         pointBorderColor: '#ffffff',
         pointBorderWidth: 2,
         pointRadius: type === 'scatter' ? 6 : 4,

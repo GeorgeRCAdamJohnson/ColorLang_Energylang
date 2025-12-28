@@ -75,8 +75,14 @@ export const useDataLoader = (): UseDataLoaderResult => {
   const [error, setError] = useState<string | null>(null)
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([])
   const [availableBenchmarks, setAvailableBenchmarks] = useState<string[]>([])
+  const [dataLoaded, setDataLoaded] = useState(false) // Prevent multiple loads
 
   const loadData = useCallback(async () => {
+    // Prevent multiple simultaneous loads
+    if (dataLoaded && data.length > 0) {
+      return
+    }
+
     try {
       setLoading(true)
       setError(null)
@@ -84,12 +90,12 @@ export const useDataLoader = (): UseDataLoaderResult => {
       // Load data from the correct CSV file
       let processedData: ProcessedBenchmarkData[]
       try {
-        // Load the actual benchmark results CSV file
+        // Load the sample benchmark data that contains both C++ and Python data
         const rawData = await CSVDataLoader.loadCSV(
-          '/matrix_multiply_benchmark_results_summary.csv'
+          '/sample_benchmark_data.csv'
         )
         processedData = CSVDataLoader.processData(rawData)
-        console.log(`Loaded ${processedData.length} benchmark records from real CSV data`)
+        console.log(`Loaded ${processedData.length} benchmark records from sample CSV data`)
 
         // Debug: Log sample of processed data
         console.log('Sample processed data:', processedData.slice(0, 5))
@@ -129,6 +135,7 @@ export const useDataLoader = (): UseDataLoaderResult => {
 
       setAvailableLanguages(languages)
       setAvailableBenchmarks(benchmarks)
+      setDataLoaded(true) // Mark as loaded
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load data'
       setError(errorMessage)
@@ -136,9 +143,10 @@ export const useDataLoader = (): UseDataLoaderResult => {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [dataLoaded, data.length]) // Add dependencies to prevent unnecessary reloads
 
   const reload = useCallback(async () => {
+    setDataLoaded(false) // Reset the loaded flag to allow reload
     await loadData()
   }, [loadData])
 
@@ -218,7 +226,7 @@ export const useEfficiencyComparison = () => {
 
         // Load CSV data and calculate efficiency comparison
         const rawData = await CSVDataLoader.loadCSV(
-          '/matrix_multiply_benchmark_results_summary.csv'
+          '/sample_benchmark_data.csv'
         )
         const processedData = CSVDataLoader.processData(rawData)
 

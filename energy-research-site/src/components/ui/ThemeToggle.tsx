@@ -1,20 +1,17 @@
 import { Sun, Moon, Monitor } from 'lucide-react'
-import { useTheme } from '../../contexts/ThemeContext'
+import { useContext } from 'react'
+import { ThemeContext } from '../../contexts/ThemeContext'
 
 export function ThemeToggle() {
-  // Add error boundary for theme context
-  let theme: 'light' | 'dark' | 'system' = 'light'
-  let effectiveTheme: 'light' | 'dark' = 'light'
-  let toggleTheme = () => {}
-
-  try {
-    const themeContext = useTheme()
-    theme = themeContext.theme
-    effectiveTheme = themeContext.effectiveTheme
-    toggleTheme = themeContext.toggleTheme
-  } catch (error) {
-    console.warn('ThemeToggle: Theme context not available, using defaults')
-  }
+  // Use useContext directly with null check instead of custom hook
+  const themeContext = useContext(ThemeContext)
+  
+  // Provide safe defaults if context is not available
+  const theme = themeContext?.theme ?? 'light'
+  const effectiveTheme = themeContext?.effectiveTheme ?? 'light'
+  const toggleTheme = themeContext?.toggleTheme ?? (() => {
+    console.warn('ThemeToggle: Theme context not available')
+  })
 
   const getIcon = () => {
     switch (theme) {

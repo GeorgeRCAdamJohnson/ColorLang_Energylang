@@ -327,39 +327,39 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
 
       {/* Hover Details */}
       {hoveredData && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg border energy-data" data-protected="true">
-          <h4 className="font-medium text-gray-900 mb-2 flex items-center">
+        <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 energy-data transition-colors duration-200" data-protected="true">
+          <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2 flex items-center">
             <Zap className="w-4 h-4 mr-2 text-blue-500" />
             Data Point Details
           </h4>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="font-medium text-gray-700">Language:</span>
-              <span className="ml-2 text-gray-900">{hoveredData.language}</span>
+              <span className="font-medium text-gray-700 dark:text-gray-300">Language:</span>
+              <span className="ml-2 text-gray-900 dark:text-gray-100">{hoveredData.language}</span>
             </div>
             <div>
-              <span className="font-medium text-gray-700">Benchmark:</span>
-              <span className="ml-2 text-gray-900">{hoveredData.benchmark}</span>
+              <span className="font-medium text-gray-700 dark:text-gray-300">Benchmark:</span>
+              <span className="ml-2 text-gray-900 dark:text-gray-100">{hoveredData.benchmark}</span>
             </div>
             {'meanEnergyJ' in hoveredData ? (
               <>
                 <div>
-                  <span className="font-medium text-gray-700">Avg Energy:</span>
-                  <span className="ml-2 text-gray-900">{hoveredData.meanEnergyJ.toFixed(2)}J</span>
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Avg Energy:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">{hoveredData.meanEnergyJ.toFixed(2)}J</span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Avg Runtime:</span>
-                  <span className="ml-2 text-gray-900">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Avg Runtime:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">
                     {hoveredData.meanRuntimeMs.toFixed(0)}ms
                   </span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Sample Count:</span>
-                  <span className="ml-2 text-gray-900">{hoveredData.count}</span>
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Sample Count:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">{hoveredData.count}</span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Efficiency:</span>
-                  <span className="ml-2 text-gray-900">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Efficiency:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">
                     {hoveredData.language === 'Python'
                       ? '15.16e-8'
                       : hoveredData.jPerFlop.toFixed(4)}{' '}
@@ -370,22 +370,22 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
             ) : (
               <>
                 <div>
-                  <span className="font-medium text-gray-700">Energy:</span>
-                  <span className="ml-2 text-gray-900">{hoveredData.totalEnergyJ.toFixed(2)}J</span>
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Energy:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">{hoveredData.totalEnergyJ.toFixed(2)}J</span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Runtime:</span>
-                  <span className="ml-2 text-gray-900">{hoveredData.runtimeMs.toFixed(0)}ms</span>
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Runtime:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">{hoveredData.runtimeMs.toFixed(0)}ms</span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Iteration:</span>
-                  <span className="ml-2 text-gray-900">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Iteration:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">
                     {hoveredData.iteration}/{hoveredData.totalIterations}
                   </span>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Efficiency:</span>
-                  <span className="ml-2 text-gray-900">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">Efficiency:</span>
+                  <span className="ml-2 text-gray-900 dark:text-gray-100">
                     {hoveredData.language === 'Python'
                       ? '15.16e-8'
                       : (hoveredData.jPerFlop || 0).toFixed(4)}{' '}

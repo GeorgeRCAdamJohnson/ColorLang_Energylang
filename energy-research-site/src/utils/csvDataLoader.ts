@@ -198,17 +198,40 @@ export class CSVDataLoader {
    */
   private static extractLanguage(benchmarkPath: string): string {
     const path = benchmarkPath.toLowerCase()
+    console.log('CSVDataLoader - Extracting language from path:', benchmarkPath)
 
     // Check for EnergyLang first (before Python, since it uses .py extension)
-    if (path.includes('energylang')) return 'EnergyLang'
-    if (path.includes('.cpp') || path.includes('cpp')) return 'C++'
-    if (path.includes('.py') || path.includes('python')) return 'Python'
-    if (path.includes('.rs') || path.includes('rust')) return 'Rust'
-    if (path.includes('.go')) return 'Go'
-    if (path.includes('.java')) return 'Java'
-    if (path.includes('.js') || path.includes('javascript')) return 'JavaScript'
+    if (path.includes('energylang')) {
+      console.log('CSVDataLoader - Detected EnergyLang')
+      return 'EnergyLang'
+    }
+    if (path.includes('.cpp') || path.includes('cpp')) {
+      console.log('CSVDataLoader - Detected C++')
+      return 'C++'
+    }
+    if (path.includes('.py') || path.includes('python')) {
+      console.log('CSVDataLoader - Detected Python')
+      return 'Python'
+    }
+    if (path.includes('.rs') || path.includes('rust')) {
+      console.log('CSVDataLoader - Detected Rust')
+      return 'Rust'
+    }
+    if (path.includes('.go')) {
+      console.log('CSVDataLoader - Detected Go')
+      return 'Go'
+    }
+    if (path.includes('.java')) {
+      console.log('CSVDataLoader - Detected Java')
+      return 'Java'
+    }
+    if (path.includes('.js') || path.includes('javascript')) {
+      console.log('CSVDataLoader - Detected JavaScript')
+      return 'JavaScript'
+    }
 
     // Default fallback
+    console.log('CSVDataLoader - Unknown language, using fallback')
     return 'Unknown'
   }
 
@@ -230,6 +253,14 @@ export class CSVDataLoader {
     // For matrix multiplication, approximate FLOP count based on runtime
     const estimatedFlops = this.estimateFlops(row.benchmark, row.runtime_ms)
     const jPerFlop = estimatedFlops > 0 ? totalEnergyJ / estimatedFlops : undefined
+    
+    console.log(`CSVDataLoader - Processing ${language} benchmark:`, {
+      benchmark: row.benchmark,
+      totalEnergyJ,
+      estimatedFlops,
+      jPerFlop,
+      runtime: row.runtime_ms
+    })
 
     return {
       id: `${language}-${row.benchmark}-${row.iteration}-${index}`,

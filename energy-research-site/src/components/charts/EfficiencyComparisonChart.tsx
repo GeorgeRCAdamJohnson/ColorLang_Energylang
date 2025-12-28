@@ -110,7 +110,7 @@ export const EfficiencyComparisonChart: React.FC<EfficiencyComparisonChartProps>
   }
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg p-6 ${className}`}>
+    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200 ${className}`}>
       {/* Key Finding Highlight */}
       {showKeyFinding && keyFindings && (
         <div className="mb-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
