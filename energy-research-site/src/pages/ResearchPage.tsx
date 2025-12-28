@@ -68,7 +68,9 @@ export function ResearchPage() {
 
           {/* Research Journey Overview */}
           <div className="card mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Research Journey</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+              Research Journey
+            </h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -113,8 +115,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Problem Statement</h4>
-                <p className="text-gray-700 mb-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  Problem Statement
+                </h4>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   Modern software development prioritizes developer productivity and runtime
                   performance, but largely ignores energy consumption. With growing environmental
                   concerns and the massive scale of global computing, even small improvements in
@@ -155,10 +159,10 @@ export function ResearchPage() {
           >
             <div className="space-y-6 research-content" data-protected="true">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
                   Phase 1: Theoretical Foundation
                 </h4>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   Initial research focused on designing EnergyLang as a domain-specific language
                   with energy-aware constructs. The concept included:
                 </p>
@@ -179,10 +183,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
                   Phase 2: Measurement Infrastructure
                 </h4>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   Realizing that energy measurement was more complex than anticipated, the focus
                   shifted to building robust measurement infrastructure:
                 </p>
@@ -200,10 +204,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
                   Phase 3: Cross-Language Benchmarking
                 </h4>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   The research evolved into a comprehensive cross-language energy efficiency study,
                   implementing identical algorithms across multiple programming languages to
                   establish baseline energy consumption patterns.
@@ -238,8 +242,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Phase 4: Strategic Pivot</h4>
-                <p className="text-gray-700 mb-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  Phase 4: Strategic Pivot
+                </h4>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   Based on empirical findings showing significant energy differences between
                   existing languages (C++ ~6x more efficient than Python), the research pivoted from
                   creating a new language to providing actionable insights for developers using
@@ -277,8 +283,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Root Cause Analysis</h4>
-                <p className="text-gray-700 mb-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  Root Cause Analysis
+                </h4>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   Systematic debugging revealed that profilers required time to initialize and
                   stabilize before accurate measurements could begin. Traditional approaches using
                   sleep delays or process synchronization were unreliable across different hardware
@@ -320,10 +328,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
                   File-Sentinel Handshake Protocol
                 </h4>
-                <p className="text-gray-700 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   The solution implements a robust handshake mechanism using filesystem operations
                   to coordinate between benchmark execution and profiler data collection.
                 </p>
@@ -385,8 +393,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Results and Validation</h4>
-                <p className="text-gray-700 mb-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  Results and Validation
+                </h4>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   The file-sentinel handshake protocol reduced measurement variance from 200-300% to
                   less than 5%, enabling statistically significant energy comparisons across
                   programming languages.
@@ -421,7 +431,9 @@ export function ResearchPage() {
           >
             <div className="space-y-6 research-content" data-protected="true">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Energy Measurement Tools</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  Energy Measurement Tools
+                </h4>
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 p-4 rounded-lg">
                     <h5 className="font-medium text-red-900 dark:text-red-200 mb-2">AMD uProf</h5>
@@ -453,7 +465,7 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
                   Energy Canonicalization: Power × Time
                 </h4>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
@@ -490,8 +502,10 @@ export function ResearchPage() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">Statistical Rigor</h4>
-                <p className="text-gray-700 mb-4">
+                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
+                  Statistical Rigor
+                </h4>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
                   Each benchmark configuration was executed multiple times to ensure statistical
                   significance:
                 </p>
@@ -525,7 +539,7 @@ export function ResearchPage() {
             icon={<BarChart3 className="w-5 h-5 text-blue-600" />}
           >
             <div className="space-y-4">
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-gray-300">
                 Explore the comprehensive benchmark data through interactive visualizations. This
                 dashboard displays C++ vs Python efficiency comparisons prominently, shows both raw
                 measurements and normalized J/FLOP comparisons, and implements multiple chart types
@@ -551,7 +565,9 @@ export function ResearchPage() {
 
           {/* Research Impact */}
           <div className="card mt-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Research Impact and Findings</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+              Research Impact and Findings
+            </h2>
             <div className="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 p-6 rounded-lg">
               <div className="flex items-center gap-3 mb-4">
                 <Zap className="w-8 h-8 text-yellow-500" />
@@ -562,7 +578,7 @@ export function ResearchPage() {
                 matrix multiplication operations, with significant implications for large-scale
                 computing.
               </p>
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-gray-300">
                 This finding, enabled by the robust measurement infrastructure and file-sentinel
                 handshake protocol, provides actionable guidance for developers and organizations
                 seeking to reduce their computational energy footprint.
