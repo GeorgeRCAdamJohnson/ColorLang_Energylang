@@ -1,6 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
 import { Suspense, lazy } from 'react'
 import { Layout } from './components/layout/Layout'
+import { ErrorBoundary } from './components/ui/ErrorBoundary'
+import { ThemeProvider } from './contexts/ThemeContext'
+import { ThemeDebug } from './components/debug/ThemeDebug'
 import { useSectionTracking } from './hooks/useSectionTracking'
 
 // Lazy load pages for code splitting
@@ -46,20 +49,25 @@ function App() {
   useSectionTracking()
 
   return (
-    <Layout>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/research" element={<ResearchPage />} />
-          <Route path="/findings" element={<FindingsPage />} />
-          <Route path="/colorlang" element={<ColorLangPage />} />
-          <Route path="/methods" element={<MethodsPage />} />
-          <Route path="/lessons" element={<LessonsPage />} />
-          <Route path="/impact" element={<ImpactPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </Layout>
+    <ThemeProvider>
+      <ErrorBoundary>
+        <Layout>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/research" element={<ResearchPage />} />
+              <Route path="/findings" element={<FindingsPage />} />
+              <Route path="/colorlang" element={<ColorLangPage />} />
+              <Route path="/methods" element={<MethodsPage />} />
+              <Route path="/lessons" element={<LessonsPage />} />
+              <Route path="/impact" element={<ImpactPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </Layout>
+        <ThemeDebug />
+      </ErrorBoundary>
+    </ThemeProvider>
   )
 }
 

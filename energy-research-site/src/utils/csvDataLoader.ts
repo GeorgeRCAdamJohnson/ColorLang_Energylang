@@ -81,9 +81,10 @@ export class CSVDataLoader {
    */
   static async loadCSV(source: File | string): Promise<RawBenchmarkData[]> {
     return new Promise((resolve, reject) => {
-      Papa.parse(source, {
+      const config = {
         header: true,
         skipEmptyLines: true,
+        download: typeof source === 'string', // Enable download for URL strings
         transformHeader: (header: string) => header.trim(),
         transform: (value: string, field: string) => {
           // Clean up numeric fields
@@ -93,20 +94,25 @@ export class CSVDataLoader {
           }
           return value.trim()
         },
-        complete: results => {
+        complete: (results: Papa.ParseResult<Record<string, unknown>>) => {
           try {
             const validatedData = this.validateAndCleanData(
               results.data as Record<string, unknown>[]
             )
             resolve(validatedData)
           } catch (error) {
+            console.error('CSV validation error:', error)
             reject(error)
           }
         },
-        error: error => {
+        error: (error: Papa.ParseError) => {
+          console.error('CSV parsing error:', error)
           reject(new Error(`CSV parsing failed: ${error.message}`))
         },
-      })
+      }
+
+      // Use proper Papa.parse with type assertion to avoid TypeScript overload issues
+      ;(Papa.parse as any)(source, config)
     })
   }
 
@@ -163,6 +169,11 @@ export class CSVDataLoader {
       const energies = rows.map(r => r.totalEnergyJ)
       const powers = rows.map(r => r.avgCpuPowerW + r.avgGpuPowerW)
 
+      // Filter out undefined J/FLOP values before calculating mean
+      const validJPerFlopValues = rows
+        .map(r => r.jPerFlop)
+        .filter((jPerFlop): jPerFlop is number => jPerFlop !== undefined && jPerFlop > 0)
+
       return {
         language,
         benchmark,
@@ -170,7 +181,7 @@ export class CSVDataLoader {
         meanRuntimeMs: this.calculateMean(runtimes),
         meanEnergyJ: this.calculateMean(energies),
         meanPowerW: this.calculateMean(powers),
-        jPerFlop: this.calculateMean(rows.map(r => r.jPerFlop || 0)),
+        jPerFlop: validJPerFlopValues.length > 0 ? this.calculateMean(validJPerFlopValues) : 0,
         standardDeviation: {
           runtime: this.calculateStandardDeviation(runtimes),
           energy: this.calculateStandardDeviation(energies),
@@ -246,22 +257,57 @@ export class CSVDataLoader {
   }
 
   /**
-   * Estimate FLOP count for benchmarks (simplified)
+   * Estimate FLOP count for benchmarks based on actual computational complexity
    */
-  private static estimateFlops(benchmark: string, runtimeMs: number): number {
-    if (benchmark.toLowerCase().includes('matrix_multiply')) {
-      // Rough estimation: matrix multiplication typically involves n^3 operations
-      // This is a simplified estimation for demonstration
-      return Math.max(1000000, runtimeMs * 1000) // Rough approximation
+  private static estimateFlops(benchmark: string, _runtimeMs: number): number {
+    const benchmarkName = benchmark.toLowerCase()
+
+    if (benchmarkName.includes('matrix_multiply')) {
+      // For matrix multiplication, assume standard 1000x1000 matrices
+      // Matrix multiplication complexity: O(n^3) for n×n matrices
+      // For 1000×1000 matrices: 2 * n^3 = 2 * 1000^3 = 2 billion FLOPs
+      const matrixSize = 1000 // Standard benchmark matrix size
+      const flops = 2 * Math.pow(matrixSize, 3) // 2n^3 for matrix multiplication
+      return flops
     }
-    return 0 // Unknown benchmark type
+
+    if (benchmarkName.includes('fft')) {
+      // FFT complexity: O(n log n)
+      const n = 1048576 // 2^20, common FFT size
+      return n * Math.log2(n) * 5 // Approximate FLOPs per complex multiplication
+    }
+
+    if (benchmarkName.includes('convolution')) {
+      // 2D convolution with typical image sizes
+      const imageSize = 512 * 512
+      const kernelSize = 3 * 3
+      return imageSize * kernelSize * 2 // Multiply and accumulate
+    }
+
+    if (benchmarkName.includes('sorting')) {
+      // Sorting algorithms typically don't have floating point operations
+      return 0
+    }
+
+    if (benchmarkName.includes('ml_inference') || benchmarkName.includes('neural')) {
+      // Neural network inference - rough estimation
+      const parameters = 1000000 // 1M parameters
+      return parameters * 2 // Forward pass approximation
+    }
+
+    // For unknown benchmarks, return 0 to avoid misleading data
+    return 0
   }
 
   /**
    * Validate and clean raw CSV data
    */
   private static validateAndCleanData(data: Record<string, unknown>[]): RawBenchmarkData[] {
-    if (!Array.isArray(data) || data.length === 0) {
+    if (!Array.isArray(data)) {
+      throw new DataValidationError('Data is not an array')
+    }
+
+    if (data.length === 0) {
       throw new DataValidationError('No data found in CSV file')
     }
 

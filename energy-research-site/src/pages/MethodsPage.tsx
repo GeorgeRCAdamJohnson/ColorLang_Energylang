@@ -78,8 +78,8 @@ export function MethodsPage() {
                     Solved profiler race conditions through a sophisticated handshake mechanism that
                     ensures accurate timing and energy measurements.
                   </p>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <code className="text-sm text-gray-800">
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <code className="text-sm text-gray-800 dark:text-gray-200">
                       1. Create sentinel file
                       <br />
                       2. Start profiler
@@ -101,10 +101,10 @@ export function MethodsPage() {
                     Physics-based approach to energy measurement using the fundamental relationship:
                     Energy = Power × Time.
                   </p>
-                  <div className="bg-blue-50 rounded-lg p-4">
+                  <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4">
                     <div className="text-center">
-                      <div className="text-lg font-semibold text-blue-800 mb-2">E = P × t</div>
-                      <div className="text-sm text-blue-600">
+                      <div className="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-2">E = P × t</div>
+                      <div className="text-sm text-blue-600 dark:text-blue-400">
                         Energy (Joules) = Power (Watts) × Time (Seconds)
                       </div>
                     </div>
@@ -119,11 +119,11 @@ export function MethodsPage() {
               <div className="card">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
                   {[
-                    { name: 'C++', color: 'bg-blue-100 text-blue-800' },
-                    { name: 'Python', color: 'bg-yellow-100 text-yellow-800' },
-                    { name: 'Rust', color: 'bg-orange-100 text-orange-800' },
-                    { name: 'Go', color: 'bg-cyan-100 text-cyan-800' },
-                    { name: 'Java', color: 'bg-red-100 text-red-800' },
+                    { name: 'C++', color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300' },
+                    { name: 'Python', color: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' },
+                    { name: 'Rust', color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300' },
+                    { name: 'Go', color: 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300' },
+                    { name: 'Java', color: 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' },
                   ].map(lang => (
                     <div
                       key={lang.name}
@@ -158,19 +158,19 @@ export function MethodsPage() {
                     <h4 className="font-semibold text-gray-900 mb-3">Core Tables</h4>
                     <ul className="space-y-2 text-body">
                       <li>
-                        • <code className="bg-gray-100 px-2 py-1 rounded">benchmarks</code> - Test
+                        • <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded">benchmarks</code> - Test
                         execution records
                       </li>
                       <li>
-                        • <code className="bg-gray-100 px-2 py-1 rounded">energy_measurements</code>{' '}
+                        • <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded">energy_measurements</code>{' '}
                         - Power consumption data
                       </li>
                       <li>
-                        • <code className="bg-gray-100 px-2 py-1 rounded">languages</code> -
+                        • <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded">languages</code> -
                         Implementation metadata
                       </li>
                       <li>
-                        • <code className="bg-gray-100 px-2 py-1 rounded">system_info</code> -
+                        • <code className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded">system_info</code> -
                         Hardware specifications
                       </li>
                     </ul>

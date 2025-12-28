@@ -178,7 +178,7 @@ export function ContentSuggestions({
     <div className={`space-y-3 ${className}`}>
       <div className="flex items-center space-x-2 mb-4">
         <Sparkles className="text-blue-500" size={18} />
-        <h3 className="text-lg font-semibold text-gray-900">Suggested Next Steps</h3>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Suggested Next Steps</h3>
       </div>
 
       <div className="space-y-3">
@@ -191,30 +191,30 @@ export function ContentSuggestions({
           >
             <Link
               to={suggestion.path}
-              className="block p-4 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 rounded-lg hover:border-blue-200 hover:shadow-md transition-all duration-200 group"
+              className="block p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-100 dark:border-blue-800 rounded-lg hover:border-blue-200 dark:hover:border-blue-700 hover:shadow-md transition-all duration-200 group"
             >
               <div className="flex items-start space-x-3">
                 <div className="flex-shrink-0 mt-1">{suggestion.icon}</div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
-                    <h4 className="text-sm font-medium text-gray-900 group-hover:text-blue-700 transition-colors">
+                    <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
                       {suggestion.title}
                     </h4>
                     <ArrowRight
-                      className="text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"
+                      className="text-gray-400 dark:text-gray-500 group-hover:text-blue-500 dark:group-hover:text-blue-400 group-hover:translate-x-1 transition-all"
                       size={16}
                     />
                   </div>
 
-                  <p className="text-sm text-gray-600 mb-2">{suggestion.description}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{suggestion.description}</p>
 
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                    <span className="text-xs text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded-full">
                       {suggestion.reason}
                     </span>
                     {suggestion.priority === 'high' && (
-                      <span className="text-xs text-orange-600 bg-orange-100 px-2 py-1 rounded-full">
+                      <span className="text-xs text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-900/30 px-2 py-1 rounded-full">
                         Recommended
                       </span>
                     )}
