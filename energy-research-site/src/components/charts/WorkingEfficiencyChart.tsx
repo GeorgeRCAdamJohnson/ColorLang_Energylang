@@ -35,7 +35,7 @@ export const WorkingEfficiencyChart: React.FC = () => {
         label: 'Energy Efficiency (J/FLOP)',
         data: [
           2.42e-8,  // C++ - Most efficient
-          1.516e-7, // Python - Least efficient (6.3x worse than C++) - Changed to -7 for consistency
+          15.16e-8, // Python - Least efficient (6.3x worse than C++) - Back to -8 for consistency
           2.85e-8,  // Rust - Close to C++
           4.56e-8,  // Go - Moderate efficiency
           5.23e-8,  // Java - Moderate efficiency
@@ -170,7 +170,7 @@ export const WorkingEfficiencyChart: React.FC = () => {
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-red-600 dark:text-red-400">
-              1.516e-7
+              15.16e-8
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Python J/FLOP (Worst)
@@ -209,7 +209,7 @@ export const WorkingEfficiencyChart: React.FC = () => {
             { lang: 'Go', value: 4.56e-8, rank: 3, color: 'blue' },
             { lang: 'Java', value: 5.23e-8, rank: 4, color: 'yellow' },
             { lang: 'EnergyLang', value: 8.90e-8, rank: 5, color: 'purple' },
-            { lang: 'Python', value: 1.516e-7, rank: 6, color: 'red' },
+            { lang: 'Python', value: 15.16e-8, rank: 6, color: 'red' },
           ].map((item) => (
             <div
               key={item.lang}
