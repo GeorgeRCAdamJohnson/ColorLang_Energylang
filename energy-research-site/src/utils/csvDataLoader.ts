@@ -352,10 +352,25 @@ export class CSVDataLoader {
     }
 
     if (typeof value === 'string') {
+      // Handle 'None' values from Python data
+      if (value.toLowerCase() === 'none' || value.trim() === '') {
+        // Return sensible defaults for different fields
+        if (fieldName === 'bench_start_ts') {
+          return Date.now() // Use current timestamp as fallback
+        }
+        return 0 // Default to 0 for other numeric fields
+      }
+
       const parsed = parseFloat(value)
       if (!isNaN(parsed)) {
         return parsed
       }
+    }
+
+    // For timestamp fields, provide a reasonable fallback
+    if (fieldName === 'bench_start_ts') {
+      console.warn(`Invalid timestamp for row ${rowIndex}, using current time`)
+      return Date.now()
     }
 
     throw new DataValidationError(
