@@ -37,7 +37,6 @@
     
     # Anti-scraping headers
     X-Robots-Tag = "index, follow, noarchive, nosnippet, noimageindex"
-    X-Content-Type-Options = "nosniff"
 
 # Cache static assets
 [[headers]]
