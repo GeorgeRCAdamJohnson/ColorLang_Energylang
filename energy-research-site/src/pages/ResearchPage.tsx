@@ -102,7 +102,9 @@ export function ResearchPage() {
           >
             <div className="space-y-6 research-content" data-protected="true">
               <div className="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-400 dark:border-blue-500 p-4 rounded-r-lg">
-                <h4 className="font-semibold text-blue-900 dark:text-blue-200 mb-2">Core Hypothesis</h4>
+                <h4 className="font-semibold text-blue-900 dark:text-blue-200 mb-2">
+                  Core Hypothesis
+                </h4>
                 <p className="text-blue-800 dark:text-blue-300">
                   Programming languages could be designed with energy efficiency as a first-class
                   concern, potentially achieving significant energy savings through language-level
@@ -120,7 +122,9 @@ export function ResearchPage() {
                 </p>
 
                 <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                  <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Key Questions</h5>
+                  <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                    Key Questions
+                  </h5>
                   <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                     <li className="flex items-start gap-2">
                       <span className="text-blue-500 dark:text-blue-400 mt-1">•</span>
@@ -183,7 +187,9 @@ export function ResearchPage() {
                   shifted to building robust measurement infrastructure:
                 </p>
                 <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 p-4 rounded-lg">
-                  <h5 className="font-medium text-yellow-900 dark:text-yellow-200 mb-2">Key Challenges Discovered</h5>
+                  <h5 className="font-medium text-yellow-900 dark:text-yellow-200 mb-2">
+                    Key Challenges Discovered
+                  </h5>
                   <ul className="space-y-1 text-yellow-800 dark:text-yellow-300 text-sm">
                     <li>• Profiler race conditions causing nondeterministic measurements</li>
                     <li>• Hardware-specific energy measurement APIs and tools</li>
@@ -205,7 +211,9 @@ export function ResearchPage() {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg">
-                    <h5 className="font-medium text-blue-900 dark:text-blue-200 mb-2">Languages Studied</h5>
+                    <h5 className="font-medium text-blue-900 dark:text-blue-200 mb-2">
+                      Languages Studied
+                    </h5>
                     <ul className="text-sm text-blue-800 dark:text-blue-300 space-y-1">
                       <li>• C++ (optimized and standard)</li>
                       <li>• Python (NumPy and pure)</li>
@@ -215,7 +223,9 @@ export function ResearchPage() {
                     </ul>
                   </div>
                   <div className="bg-green-50 dark:bg-green-900/30 p-4 rounded-lg">
-                    <h5 className="font-medium text-green-900 dark:text-green-200 mb-2">Benchmark Algorithms</h5>
+                    <h5 className="font-medium text-green-900 dark:text-green-200 mb-2">
+                      Benchmark Algorithms
+                    </h5>
                     <ul className="text-sm text-green-800 dark:text-green-300 space-y-1">
                       <li>• Matrix multiplication</li>
                       <li>• Sorting algorithms</li>
@@ -276,23 +286,33 @@ export function ResearchPage() {
                 </p>
 
                 <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
-                  <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Investigation Process</h5>
+                  <h5 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                    Investigation Process
+                  </h5>
                   <ol className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
                     <li className="flex gap-2">
-                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">1.</span>
+                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">
+                        1.
+                      </span>
                       Identified timing inconsistencies through statistical analysis of measurement
                       variance
                     </li>
                     <li className="flex gap-2">
-                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">2.</span>
+                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">
+                        2.
+                      </span>
                       Traced profiler initialization sequences using system call monitoring
                     </li>
                     <li className="flex gap-2">
-                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">3.</span>
+                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">
+                        3.
+                      </span>
                       Tested various synchronization mechanisms (signals, pipes, shared memory)
                     </li>
                     <li className="flex gap-2">
-                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">4.</span>
+                      <span className="font-mono bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-1 rounded">
+                        4.
+                      </span>
                       Developed file-based handshake protocol as most reliable solution
                     </li>
                   </ol>
@@ -309,7 +329,9 @@ export function ResearchPage() {
                 </p>
 
                 <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 p-4 rounded-lg mb-4">
-                  <h5 className="font-medium text-green-900 dark:text-green-200 mb-2">Protocol Steps</h5>
+                  <h5 className="font-medium text-green-900 dark:text-green-200 mb-2">
+                    Protocol Steps
+                  </h5>
                   <ol className="space-y-2 text-green-800 dark:text-green-300 text-sm">
                     <li>
                       <strong>1. Profiler Start:</strong> Energy profiler begins monitoring and
@@ -338,7 +360,9 @@ export function ResearchPage() {
                 </div>
 
                 <div className="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-lg">
-                  <h5 className="font-medium text-blue-900 dark:text-blue-200 mb-2">Implementation Benefits</h5>
+                  <h5 className="font-medium text-blue-900 dark:text-blue-200 mb-2">
+                    Implementation Benefits
+                  </h5>
                   <ul className="space-y-1 text-blue-800 dark:text-blue-300 text-sm">
                     <li>
                       • <strong>Reliability:</strong> Filesystem operations are atomic and
@@ -381,7 +405,9 @@ export function ResearchPage() {
                       After (File Sentinels)
                     </h6>
                     <p className="text-green-800 dark:text-green-300 text-sm">Variance: &lt;5%</p>
-                    <p className="text-green-800 dark:text-green-300 text-sm">Reliability: &gt;99%</p>
+                    <p className="text-green-800 dark:text-green-300 text-sm">
+                      Reliability: &gt;99%
+                    </p>
                   </div>
                 </div>
               </div>
@@ -406,7 +432,9 @@ export function ResearchPage() {
                     </ul>
                   </div>
                   <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 p-4 rounded-lg">
-                    <h5 className="font-medium text-green-900 dark:text-green-200 mb-2">NVIDIA-smi</h5>
+                    <h5 className="font-medium text-green-900 dark:text-green-200 mb-2">
+                      NVIDIA-smi
+                    </h5>
                     <ul className="text-sm text-green-800 dark:text-green-300 space-y-1">
                       <li>• GPU power consumption</li>
                       <li>• Memory usage tracking</li>
@@ -437,7 +465,9 @@ export function ResearchPage() {
                 </p>
 
                 <div className="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-400 dark:border-blue-500 p-4 rounded-r-lg">
-                  <h5 className="font-medium text-blue-900 dark:text-blue-200 mb-2">Canonicalization Process</h5>
+                  <h5 className="font-medium text-blue-900 dark:text-blue-200 mb-2">
+                    Canonicalization Process
+                  </h5>
                   <ol className="space-y-2 text-blue-800 dark:text-blue-300 text-sm">
                     <li>
                       <strong>1. Power Measurement:</strong> Continuous sampling of instantaneous
@@ -503,7 +533,9 @@ export function ResearchPage() {
               </p>
 
               <div className="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 p-4 rounded-lg">
-                <h5 className="font-medium text-yellow-900 dark:text-yellow-200 mb-2">Dashboard Features</h5>
+                <h5 className="font-medium text-yellow-900 dark:text-yellow-200 mb-2">
+                  Dashboard Features
+                </h5>
                 <ul className="space-y-1 text-yellow-800 dark:text-yellow-300 text-sm">
                   <li>• Interactive filtering by programming language and benchmark type</li>
                   <li>• Multiple visualization types: bar charts, scatter plots, box plots</li>

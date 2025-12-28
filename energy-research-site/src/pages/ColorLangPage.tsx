@@ -80,10 +80,14 @@ export function ColorLangPage() {
           {/* Research Context */}
           <section className="mb-12">
             <div className="card bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border-indigo-200 dark:border-indigo-700">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Research Innovation</h2>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                Research Innovation
+              </h2>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-medium text-gray-800 dark:text-gray-200 mb-3">Technical Achievements</h3>
+                  <h3 className="font-medium text-gray-800 dark:text-gray-200 mb-3">
+                    Technical Achievements
+                  </h3>
                   <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 bg-indigo-500 dark:bg-indigo-400 rounded-full mt-2 flex-shrink-0" />
@@ -106,7 +110,9 @@ export function ColorLangPage() {
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-800 dark:text-gray-200 mb-3">Innovation Impact</h3>
+                  <h3 className="font-medium text-gray-800 dark:text-gray-200 mb-3">
+                    Innovation Impact
+                  </h3>
                   <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 bg-purple-500 dark:bg-purple-400 rounded-full mt-2 flex-shrink-0" />

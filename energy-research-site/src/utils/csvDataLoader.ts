@@ -111,7 +111,8 @@ export class CSVDataLoader {
         },
       }
 
-      // Use proper Papa.parse with type assertion to avoid TypeScript overload issues
+      // Use Papa.parse with type assertion to handle complex overload resolution
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ;(Papa.parse as any)(source, config)
     })
   }

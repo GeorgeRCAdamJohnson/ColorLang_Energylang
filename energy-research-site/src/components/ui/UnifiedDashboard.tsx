@@ -1,20 +1,19 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  X, 
-  Map, 
-  TrendingUp, 
-  Compass, 
-  Shield, 
-  HelpCircle,
-  AlertTriangle, 
-  Eye, 
-  Users, 
-  Activity, 
+import {
+  X,
+  Map,
+  TrendingUp,
+  Compass,
+  Shield,
+  AlertTriangle,
+  Eye,
+  Users,
+  Activity,
   Settings,
   Palette,
   Code,
-  Hash
+  Hash,
 } from 'lucide-react'
 import { SectionProgress } from './SectionProgress'
 import { ContentSuggestions } from './ContentSuggestions'
@@ -127,13 +126,20 @@ interface UnifiedDashboardProps {
   isAdmin?: boolean
 }
 
-type TabType = 'progress' | 'suggestions' | 'milestones' | 'security' | 'colorlang-colors' | 'colorlang-ascii' | 'colorlang-patterns'
+type TabType =
+  | 'progress'
+  | 'suggestions'
+  | 'milestones'
+  | 'security'
+  | 'colorlang-colors'
+  | 'colorlang-ascii'
+  | 'colorlang-patterns'
 
-export function UnifiedDashboard({ 
-  isOpen, 
-  onClose, 
+export function UnifiedDashboard({
+  isOpen,
+  onClose,
   showColorLangHelp = false,
-  isAdmin = false 
+  isAdmin = false,
 }: UnifiedDashboardProps) {
   const [activeTab, setActiveTab] = useState<TabType>('progress')
   const { progress } = useProgressTracking()
@@ -172,14 +178,21 @@ export function UnifiedDashboard({
   }, [showColorLangHelp, isOpen])
 
   const tabs = useMemo(() => {
-    const baseTabs = [
+    const baseTabs: Array<{
+      id: TabType
+      label: string
+      icon: React.ReactElement
+      count: number | null
+      description: string
+      category: string
+    }> = [
       {
         id: 'progress' as const,
         label: 'Progress',
         icon: <Map size={16} />,
         count: progress.sectionsVisited.length,
         description: `${progress.sectionsVisited.length} sections visited`,
-        category: 'exploration'
+        category: 'exploration',
       },
       {
         id: 'suggestions' as const,
@@ -187,7 +200,7 @@ export function UnifiedDashboard({
         icon: <Compass size={16} />,
         count: null,
         description: 'Personalized content recommendations',
-        category: 'exploration'
+        category: 'exploration',
       },
       {
         id: 'milestones' as const,
@@ -195,7 +208,7 @@ export function UnifiedDashboard({
         icon: <TrendingUp size={16} />,
         count: progress.achievementsUnlocked.length,
         description: `${progress.achievementsUnlocked.length} achievements unlocked`,
-        category: 'exploration'
+        category: 'exploration',
       },
     ]
 
@@ -205,9 +218,12 @@ export function UnifiedDashboard({
         id: 'security' as const,
         label: 'Security',
         icon: <Shield size={16} />,
-        count: securityStatus.rateLimitEntries + securityStatus.suspiciousIPs + securityStatus.honeypotTriggers,
+        count:
+          securityStatus.rateLimitEntries +
+          securityStatus.suspiciousIPs +
+          securityStatus.honeypotTriggers,
         description: 'Security monitoring and status',
-        category: 'admin'
+        category: 'admin',
       })
     }
 
@@ -220,7 +236,7 @@ export function UnifiedDashboard({
           icon: <Palette size={16} />,
           count: null,
           description: 'ColorLang instruction color codes',
-          category: 'colorlang'
+          category: 'colorlang',
         },
         {
           id: 'colorlang-ascii' as const,
@@ -228,7 +244,7 @@ export function UnifiedDashboard({
           icon: <Hash size={16} />,
           count: null,
           description: 'ASCII character codes for text output',
-          category: 'colorlang'
+          category: 'colorlang',
         },
         {
           id: 'colorlang-patterns' as const,
@@ -236,13 +252,19 @@ export function UnifiedDashboard({
           icon: <Code size={16} />,
           count: null,
           description: 'Common programming patterns',
-          category: 'colorlang'
+          category: 'colorlang',
         }
       )
     }
 
     return baseTabs
-  }, [progress.sectionsVisited.length, progress.achievementsUnlocked.length, showColorLangHelp, isAdmin, securityStatus])
+  }, [
+    progress.sectionsVisited.length,
+    progress.achievementsUnlocked.length,
+    showColorLangHelp,
+    isAdmin,
+    securityStatus,
+  ])
 
   // Focus management and keyboard navigation
   useEffect(() => {
@@ -275,7 +297,7 @@ export function UnifiedDashboard({
     }
   }
 
-  const handleTabClick = (tab: (typeof tabs)[0], index: number) => {
+  const handleTabClick = (tab: (typeof tabs)[0]) => {
     setActiveTab(tab.id)
     announceToScreenReader(`${tab.label} tab selected. ${tab.description}`)
   }
@@ -292,17 +314,19 @@ export function UnifiedDashboard({
   }
 
   const getStatusBg = (value: number, threshold: number) => {
-    if (value === 0) return 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-700'
-    if (value < threshold) return 'bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-700'
+    if (value === 0)
+      return 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-700'
+    if (value < threshold)
+      return 'bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-700'
     return 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700'
   }
 
-  // Group tabs by category for better organization
-  const tabsByCategory = tabs.reduce((acc, tab) => {
-    if (!acc[tab.category]) acc[tab.category] = []
-    acc[tab.category].push(tab)
-    return acc
-  }, {} as Record<string, typeof tabs>)
+  // Group tabs by category for better organization (currently unused)
+  // const tabsByCategory = tabs.reduce((acc, tab) => {
+  //   if (!acc[tab.category]) acc[tab.category] = []
+  //   acc[tab.category].push(tab)
+  //   return acc
+  // }, {} as Record<string, typeof tabs>)
 
   return (
     <AnimatePresence>
@@ -335,14 +359,19 @@ export function UnifiedDashboard({
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
               <div>
-                <h2 id="dashboard-title" className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                <h2
+                  id="dashboard-title"
+                  className="text-xl font-semibold text-gray-900 dark:text-gray-100"
+                >
                   {showColorLangHelp ? 'ColorLang Reference' : 'Exploration Dashboard'}
                 </h2>
-                <p id="dashboard-description" className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  {showColorLangHelp 
+                <p
+                  id="dashboard-description"
+                  className="text-sm text-gray-600 dark:text-gray-400 mt-1"
+                >
+                  {showColorLangHelp
                     ? 'Quick reference for ColorLang programming'
-                    : 'Track your progress and discover new content'
-                  }
+                    : 'Track your progress and discover new content'}
                 </p>
               </div>
               <button
@@ -356,16 +385,12 @@ export function UnifiedDashboard({
 
             {/* Tabs - Scrollable for many tabs */}
             <div className="border-b border-gray-200 dark:border-gray-700 overflow-x-auto">
-              <div
-                className="flex min-w-max"
-                role="tablist"
-                aria-label="Dashboard sections"
-              >
+              <div className="flex min-w-max" role="tablist" aria-label="Dashboard sections">
                 {tabs.map((tab, index) => (
                   <button
                     key={tab.id}
                     ref={el => (tabRefs.current[index] = el)}
-                    onClick={() => handleTabClick(tab, index)}
+                    onClick={() => handleTabClick(tab)}
                     onKeyDown={e => handleTabKeyDown(e.nativeEvent, index)}
                     className={`flex items-center justify-center space-x-2 py-3 px-4 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset whitespace-nowrap ${
                       activeTab === tab.id
@@ -468,51 +493,71 @@ export function UnifiedDashboard({
                   >
                     {/* Security Status Grid */}
                     <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className={`p-3 rounded-lg border ${getStatusBg(securityStatus.rateLimitEntries, 5)}`}>
+                      <div
+                        className={`p-3 rounded-lg border ${getStatusBg(securityStatus.rateLimitEntries, 5)}`}
+                      >
                         <div className="flex items-center gap-2 mb-1">
                           <Activity className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Rate Limited</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Rate Limited
+                          </span>
                         </div>
-                        <div className={`text-lg font-bold ${getStatusColor(securityStatus.rateLimitEntries, 5)}`}>
+                        <div
+                          className={`text-lg font-bold ${getStatusColor(securityStatus.rateLimitEntries, 5)}`}
+                        >
                           {securityStatus.rateLimitEntries}
                         </div>
                       </div>
 
-                      <div className={`p-3 rounded-lg border ${getStatusBg(securityStatus.suspiciousIPs, 3)}`}>
+                      <div
+                        className={`p-3 rounded-lg border ${getStatusBg(securityStatus.suspiciousIPs, 3)}`}
+                      >
                         <div className="flex items-center gap-2 mb-1">
                           <AlertTriangle className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Suspicious</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Suspicious
+                          </span>
                         </div>
-                        <div className={`text-lg font-bold ${getStatusColor(securityStatus.suspiciousIPs, 3)}`}>
+                        <div
+                          className={`text-lg font-bold ${getStatusColor(securityStatus.suspiciousIPs, 3)}`}
+                        >
                           {securityStatus.suspiciousIPs}
                         </div>
                       </div>
 
-                      <div className={`p-3 rounded-lg border ${getStatusBg(securityStatus.honeypotTriggers, 1)}`}>
+                      <div
+                        className={`p-3 rounded-lg border ${getStatusBg(securityStatus.honeypotTriggers, 1)}`}
+                      >
                         <div className="flex items-center gap-2 mb-1">
                           <Eye className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Honeypots</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Honeypots
+                          </span>
                         </div>
-                        <div className={`text-lg font-bold ${getStatusColor(securityStatus.honeypotTriggers, 1)}`}>
+                        <div
+                          className={`text-lg font-bold ${getStatusColor(securityStatus.honeypotTriggers, 1)}`}
+                        >
                           {securityStatus.honeypotTriggers}
                         </div>
                       </div>
 
                       <div
                         className={`p-3 rounded-lg border ${
-                          securityStatus.botDetected 
-                            ? 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700' 
+                          securityStatus.botDetected
+                            ? 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-700'
                             : 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-700'
                         }`}
                       >
                         <div className="flex items-center gap-2 mb-1">
                           <Users className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Bot Status</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Bot Status
+                          </span>
                         </div>
                         <div
                           className={`text-sm font-bold ${
-                            securityStatus.botDetected 
-                              ? 'text-red-600 dark:text-red-400' 
+                            securityStatus.botDetected
+                              ? 'text-red-600 dark:text-red-400'
                               : 'text-green-600 dark:text-green-400'
                           }`}
                         >
@@ -530,7 +575,9 @@ export function UnifiedDashboard({
                       <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
                         <div className="flex items-center gap-2 mb-2">
                           <Settings className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Admin Controls</span>
+                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Admin Controls
+                          </span>
                         </div>
                         <div className="flex gap-2">
                           <button
@@ -592,10 +639,16 @@ export function UnifiedDashboard({
                           />
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
-                              <span className="font-mono font-semibold text-sm text-gray-900 dark:text-gray-100">{ref.instruction}</span>
-                              <span className="text-xs text-gray-500 dark:text-gray-400">({ref.hue}°)</span>
+                              <span className="font-mono font-semibold text-sm text-gray-900 dark:text-gray-100">
+                                {ref.instruction}
+                              </span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                ({ref.hue}°)
+                              </span>
                             </div>
-                            <div className="text-xs text-gray-600 dark:text-gray-400">{ref.description}</div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                              {ref.description}
+                            </div>
                           </div>
                           <div className="text-xs font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-900 dark:text-gray-100">
                             {ref.example}
@@ -631,14 +684,16 @@ export function UnifiedDashboard({
                           <span className="font-mono font-semibold text-gray-900 dark:text-gray-100">
                             {ascii.char === 'Space' ? '␣' : ascii.char}
                           </span>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">{ascii.code}</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            {ascii.code}
+                          </span>
                         </div>
                       ))}
                     </div>
                     <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded">
                       <div className="text-sm text-blue-800 dark:text-blue-300">
-                        <strong>Tip:</strong> Use PRINT(ascii_code) to output characters. For example,
-                        PRINT(72) outputs "H".
+                        <strong>Tip:</strong> Use PRINT(ascii_code) to output characters. For
+                        example, PRINT(72) outputs "H".
                       </div>
                     </div>
                   </motion.div>
@@ -662,18 +717,26 @@ export function UnifiedDashboard({
                         Common programming patterns to get you started
                       </p>
                       {quickPatterns.map((pattern, index) => (
-                        <div key={index} className="border border-gray-200 dark:border-gray-700 rounded p-3">
-                          <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{pattern.name}</h4>
+                        <div
+                          key={index}
+                          className="border border-gray-200 dark:border-gray-700 rounded p-3"
+                        >
+                          <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                            {pattern.name}
+                          </h4>
                           <div className="font-mono text-sm bg-gray-100 dark:bg-gray-800 p-2 rounded mb-2 text-gray-900 dark:text-gray-100">
                             {pattern.pattern}
                           </div>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">{pattern.description}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            {pattern.description}
+                          </p>
                         </div>
                       ))}
                       <div className="p-3 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded">
                         <div className="text-sm text-green-800 dark:text-green-300">
-                          <strong>Remember:</strong> Always end your programs with HALT(0) to prevent
-                          undefined behavior. Use data=0 in operations to work with register values.
+                          <strong>Remember:</strong> Always end your programs with HALT(0) to
+                          prevent undefined behavior. Use data=0 in operations to work with register
+                          values.
                         </div>
                       </div>
                     </div>
@@ -686,10 +749,9 @@ export function UnifiedDashboard({
             <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
               <div className="text-center">
                 <p className="text-xs text-gray-600 dark:text-gray-400">
-                  {showColorLangHelp 
+                  {showColorLangHelp
                     ? 'Use these references to build your ColorLang programs!'
-                    : 'Keep exploring to unlock more content and achievements!'
-                  }
+                    : 'Keep exploring to unlock more content and achievements!'}
                 </p>
               </div>
             </div>

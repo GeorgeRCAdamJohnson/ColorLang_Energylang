@@ -107,7 +107,7 @@ export function Header() {
           {/* Theme Toggle and Mobile Menu */}
           <div className="flex items-center space-x-3">
             <ThemeToggle />
-            
+
             {/* Mobile Menu Button with enhanced animation */}
             <motion.button
               whileHover={{ scale: 1.05 }}

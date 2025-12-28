@@ -33,7 +33,12 @@ export const DataDebugDisplay: React.FC = () => {
               <div className="font-medium">{item.language}</div>
               <div className="text-sm text-gray-600">{item.benchmark}</div>
               <div className="text-sm">
-                <strong>J/FLOP:</strong> {item.language === 'Python' ? '15.16e-8' : (item.jPerFlop ? item.jPerFlop.toFixed(6) : 'N/A')}
+                <strong>J/FLOP:</strong>{' '}
+                {item.language === 'Python'
+                  ? '15.16e-8'
+                  : item.jPerFlop
+                    ? item.jPerFlop.toFixed(6)
+                    : 'N/A'}
               </div>
               <div className="text-sm">
                 <strong>Energy:</strong> {item.meanEnergyJ.toFixed(2)}J

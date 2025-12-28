@@ -71,7 +71,9 @@ export function HomePage() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="heading-xl mb-6"
             >
-              <span className="block text-gray-900 dark:text-gray-100 mb-2">Groundbreaking Research in</span>
+              <span className="block text-gray-900 dark:text-gray-100 mb-2">
+                Groundbreaking Research in
+              </span>
               <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent font-extrabold">
                 Programming Innovation
               </span>
@@ -138,18 +140,28 @@ export function HomePage() {
             >
               <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 dark:border-gray-700/50">
                 <div className="text-3xl font-bold text-blue-600 mb-2">5+</div>
-                <div className="text-gray-700 dark:text-gray-300 font-medium">Programming Languages</div>
+                <div className="text-gray-700 dark:text-gray-300 font-medium">
+                  Programming Languages
+                </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Energy Benchmarked</div>
               </div>
               <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 dark:border-gray-700/50">
                 <div className="text-3xl font-bold text-purple-600 mb-2">2D</div>
-                <div className="text-gray-700 dark:text-gray-300 font-medium">Visual Programming</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Color Field Innovation</div>
+                <div className="text-gray-700 dark:text-gray-300 font-medium">
+                  Visual Programming
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  Color Field Innovation
+                </div>
               </div>
               <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 dark:border-gray-700/50">
                 <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
-                <div className="text-gray-700 dark:text-gray-300 font-medium">AI-Assisted Development</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">With Rigorous Methodology</div>
+                <div className="text-gray-700 dark:text-gray-300 font-medium">
+                  AI-Assisted Development
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  With Rigorous Methodology
+                </div>
               </div>
             </motion.div>
 

@@ -117,7 +117,8 @@ export function useProgressTracking() {
           },
           methods: {
             name: 'Technical Methods',
-            message: 'Deep dive into the technical implementation details and sophisticated measurement techniques.',
+            message:
+              'Deep dive into the technical implementation details and sophisticated measurement techniques.',
           },
           lessons: {
             name: 'Strategic Lessons',

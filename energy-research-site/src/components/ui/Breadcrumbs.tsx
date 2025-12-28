@@ -41,10 +41,15 @@ export function Breadcrumbs() {
   }
 
   return (
-    <nav aria-label="Breadcrumb" className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-6">
+    <nav
+      aria-label="Breadcrumb"
+      className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 mb-6"
+    >
       {breadcrumbs.map((breadcrumb, index) => (
         <div key={breadcrumb.path} className="flex items-center">
-          {index > 0 && <ChevronRight size={16} className="mx-2 text-gray-400 dark:text-gray-500" />}
+          {index > 0 && (
+            <ChevronRight size={16} className="mx-2 text-gray-400 dark:text-gray-500" />
+          )}
 
           {breadcrumb.isActive ? (
             <span className="text-gray-900 dark:text-gray-100 font-medium flex items-center">

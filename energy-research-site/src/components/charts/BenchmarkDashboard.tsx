@@ -360,9 +360,7 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
                       </div>
                       <div className="flex justify-between">
                         <span>Efficiency (J/FLOP):</span>
-                        <span className="font-medium">
-                          15.16e-8
-                        </span>
+                        <span className="font-medium">15.16e-8</span>
                       </div>
                     </div>
                   </div>

@@ -173,7 +173,10 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
   }
 
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200 ${className}`} data-protected="true">
+    <div
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 transition-colors duration-200 ${className}`}
+      data-protected="true"
+    >
       {/* Chart Controls */}
       {showFilters && (
         <div className="mb-6 space-y-4">
@@ -181,7 +184,9 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
             {/* Chart Type Selector */}
             <div className="flex items-center space-x-2">
               <Filter className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Chart Type:</label>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Chart Type:
+              </label>
               <select
                 value={filters.chartType}
                 onChange={e =>
@@ -199,7 +204,9 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
             {/* Metric Selector */}
             <div className="flex items-center space-x-2">
               <TrendingUp className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Metric:</label>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Metric:
+              </label>
               <select
                 value={filters.metric}
                 onChange={e =>
@@ -248,7 +255,9 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
 
           {/* Benchmark Filter */}
           <div className="flex flex-wrap gap-2">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Benchmarks:</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Benchmarks:
+            </span>
             {filterOptions.benchmarks.map(benchmark => (
               <label key={benchmark} className="flex items-center space-x-1">
                 <input
@@ -331,7 +340,10 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
                 <div>
                   <span className="font-medium text-gray-700">Efficiency:</span>
                   <span className="ml-2 text-gray-900">
-                    {hoveredData.language === 'Python' ? '15.16e-8' : hoveredData.jPerFlop.toFixed(4)} J/FLOP
+                    {hoveredData.language === 'Python'
+                      ? '15.16e-8'
+                      : hoveredData.jPerFlop.toFixed(4)}{' '}
+                    J/FLOP
                   </span>
                 </div>
               </>
@@ -354,7 +366,10 @@ export const BenchmarkChart: React.FC<BenchmarkChartProps> = ({
                 <div>
                   <span className="font-medium text-gray-700">Efficiency:</span>
                   <span className="ml-2 text-gray-900">
-                    {hoveredData.language === 'Python' ? '15.16e-8' : (hoveredData.jPerFlop || 0).toFixed(4)} J/FLOP
+                    {hoveredData.language === 'Python'
+                      ? '15.16e-8'
+                      : (hoveredData.jPerFlop || 0).toFixed(4)}{' '}
+                    J/FLOP
                   </span>
                 </div>
               </>

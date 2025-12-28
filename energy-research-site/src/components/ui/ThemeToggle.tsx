@@ -37,12 +37,8 @@ export function ThemeToggle() {
       title={`Current theme: ${getLabel()}. Click to cycle through themes.`}
       aria-label={`Switch theme. Current: ${getLabel()}`}
     >
-      <span className="transition-transform duration-200 hover:scale-110">
-        {getIcon()}
-      </span>
-      <span className="text-sm font-medium hidden sm:inline">
-        {getLabel()}
-      </span>
+      <span className="transition-transform duration-200 hover:scale-110">{getIcon()}</span>
+      <span className="text-sm font-medium hidden sm:inline">{getLabel()}</span>
     </button>
   )
 }

@@ -46,7 +46,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     if (!mounted || typeof window === 'undefined') return
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    
+
     const handleChange = (e: MediaQueryListEvent) => {
       setSystemTheme(e.matches ? 'dark' : 'light')
     }
@@ -63,10 +63,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     if (!mounted || typeof document === 'undefined') return
 
     const root = document.documentElement
-    
+
     // Always remove dark class first
     root.classList.remove('dark')
-    
+
     // Add dark class only if effective theme is dark
     if (effectiveTheme === 'dark') {
       root.classList.add('dark')
@@ -103,6 +103,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
   const context = useContext(ThemeContext)
   if (context === undefined) {

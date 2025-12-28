@@ -64,63 +64,66 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
     })
   }, [])
 
-  const moveMonkey = useCallback((dx: number, dy: number) => {
-    if (!gameState.gameRunning || gameState.gameOver) return
+  const moveMonkey = useCallback(
+    (dx: number, dy: number) => {
+      if (!gameState.gameRunning || gameState.gameOver) return
 
-    setGameState(prev => {
-      const newX = Math.max(0, Math.min(width - 1, prev.monkeyX + dx))
-      const newY = Math.max(0, Math.min(height - 1, prev.monkeyY + dy))
+      setGameState(prev => {
+        const newX = Math.max(0, Math.min(width - 1, prev.monkeyX + dx))
+        const newY = Math.max(0, Math.min(height - 1, prev.monkeyY + dy))
 
-      // Check for obstacle collision
-      const hitObstacle = prev.obstacles.some(obs => obs.x === newX && obs.y === newY)
-      if (hitObstacle) {
-        return {
-          ...prev,
-          gameOver: true,
-          gameRunning: false,
-          message: '💥 Game Over! You hit an obstacle! Click Reset to try again.',
+        // Check for obstacle collision
+        const hitObstacle = prev.obstacles.some(obs => obs.x === newX && obs.y === newY)
+        if (hitObstacle) {
+          return {
+            ...prev,
+            gameOver: true,
+            gameRunning: false,
+            message: '💥 Game Over! You hit an obstacle! Click Reset to try again.',
+          }
         }
-      }
 
-      // Check for banana collection
-      const updatedBananas = prev.bananas.map(banana => {
-        if (banana.x === newX && banana.y === newY && !banana.collected) {
-          return { ...banana, collected: true }
+        // Check for banana collection
+        const updatedBananas = prev.bananas.map(banana => {
+          if (banana.x === newX && banana.y === newY && !banana.collected) {
+            return { ...banana, collected: true }
+          }
+          return banana
+        })
+
+        const newScore = updatedBananas.filter(b => b.collected).length * 10
+        const allBananasCollected = updatedBananas.every(b => b.collected)
+
+        let message = prev.message
+        if (newScore > prev.score) {
+          message = `🍌 Banana collected! Score: ${newScore}`
         }
-        return banana
-      })
+        if (allBananasCollected) {
+          message = '🎉 Congratulations! You collected all bananas! You win!'
+          return {
+            ...prev,
+            monkeyX: newX,
+            monkeyY: newY,
+            bananas: updatedBananas,
+            score: newScore,
+            gameOver: true,
+            gameRunning: false,
+            message,
+          }
+        }
 
-      const newScore = updatedBananas.filter(b => b.collected).length * 10
-      const allBananasCollected = updatedBananas.every(b => b.collected)
-
-      let message = prev.message
-      if (newScore > prev.score) {
-        message = `🍌 Banana collected! Score: ${newScore}`
-      }
-      if (allBananasCollected) {
-        message = '🎉 Congratulations! You collected all bananas! You win!'
         return {
           ...prev,
           monkeyX: newX,
           monkeyY: newY,
           bananas: updatedBananas,
           score: newScore,
-          gameOver: true,
-          gameRunning: false,
           message,
         }
-      }
-
-      return {
-        ...prev,
-        monkeyX: newX,
-        monkeyY: newY,
-        bananas: updatedBananas,
-        score: newScore,
-        message,
-      }
-    })
-  }, [gameState.gameRunning, gameState.gameOver, width, height])
+      })
+    },
+    [gameState.gameRunning, gameState.gameOver, width, height]
+  )
 
   // Keyboard controls
   useEffect(() => {
@@ -178,7 +181,7 @@ export function MonkeyGame({ width = 8, height = 6 }: MonkeyGameProps) {
 
     let content = ''
     let bgColor = 'bg-green-100'
-    let textColor = 'text-gray-400'
+    const textColor = 'text-gray-400'
 
     if (isMonkey) {
       content = '🐵'

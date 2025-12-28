@@ -14,7 +14,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Project Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Energy Research Showcase</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Energy Research Showcase
+            </h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
               Comprehensive research into programming language energy efficiency and visual
               programming paradigms. Featuring EnergyLang benchmarking and ColorLang visual

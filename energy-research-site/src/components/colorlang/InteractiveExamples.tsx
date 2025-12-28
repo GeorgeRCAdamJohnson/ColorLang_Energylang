@@ -32,12 +32,12 @@ function ExampleCard({ program, isActive, onClick }: ExampleCardProps) {
     // Define difficulty based on program complexity, not just size
     const difficultyMap: Record<string, string> = {
       'hello-world': 'Beginner',
-      'arithmetic': 'Beginner', 
-      'counter': 'Intermediate',
-      'fibonacci': 'Intermediate',
+      arithmetic: 'Beginner',
+      counter: 'Intermediate',
+      fibonacci: 'Intermediate',
       'color-demo': 'Intermediate',
       'neural-network': 'Advanced',
-      'monkey-game': 'Advanced'
+      'monkey-game': 'Advanced',
     }
     return difficultyMap[program.id] || 'Intermediate'
   }

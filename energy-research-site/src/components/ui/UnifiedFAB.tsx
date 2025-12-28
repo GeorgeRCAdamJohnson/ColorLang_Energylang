@@ -1,12 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Compass, 
-  HelpCircle, 
-  Shield, 
-  X, 
-  ChevronUp
-} from 'lucide-react'
+import { Compass, HelpCircle, Shield, X, ChevronUp } from 'lucide-react'
 import { UnifiedDashboard } from './UnifiedDashboard'
 import { useProgressTracking } from '../../hooks/useProgressTracking'
 import { useLocation } from 'react-router-dom'
@@ -18,7 +12,9 @@ interface UnifiedFABProps {
 export function UnifiedFAB({ isAdmin = false }: UnifiedFABProps) {
   const [isDashboardOpen, setIsDashboardOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [dashboardMode, setDashboardMode] = useState<'exploration' | 'colorlang' | 'security'>('exploration')
+  const [dashboardMode, setDashboardMode] = useState<'exploration' | 'colorlang' | 'security'>(
+    'exploration'
+  )
   const { progress } = useProgressTracking()
   const location = useLocation()
 
@@ -76,7 +72,7 @@ export function UnifiedFAB({ isAdmin = false }: UnifiedFABProps) {
       color: 'bg-blue-600 hover:bg-blue-700',
       shortcut: 'Ctrl+Shift+D',
       show: true,
-      badge: progress.sectionsVisited.length > 0 ? progress.sectionsVisited.length : null
+      badge: progress.sectionsVisited.length > 0 ? progress.sectionsVisited.length : null,
     },
     {
       id: 'colorlang',
@@ -86,7 +82,7 @@ export function UnifiedFAB({ isAdmin = false }: UnifiedFABProps) {
       color: 'bg-purple-600 hover:bg-purple-700',
       shortcut: 'Ctrl+Shift+H',
       show: isColorLangPage,
-      badge: null
+      badge: null,
     },
     {
       id: 'security',
@@ -96,8 +92,8 @@ export function UnifiedFAB({ isAdmin = false }: UnifiedFABProps) {
       color: 'bg-red-600 hover:bg-red-700',
       shortcut: 'Ctrl+Shift+S',
       show: showSecurity,
-      badge: null
-    }
+      badge: null,
+    },
   ].filter(button => button.show)
 
   const primaryButton = fabButtons.find(b => b.id === 'exploration') || fabButtons[0]
@@ -114,39 +110,42 @@ export function UnifiedFAB({ isAdmin = false }: UnifiedFABProps) {
               exit={{ opacity: 0, scale: 0.8 }}
               className="absolute bottom-16 right-0 space-y-3"
             >
-              {fabButtons.slice(1).reverse().map((button, index) => (
-                <motion.div
-                  key={button.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-3"
-                >
-                  {/* Label */}
-                  <div className="bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap shadow-lg">
-                    <div className="font-medium">{button.label}</div>
-                    <div className="text-xs text-gray-300">{button.shortcut}</div>
-                  </div>
-                  
-                  {/* Button */}
-                  <motion.button
-                    onClick={() => openDashboard(button.id as any)}
-                    className={`${button.color} text-white p-3 rounded-full shadow-lg transition-colors relative`}
-                    title={`${button.label} (${button.shortcut})`}
-                    aria-label={button.description}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
+              {fabButtons
+                .slice(1)
+                .reverse()
+                .map((button, index) => (
+                  <motion.div
+                    key={button.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center gap-3"
                   >
-                    {button.icon}
-                    {button.badge && (
-                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
-                        {button.badge}
-                      </span>
-                    )}
-                  </motion.button>
-                </motion.div>
-              ))}
+                    {/* Label */}
+                    <div className="bg-gray-900 text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap shadow-lg">
+                      <div className="font-medium">{button.label}</div>
+                      <div className="text-xs text-gray-300">{button.shortcut}</div>
+                    </div>
+
+                    {/* Button */}
+                    <motion.button
+                      onClick={() => openDashboard('exploration')}
+                      className={`${button.color} text-white p-3 rounded-full shadow-lg transition-colors relative`}
+                      title={`${button.label} (${button.shortcut})`}
+                      aria-label={button.description}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {button.icon}
+                      {button.badge && (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center">
+                          {button.badge}
+                        </span>
+                      )}
+                    </motion.button>
+                  </motion.div>
+                ))}
             </motion.div>
           )}
         </AnimatePresence>
@@ -155,23 +154,25 @@ export function UnifiedFAB({ isAdmin = false }: UnifiedFABProps) {
         <motion.button
           onClick={() => {
             if (fabButtons.length === 1) {
-              openDashboard(primaryButton.id as any)
+              openDashboard('exploration')
             } else {
               setIsExpanded(!isExpanded)
             }
           }}
           className={`${primaryButton.color} text-white p-4 rounded-full shadow-lg transition-colors relative`}
-          title={fabButtons.length === 1 
-            ? `${primaryButton.label} (${primaryButton.shortcut})`
-            : isExpanded 
-              ? 'Close menu' 
-              : 'Open dashboard menu'
+          title={
+            fabButtons.length === 1
+              ? `${primaryButton.label} (${primaryButton.shortcut})`
+              : isExpanded
+                ? 'Close menu'
+                : 'Open dashboard menu'
           }
-          aria-label={fabButtons.length === 1 
-            ? primaryButton.description
-            : isExpanded 
-              ? 'Close dashboard menu' 
-              : 'Open dashboard menu'
+          aria-label={
+            fabButtons.length === 1
+              ? primaryButton.description
+              : isExpanded
+                ? 'Close dashboard menu'
+                : 'Open dashboard menu'
           }
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}

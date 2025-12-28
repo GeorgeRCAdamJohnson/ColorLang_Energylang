@@ -39,8 +39,9 @@ export function FindingsPage() {
           <header className="text-center mb-12">
             <h1 className="heading-xl mb-4">Key Findings</h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive analysis of energy efficiency across programming languages: 
-              C++ demonstrates 6.3x superior efficiency compared to Python NumPy for matrix multiplication operations.
+              Comprehensive analysis of energy efficiency across programming languages: C++
+              demonstrates 6.3x superior efficiency compared to Python NumPy for matrix
+              multiplication operations.
             </p>
           </header>
 
@@ -48,7 +49,9 @@ export function FindingsPage() {
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 mb-12 border border-blue-200">
             <div className="text-center">
               <div className="text-4xl font-bold text-blue-600 mb-2">6.3x</div>
-              <div className="text-lg font-semibold text-gray-900 mb-2">Better Energy Efficiency</div>
+              <div className="text-lg font-semibold text-gray-900 mb-2">
+                Better Energy Efficiency
+              </div>
               <div className="text-gray-600">
                 C++ demonstrates superior energy efficiency compared to Python
               </div>

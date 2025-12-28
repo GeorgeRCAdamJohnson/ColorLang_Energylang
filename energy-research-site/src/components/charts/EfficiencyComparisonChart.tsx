@@ -57,7 +57,10 @@ export const EfficiencyComparisonChart: React.FC<EfficiencyComparisonChartProps>
         return {
           x: language,
           y: avgJPerFlop, // Use J/FLOP as the efficiency metric
-          label: language === 'Python' ? `${language} - 15.16e-8 J/FLOP` : `${language} - ${avgJPerFlop.toExponential(3)} J/FLOP`,
+          label:
+            language === 'Python'
+              ? `${language} - 15.16e-8 J/FLOP`
+              : `${language} - ${avgJPerFlop.toExponential(3)} J/FLOP`,
           metadata: {
             language,
             avgJPerFlop,
@@ -130,9 +133,7 @@ export const EfficiencyComparisonChart: React.FC<EfficiencyComparisonChartProps>
               <Zap className="w-4 h-4 text-red-600" />
               <div>
                 <div className="text-sm text-gray-600">Python (Least Efficient)</div>
-                <div className="font-bold text-red-700">
-                  15.16e-8 J/FLOP
-                </div>
+                <div className="font-bold text-red-700">15.16e-8 J/FLOP</div>
                 <div className="text-xs text-red-600">❌ Least Efficient</div>
               </div>
             </div>
@@ -152,7 +153,7 @@ export const EfficiencyComparisonChart: React.FC<EfficiencyComparisonChartProps>
               🏆 C++ demonstrates {keyFindings.efficiencyRatio.toFixed(1)}x better energy efficiency
               than Python
             </strong>{' '}
-            for matrix multiplication operations. 
+            for matrix multiplication operations.
           </p>
           <div className="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
             <div className="text-sm text-gray-700">
@@ -162,7 +163,9 @@ export const EfficiencyComparisonChart: React.FC<EfficiencyComparisonChartProps>
               <br />
               • Python: 15.16e-8 J/FLOP (less efficient)
               <br />
-              <span className="text-blue-700 font-medium">C++ uses ~6x less energy per operation</span>
+              <span className="text-blue-700 font-medium">
+                C++ uses ~6x less energy per operation
+              </span>
             </div>
           </div>
         </div>
@@ -216,7 +219,9 @@ export const EfficiencyComparisonChart: React.FC<EfficiencyComparisonChartProps>
                 </div>
                 <div className="text-right">
                   <div className="font-bold text-gray-900">
-                    {point.x === 'Python' ? '15.16e-8 J/FLOP' : `${point.y.toExponential(3)} J/FLOP`}
+                    {point.x === 'Python'
+                      ? '15.16e-8 J/FLOP'
+                      : `${point.y.toExponential(3)} J/FLOP`}
                   </div>
                   <div className="text-xs text-gray-500">
                     {index === 0

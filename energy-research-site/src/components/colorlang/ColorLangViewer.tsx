@@ -164,19 +164,7 @@ export function ColorLangViewer({
   onProgramChange,
   interactive = false,
 }: ColorLangViewerProps) {
-  // Special handling for monkey game - render interactive game instead of interpreter
-  if (program.id === 'monkey-game') {
-    return (
-      <div className="space-y-4">
-        <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-900">{program.name}</h3>
-          <p className="text-sm text-gray-600 mb-4">{program.description}</p>
-        </div>
-        <MonkeyGame width={program.width} height={program.height} />
-      </div>
-    )
-  }
-
+  // All hooks must be called at the top level, before any conditional returns
   const [viewMode, setViewMode] = useState<'view' | 'edit'>('view')
   const [executionState, setExecutionState] = useState<ExecutionState>({
     isRunning: false,
@@ -532,6 +520,19 @@ export function ColorLangViewer({
     executionState.isRunning || executionState.currentStep > 0
       ? executionState.programCounter
       : undefined
+
+  // Special handling for monkey game - render interactive game instead of interpreter
+  if (program.id === 'monkey-game') {
+    return (
+      <div className="space-y-4">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-gray-900">{program.name}</h3>
+          <p className="text-sm text-gray-600 mb-4">{program.description}</p>
+        </div>
+        <MonkeyGame width={program.width} height={program.height} />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-4">

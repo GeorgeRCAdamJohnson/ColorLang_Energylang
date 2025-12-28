@@ -133,8 +133,12 @@ export function ToastProvider({ children }: ToastProviderProps) {
               <div className="flex items-start space-x-3">
                 {getIcon(toast.type)}
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{toast.title}</h4>
-                  {toast.message && <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">{toast.message}</p>}
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    {toast.title}
+                  </h4>
+                  {toast.message && (
+                    <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">{toast.message}</p>
+                  )}
                   {toast.action && (
                     <button
                       onClick={toast.action.onClick}
