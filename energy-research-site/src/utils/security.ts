@@ -490,8 +490,8 @@ class SecurityManager {
 // Export singleton instance
 export const securityManager = new SecurityManager()
 
-// Auto-initialize security when module loads
-if (typeof window !== 'undefined') {
+// Auto-initialize security when module loads (only in production)
+if (typeof window !== 'undefined' && (import.meta as { env?: { PROD?: boolean } }).env?.PROD) {
   // Add CSS animations
   const animationStyle = document.createElement('style')
   animationStyle.textContent = `
@@ -508,6 +508,8 @@ if (typeof window !== 'undefined') {
   } else {
     securityManager.initialize()
   }
+} else if (typeof window !== 'undefined') {
+  console.log('🔒 Security features disabled in development mode')
 }
 
 // Additional security utilities

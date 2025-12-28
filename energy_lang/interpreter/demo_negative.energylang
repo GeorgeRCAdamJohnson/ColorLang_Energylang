@@ -1,0 +1,9 @@
+# EnergyLang Demo: Negative Numbers and Subtraction
+
+x = 10
+y = 4
+z = x - y
+print z
+z = y - x
+print z
+halt

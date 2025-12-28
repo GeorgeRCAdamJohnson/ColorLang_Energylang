@@ -1,0 +1,10 @@
+{
+  "summary": {
+    "total_records": 100,
+    "checked": 100,
+    "timechart_meta_present": 100,
+    "bench_start_present": 90,
+    "empty_timecharts": 0,
+    "missing_samples": 0
+  }
+}

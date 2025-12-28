@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>energylang Benchmark Analytics - Notebook Overview</title>
+    <link rel="stylesheet" href="site/style.css">
+    <style>
+      /* small overrides for analytics page */
+      main h1{margin-top:0}
+    </style>
+</head>
+<body>
+  <div data-include="/site/_header.html"></div>
+
+  <main style="max-width:1100px;margin:28px auto;padding:0 18px 48px 18px;">
+    <h1>energylang Benchmark Analytics Notebook</h1>
+    <div class="section">
+        <h2>What is this?</h2>
+        <p>This notebook provides a robust, interactive environment for analyzing and visualizing benchmarking data from your energylang knowledge base (PostgreSQL database).</p>
+        <ul>
+            <li>Data validation and integrity checks</li>
+            <li>Exploratory data analysis</li>
+            <li>Interactive and publication-quality visualizations</li>
+            <li>Rapid iteration and sharing of insights</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>How to Use</h2>
+        <ol>
+            <li><b>Open the Notebook:</b> Launch JupyterLab or Jupyter Notebook in your project directory and open <code>energy_benchmark_analytics.ipynb</code>.</li>
+            <li><b>Configure Database Connection:</b> In the <i>Database Connection</i> cell, update the <code>DB_URL</code> variable with your PostgreSQL credentials if needed. If you use a <code>.env</code> file with <code>DATABASE_URL</code>, the notebook will pick it up automatically.</li>
+            <li><b>Run All Cells:</b> Use the <i>Run All</i> command or run each cell in order (Shift+Enter). The notebook will load your data, check for issues, and display summary statistics and visualizations.</li>
+        </ol>
+    </div>
+    <div class="section">
+        <h2>What Can You Do With It?</h2>
+        <ul>
+            <li><b>Data Integrity Checks:</b> Instantly spot duplicates, missing links, or orphaned records in your sources, benchmarks, and results tables.</li>
+            <li><b>Summary Statistics:</b> Get a quick overview of your dataset (counts, distributions, etc.).</li>
+            <li><b>Visualizations:</b>
+                <ul>
+                    <li>Box plots of throughput by language</li>
+                    <li>Box plots of latency by toolchain</li>
+                    <li>Interactive scatter plots (filter by language, compare throughput vs. latency)</li>
+                </ul>
+            </li>
+            <li><b>Interactive Filtering:</b> Use dropdowns to filter and explore subsets of your data.</li>
+            <li><b>Custom Analysis:</b> Add your own queries, charts, or data transformations as needed.</li>
+            <li><b>Export:</b> Save summary tables or charts for reports or presentations.</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>Extending the Notebook</h2>
+        <ul>
+            <li>Add new cells for additional visualizations (e.g., energy consumption, power usage, trends over time).</li>
+            <li>Integrate with Streamlit or Dash for a web dashboard.</li>
+            <li>Connect to other data sources or export results to CSV/Excel.</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>Requirements</h2>
+        <ul>
+            <li>Python 3.x</li>
+            <li>JupyterLab or Jupyter Notebook</li>
+            <li>pandas, numpy, plotly, sqlalchemy, psycopg2, ipywidgets</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>Support</h2>
+        <p>If you need help customizing or extending the notebook, just ask your AI assistant!</p>
+    </div>
+  </main>
+
+  <div data-include="/site/_footer.html"></div>
+  <script src="/site/include-fragment.js" defer></script>
+</body>
+</html>

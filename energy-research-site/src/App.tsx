@@ -3,7 +3,6 @@ import { Suspense, lazy } from 'react'
 import { Layout } from './components/layout/Layout'
 import { ErrorBoundary } from './components/ui/ErrorBoundary'
 import { ThemeProvider } from './contexts/ThemeContext'
-import { ThemeDebug } from './components/debug/ThemeDebug'
 import { useSectionTracking } from './hooks/useSectionTracking'
 
 // Lazy load pages for code splitting
@@ -65,7 +64,6 @@ function App() {
             </Routes>
           </Suspense>
         </Layout>
-        <ThemeDebug />
       </ErrorBoundary>
     </ThemeProvider>
   )

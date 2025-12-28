@@ -150,11 +150,23 @@ export const BaseChart: React.FC<BaseChartProps> = ({
           },
           label: (tooltipItem: TooltipItem<typeof type>) => {
             const value =
-              typeof tooltipItem.parsed.y === 'number'
-                ? tooltipItem.parsed.y.toFixed(2)
-                : tooltipItem.parsed.y
+              typeof tooltipItem.parsed.y === 'number' ? tooltipItem.parsed.y : tooltipItem.parsed.y
 
-            return `${yLabel}: ${value}`
+            // Format very small numbers in scientific notation
+            let formattedValue: string
+            if (typeof value === 'number') {
+              if (Math.abs(value) < 0.001 && value !== 0) {
+                formattedValue = value.toExponential(3)
+              } else if (Math.abs(value) < 1) {
+                formattedValue = value.toFixed(6)
+              } else {
+                formattedValue = value.toFixed(2)
+              }
+            } else {
+              formattedValue = String(value)
+            }
+
+            return `${yLabel}: ${formattedValue}`
           },
           afterBody: (tooltipItems: TooltipItem<typeof type>[]) => {
             const item = tooltipItems[0]
@@ -215,6 +227,20 @@ export const BaseChart: React.FC<BaseChartProps> = ({
           font: {
             size: 12,
             family: 'Inter, system-ui, sans-serif',
+          },
+          callback: function (value: string | number) {
+            if (typeof value === 'number') {
+              // Handle very small numbers (scientific notation)
+              if (Math.abs(value) < 0.001 && value !== 0) {
+                return value.toExponential(2)
+              }
+              // Handle normal numbers
+              if (Math.abs(value) < 1) {
+                return value.toFixed(6)
+              }
+              return value.toFixed(2)
+            }
+            return value
           },
         },
       },

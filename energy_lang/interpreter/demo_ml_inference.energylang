@@ -1,0 +1,11 @@
+# EnergyLang Demo: ML Inference (Stub)
+# Simulates a single-layer perceptron (no activation)
+
+w1 = 0.5
+w2 = -0.25
+x1 = 2
+x2 = 4
+b = 1
+output = w1 * x1 + w2 * x2 + b
+print output
+halt

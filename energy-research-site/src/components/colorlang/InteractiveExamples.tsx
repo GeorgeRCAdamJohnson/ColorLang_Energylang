@@ -21,6 +21,7 @@ function ExampleCard({ program, isActive, onClick }: ExampleCardProps) {
         return <Cpu size={20} />
       case 'color-demo':
       case 'neural-network':
+      case 'monkey-game':
         return <Palette size={20} />
       default:
         return <Code size={20} />
@@ -28,10 +29,17 @@ function ExampleCard({ program, isActive, onClick }: ExampleCardProps) {
   }
 
   const getComplexity = (program: ColorProgram) => {
-    const totalPixels = program.width * program.height
-    if (totalPixels <= 6) return 'Beginner'
-    if (totalPixels <= 12) return 'Intermediate'
-    return 'Advanced'
+    // Define difficulty based on program complexity, not just size
+    const difficultyMap: Record<string, string> = {
+      'hello-world': 'Beginner',
+      'arithmetic': 'Beginner', 
+      'counter': 'Intermediate',
+      'fibonacci': 'Intermediate',
+      'color-demo': 'Intermediate',
+      'neural-network': 'Advanced',
+      'monkey-game': 'Advanced'
+    }
+    return difficultyMap[program.id] || 'Intermediate'
   }
 
   const complexity = getComplexity(program)

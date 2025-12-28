@@ -1,0 +1,17 @@
+Aggregated baseline report
+========================
+
+Benchmark: benchmarks\matrix_multiply.cpp
+  count: 140
+  samples_runtime: 140  samples_energy: 140
+  mean_runtime_ms: 1364.3785714285714  std_runtime_ms: 854.3368707636034
+  mean_energy_J: 22.99977142857143  std_energy_J: 22.364142630283574
+  mean_cpu_W: 16.76810492154167  mean_gpu_W: 2.580718319027638
+
+Benchmark: energylang_matrix_multiply_db.py
+  count: 10
+  samples_runtime: 10  samples_energy: 10
+  mean_runtime_ms: 3443.4  std_runtime_ms: 928.3159423864748
+  mean_energy_J: 29.0787  std_energy_J: 9.65502176820148
+  mean_cpu_W: 8.020886126069053  mean_gpu_W: 2.343159654394835
+

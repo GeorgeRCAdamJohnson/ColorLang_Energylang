@@ -1,0 +1,6 @@
+name,runs,gpu_measured,cpu_measured,energy_measured,result_ids_captured,avg_gpu_power,avg_cpu_power,avg_total_energy
+matrix_multiply.cpp,334,334,0,0,0,19.099141276270988,,
+energylang_matrix_multiply_db.py,20,20,20,20,20,3.7417032642602495,10.300415350877193,20.88745
+matrix_multiply.go,20,20,0,0,0,3.668041666666667,,
+matrix_multiply.rs,20,20,1,1,0,3.7235630904183536,11.418333333333335,6.851
+MatrixMultiply.java,20,20,0,0,0,3.7369519230769233,,

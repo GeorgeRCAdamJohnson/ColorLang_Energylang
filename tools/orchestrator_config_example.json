@@ -1,0 +1,13 @@
+{
+  "matrix_multiply": {
+    "python": {
+      "cmd": "\"C:\\new language\\.venv\\Scripts\\python.exe\" python_matrix_multiply_benchmark.py --size 1000 --runs 10"
+    },
+    "cpp": {
+      "cmd": "benchmarks\\matrix_multiply.exe --size 1000 --runs 10"
+    },
+    "energylang": {
+      "cmd": "\"C:\\new language\\.venv\\Scripts\\python.exe\" energylang_matrix_multiply_db.py --size 1000 --runs 10"
+    }
+  }
+}

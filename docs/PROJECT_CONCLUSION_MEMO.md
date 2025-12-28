@@ -8,7 +8,7 @@
 - After broad technical exploration and a focused market/adoption analysis, we have decided to discontinue pursuing an autonomous, hyperscaler-level product that would scan bare-metal workloads and rewrite tenant code for energy optimization. Adoption, trust, and legal barriers—combined with the practical efficacy of lower-friction alternatives—make the path to hyperscaler adoption impractical in the near term.
 
 **What we built and tested (brief):**
-- An energy-aware prototype language and VM (EnergyLang) with example programs.
+- An energy-aware prototype language and VM (Energyland) with example programs.
 - A hardened benchmarking harness (file-sentinel handshake, timechart sidecars) to avoid profiler attach/start races for very-short runs.
 - Cross-language microbenchmarks and automated wrappers to run many iterations across implementations.
 - Parsers and `tools/import_benchmark_runs_log_to_db.py` to ingest harness logs into Postgres, and auditing scripts that compared DB energy columns vs physics-based power×time estimates.

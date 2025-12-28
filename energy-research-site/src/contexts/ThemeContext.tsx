@@ -71,8 +71,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     if (effectiveTheme === 'dark') {
       root.classList.add('dark')
     }
-    
-    console.log('Theme applied:', effectiveTheme, 'HTML classes:', root.className)
   }, [effectiveTheme, mounted])
 
   // Save theme preference

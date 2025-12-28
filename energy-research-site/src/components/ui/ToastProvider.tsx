@@ -133,12 +133,12 @@ export function ToastProvider({ children }: ToastProviderProps) {
               <div className="flex items-start space-x-3">
                 {getIcon(toast.type)}
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-medium text-gray-900">{toast.title}</h4>
-                  {toast.message && <p className="mt-1 text-sm text-gray-700">{toast.message}</p>}
+                  <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100">{toast.title}</h4>
+                  {toast.message && <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">{toast.message}</p>}
                   {toast.action && (
                     <button
                       onClick={toast.action.onClick}
-                      className="mt-2 text-sm font-medium text-blue-600 hover:text-blue-500 transition-colors"
+                      className="mt-2 text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
                     >
                       {toast.action.label}
                     </button>
@@ -146,7 +146,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
                 </div>
                 <button
                   onClick={() => hideToast(toast.id)}
-                  className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="flex-shrink-0 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                   aria-label="Close notification"
                 >
                   <X size={16} />

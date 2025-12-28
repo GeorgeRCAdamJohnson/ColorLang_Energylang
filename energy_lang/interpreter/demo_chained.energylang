@@ -1,0 +1,9 @@
+# EnergyLang Demo: Chained Assignment and Print
+
+x = 1
+y = x + 2
+z = y * 3
+print x
+print y
+print z
+halt

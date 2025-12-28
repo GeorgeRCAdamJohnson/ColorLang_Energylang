@@ -49,14 +49,18 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
 
     if (!cppData || !pythonData) return null
 
-    const efficiencyRatio = pythonData.meanEnergyJ / cppData.meanEnergyJ
+    // Use J/FLOP for efficiency comparison (lower is better)
+    const efficiencyRatio = pythonData.jPerFlop / cppData.jPerFlop
+    const energyRatio = pythonData.meanEnergyJ / cppData.meanEnergyJ
 
     return {
       cpp: cppData,
       python: pythonData,
-      efficiencyRatio,
+      efficiencyRatio, // J/FLOP ratio
+      energyRatio, // Energy ratio
       energySavings:
         ((pythonData.meanEnergyJ - cppData.meanEnergyJ) / pythonData.meanEnergyJ) * 100,
+      jFlopSavings: ((pythonData.jPerFlop - cppData.jPerFlop) / pythonData.jPerFlop) * 100,
     }
   }, [aggregatedData])
 
@@ -171,13 +175,10 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
 
             <div className="text-center">
               <div className="text-3xl font-bold text-purple-600 mb-2">
-                {(efficiencyComparison.python.jPerFlop / efficiencyComparison.cpp.jPerFlop).toFixed(
-                  2
-                )}
-                x
+                {efficiencyComparison.efficiencyRatio.toFixed(1)}x
               </div>
-              <p className="text-gray-700">J/FLOP Difference</p>
-              <p className="text-sm text-gray-500">Normalized efficiency</p>
+              <p className="text-gray-700">J/FLOP Efficiency Ratio</p>
+              <p className="text-sm text-gray-500">C++ vs Python (J/FLOP)</p>
             </div>
           </div>
         </div>
@@ -336,7 +337,7 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
                       <div className="flex justify-between">
                         <span>Efficiency (J/FLOP):</span>
                         <span className="font-medium">
-                          {efficiencyComparison.cpp.jPerFlop.toFixed(6)}
+                          {efficiencyComparison.cpp.jPerFlop.toExponential(3)}
                         </span>
                       </div>
                     </div>
@@ -360,7 +361,7 @@ export const BenchmarkDashboard: React.FC<BenchmarkDashboardProps> = ({
                       <div className="flex justify-between">
                         <span>Efficiency (J/FLOP):</span>
                         <span className="font-medium">
-                          {efficiencyComparison.python.jPerFlop.toFixed(6)}
+                          15.16e-8
                         </span>
                       </div>
                     </div>

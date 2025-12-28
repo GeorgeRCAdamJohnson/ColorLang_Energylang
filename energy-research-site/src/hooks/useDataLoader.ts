@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { simpleDataService } from '../services/simpleDataService'
+import { CSVDataLoader } from '../utils/csvDataLoader'
 import type { ProcessedBenchmarkData, AggregatedBenchmarkData } from '../types'
 
 interface UseDataLoaderResult {
@@ -81,20 +81,23 @@ export const useDataLoader = (): UseDataLoaderResult => {
       setLoading(true)
       setError(null)
 
-      // Try to load real data first
+      // Load data from CSV file
       let processedData: ProcessedBenchmarkData[]
       try {
-        processedData = await simpleDataService.loadBenchmarkData()
+        // Load the CSV data from the public folder
+        const rawData = await CSVDataLoader.loadCSV('/sample_benchmark_data.csv')
+        processedData = CSVDataLoader.processData(rawData)
       } catch (dataError) {
-        console.warn('Failed to load real data, using sample data:', dataError)
-        // Fallback to sample data for development - this will use the internal sample data
-        processedData = await simpleDataService.loadBenchmarkData()
+        console.warn('Failed to load CSV data:', dataError)
+        // Fallback to empty array if CSV loading fails
+        processedData = []
       }
 
       setData(processedData)
 
-      // Load aggregated data - simplified for now
-      setAggregatedData([])
+      // Load aggregated data
+      const aggregated = CSVDataLoader.aggregateData(processedData)
+      setAggregatedData(aggregated)
 
       // Extract available options
       const languages = DataProcessingUtils.getUniqueValues(processedData, 'language')
@@ -188,10 +191,44 @@ export const useEfficiencyComparison = () => {
     const loadComparison = async () => {
       try {
         setLoading(true)
-        const comparison = await simpleDataService.getEfficiencyComparison()
+
+        // Load CSV data and calculate efficiency comparison
+        const rawData = await CSVDataLoader.loadCSV('/sample_benchmark_data.csv')
+        const processedData = CSVDataLoader.processData(rawData)
+
+        // Group by language and calculate averages
+        const languageGroups = processedData.reduce(
+          (groups, item) => {
+            if (!groups[item.language]) {
+              groups[item.language] = []
+            }
+            groups[item.language].push(item)
+            return groups
+          },
+          {} as Record<string, ProcessedBenchmarkData[]>
+        )
+
+        // Calculate efficiency metrics for each language
+        const comparison = Object.entries(languageGroups)
+          .map(([language, items]) => {
+            const avgEnergyJ =
+              items.reduce((sum, item) => sum + item.totalEnergyJ, 0) / items.length
+            const avgRuntimeMs = items.reduce((sum, item) => sum + item.runtimeMs, 0) / items.length
+            const efficiency = avgEnergyJ / (avgRuntimeMs / 1000) // Energy per second
+
+            return {
+              language,
+              avgEnergyJ,
+              avgRuntimeMs,
+              efficiency,
+            }
+          })
+          .sort((a, b) => a.efficiency - b.efficiency) // Sort by efficiency (lower is better)
+
         setComparisonData(comparison)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load comparison data')
+        console.error('Efficiency comparison loading error:', err)
       } finally {
         setLoading(false)
       }

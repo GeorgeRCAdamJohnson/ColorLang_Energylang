@@ -1,0 +1,10 @@
+# EnergyLang Demo: Arithmetic and Variables
+# Computes a simple sum and product
+
+a = 7
+b = 3
+sum = a + b
+product = a * b
+print sum
+print product
+halt

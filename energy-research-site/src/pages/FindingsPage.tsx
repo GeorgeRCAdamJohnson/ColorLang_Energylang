@@ -39,18 +39,21 @@ export function FindingsPage() {
           <header className="text-center mb-12">
             <h1 className="heading-xl mb-4">Key Findings</h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover our groundbreaking research results: C++ demonstrates 6x better energy
-              efficiency compared to Python NumPy for matrix multiplication operations.
+              Comprehensive analysis of energy efficiency across programming languages: 
+              C++ demonstrates 6.3x superior efficiency compared to Python NumPy for matrix multiplication operations.
             </p>
           </header>
 
           {/* Key Finding Highlight */}
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 mb-12 border border-blue-200">
             <div className="text-center">
-              <div className="text-4xl font-bold text-blue-600 mb-2">6x</div>
-              <div className="text-lg font-semibold text-gray-900 mb-2">More Energy Efficient</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">6.3x</div>
+              <div className="text-lg font-semibold text-gray-900 mb-2">Better Energy Efficiency</div>
               <div className="text-gray-600">
-                C++ compared to Python NumPy for matrix operations
+                C++ demonstrates superior energy efficiency compared to Python
+              </div>
+              <div className="text-sm text-gray-500 mt-2">
+                Measured in Joules per Floating Point Operation (J/FLOP)
               </div>
             </div>
           </div>
@@ -60,7 +63,13 @@ export function FindingsPage() {
             <section>
               <h2 className="heading-lg mb-6">Energy Efficiency Comparison</h2>
               <div className="card">
-                <EfficiencyComparisonChart data={aggregatedData} />
+                {aggregatedData.length > 0 ? (
+                  <EfficiencyComparisonChart data={aggregatedData} />
+                ) : (
+                  <div className="p-8 text-center text-gray-500">
+                    No aggregated data available for efficiency comparison
+                  </div>
+                )}
               </div>
             </section>
 

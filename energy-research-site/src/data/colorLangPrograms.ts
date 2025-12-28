@@ -151,6 +151,51 @@ export const examplePrograms: ColorProgram[] = [
       ],
     ],
   },
+  {
+    id: 'monkey-game',
+    name: 'Monkey Game',
+    description: 'Interactive game where a monkey collects bananas while avoiding obstacles',
+    width: 6,
+    height: 4,
+    colorField: [
+      [
+        // Game initialization and monkey position
+        { hue: 95, saturation: 80, value: 70, instruction: 'LOAD', data: 2 }, // Monkey X position
+        { hue: 95, saturation: 80, value: 70, instruction: 'LOAD', data: 2 }, // Monkey Y position
+        { hue: 95, saturation: 80, value: 70, instruction: 'LOAD', data: 0 }, // Score
+        { hue: 95, saturation: 80, value: 70, instruction: 'LOAD', data: 5 }, // Banana X
+        { hue: 95, saturation: 80, value: 70, instruction: 'LOAD', data: 1 }, // Banana Y
+        { hue: 275, saturation: 80, value: 70, instruction: 'PRINT', data: 64 }, // Print '@' (monkey)
+      ],
+      [
+        // Input handling and movement
+        { hue: 125, saturation: 80, value: 70, instruction: 'INPUT', data: 0 }, // Get user input
+        { hue: 155, saturation: 80, value: 70, instruction: 'IF', data: 119 }, // If 'w' (up)
+        { hue: 45, saturation: 80, value: 70, instruction: 'SUB', data: 1 }, // Move up
+        { hue: 155, saturation: 80, value: 70, instruction: 'IF', data: 115 }, // If 's' (down)
+        { hue: 35, saturation: 80, value: 70, instruction: 'ADD', data: 1 }, // Move down
+        { hue: 155, saturation: 80, value: 70, instruction: 'IF', data: 97 }, // If 'a' (left)
+      ],
+      [
+        // Collision detection and scoring
+        { hue: 45, saturation: 80, value: 70, instruction: 'SUB', data: 1 }, // Move left
+        { hue: 155, saturation: 80, value: 70, instruction: 'IF', data: 100 }, // If 'd' (right)
+        { hue: 35, saturation: 80, value: 70, instruction: 'ADD', data: 1 }, // Move right
+        { hue: 165, saturation: 80, value: 70, instruction: 'COMPARE', data: 0 }, // Check collision
+        { hue: 35, saturation: 80, value: 70, instruction: 'ADD', data: 10 }, // Add score
+        { hue: 275, saturation: 80, value: 70, instruction: 'PRINT', data: 42 }, // Print '*' (banana)
+      ],
+      [
+        // Game loop and display
+        { hue: 275, saturation: 80, value: 70, instruction: 'PRINT', data: 83 }, // Print 'S' (Score)
+        { hue: 275, saturation: 80, value: 70, instruction: 'PRINT', data: 0 }, // Print score value
+        { hue: 185, saturation: 80, value: 70, instruction: 'JUMP', data: 1 }, // Jump to row 1 (game loop)
+        { hue: 155, saturation: 80, value: 70, instruction: 'IF', data: 113 }, // If 'q' (quit)
+        { hue: 335, saturation: 80, value: 70, instruction: 'HALT', data: 0 }, // End game
+        { hue: 0, saturation: 0, value: 100, instruction: 'NOP', data: 0 }, // No operation
+      ],
+    ],
+  },
 ]
 
 export function getExampleProgram(id: string): ColorProgram | undefined {

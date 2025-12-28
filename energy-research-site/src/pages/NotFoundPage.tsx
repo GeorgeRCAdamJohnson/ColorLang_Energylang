@@ -7,7 +7,7 @@ export function NotFoundPage() {
       <div className="container-custom">
         <div className="text-center max-w-2xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-9xl font-bold text-gray-300 mb-4">404</h1>
+            <h1 className="text-9xl font-bold text-gray-300 dark:text-gray-600 mb-4">404</h1>
             <h2 className="heading-lg mb-4">Page Not Found</h2>
             <p className="text-body mb-8">
               The page you're looking for doesn't exist. It might have been moved, deleted, or you

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-27T21:20:04.180Z",
+  "timestamp": "2025-12-27T23:28:12.937Z",
   "results": [
     {
       "category": "Performance",
@@ -21,14 +21,20 @@
     },
     {
       "category": "Code Quality",
-      "score": 100,
-      "issues": [],
-      "recommendations": []
+      "score": 75,
+      "issues": [
+        "ESLint errors or warnings found",
+        "Code formatting issues found"
+      ],
+      "recommendations": [
+        "Fix linting issues for better code quality",
+        "Run npm run format to fix formatting"
+      ]
     }
   ],
   "summary": {
-    "totalIssues": 0,
+    "totalIssues": 2,
     "criticalIssues": 0,
-    "overallScore": 100
+    "overallScore": 94
   }
 }

@@ -1,0 +1,21 @@
+# EnergyLang Demo: 4-point FFT (Stub)
+# This is a placeholder for a 4-point FFT calculation
+# (EnergyLang minimal subset does not support arrays/loops, so this is a static version)
+
+x0 = 1
+x1 = 0
+x2 = -1
+x3 = 0
+# DFT for k=0
+X0 = x0 + x1 + x2 + x3
+# DFT for k=1 (real part only, since no complex support)
+X1 = x0 - x2
+# DFT for k=2
+X2 = x0 - x1 + x2 - x3
+# DFT for k=3 (real part only)
+X3 = x0 - x2
+print X0
+print X1
+print X2
+print X3
+halt

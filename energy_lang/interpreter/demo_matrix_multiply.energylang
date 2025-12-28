@@ -1,0 +1,20 @@
+# EnergyLang Demo: Matrix Multiplication (2x2)
+# Multiplies two 2x2 matrices and prints the result
+
+a11 = 1
+a12 = 2
+a21 = 3
+a22 = 4
+b11 = 5
+b12 = 6
+b21 = 7
+b22 = 8
+c11 = a11 * b11 + a12 * b21
+c12 = a11 * b12 + a12 * b22
+c21 = a21 * b11 + a22 * b21
+c22 = a21 * b12 + a22 * b22
+print c11
+print c12
+print c21
+print c22
+halt

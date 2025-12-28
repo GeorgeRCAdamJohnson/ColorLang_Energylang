@@ -1,0 +1,80 @@
+Profiler investigation — 2025-11-14
+
+Overview
+- Purpose: document the investigation into header-only AMD uProf timechart CSVs and the short-run profiling race condition observed during cross-language energy benchmarking.
+- Scope: small-batch validation runs, wrapper changes, sample logs, and recommended next steps to avoid missing profile records.
+
+Key Findings
+- EnergyLang (interpreted) benchmarks consistently produced CPU profile rows in uProf timechart CSVs.
+- Short-lived compiled benchmark (`benchmarks\matrix_multiply.cpp`) intermittently produced timechart CSVs that contained only the header (PROFILE RECORDS schema) but no sample rows.
+- The most likely root cause is a race between profiler attach/start and the benchmark completing: if the workload completes before the profiler begins sampling, the CSV contains no data rows.
+
+Evidence (representative log excerpts)
+- Master log: `benchmark_runs_small.log` (multiple runs) showed many successful captures for EnergyLang and intermittent header-only CSVs for the C++ benchmark.
+- Successful sample directory (example): `uprofile_output\AMDuProf-run_benchmark_small-Timechart_Nov-14-2025_22-53-05\timechart.csv` (contains PROFILE RECORDS rows).
+- Header-only example directories:
+  - `uprofile_output\AMDuProf-run_benchmark_small-Timechart_Nov-14-2025_22-53-08\timechart.csv`
+  - `uprofile_output\AMDuProf-run_benchmark_small-Timechart_Nov-14-2025_22-53-09\timechart.csv`
+
+Changes implemented during investigation
+- `small_batch_energy_profile_wrapper.py` (root)
+  - Inserts a `Start-Sleep -Milliseconds 350` pre-launch in the generated batch to give the profiler time to attach.
+  - Adds retry logic: if `timechart.csv` has no PROFILE RECORDS rows, the wrapper will re-run uProf up to `SMALL_RUN_MAX_ATTEMPTS` (default 3) while keeping NVIDIA logging active across retries.
+  - Writes a master log `benchmark_runs_small.log` with uProf stdout/stderr and parsed CPU/GPU summaries.
+- `benchmarks\matrix_multiply.cpp`
+  - Added a startup sleep: `std::this_thread::sleep_for(std::chrono::milliseconds(300));` to increase the chance the profiler can begin sampling before the benchmark finishes.
+
+Why sleeps are brittle
+- Sleeps only probabilistically reduce the race window; they depend on system load and profiler start latency.
+- On heavily loaded or variable systems the sleep values that work in one environment may fail in another.
+
+Recommended robust approaches (prioritized)
+1. Profiler-handshake (recommended software fix)
+   - Modify short-lived benchmarks to wait for an explicit "go" signal before starting timed/energy-critical work.
+   - Implement the handshake as a small file/signal, named pipe, or local TCP socket. Example sequence:
+     - Wrapper starts uProf and other samplers, waits for a clear "Profiling started" message (or a short confirm sleep), then creates `./start_run` file.
+     - Benchmark waits for `./start_run` (with sensible timeout, e.g., 5s) then does the workload and exits.
+   - Deterministic and eliminates race without guessing sleep durations.
+
+2. Parallel NVML GPU sampling
+   - Add `pynvml`-based sampler in the wrapper to log GPU power at 100ms (or desired) resolution to `nvidia_power_log_*.csv`.
+   - Pros: independent GPU sampling even when other tools miss data.
+   - Command to install: `python -m pip install pynvml`.
+
+3. Use OS-level tracing (Windows ETW / WPR / WPA)
+   - Windows Performance Recorder can collect system-level traces including power events. More complex to parse but robust and not tied to vendor profilers.
+
+4. Vendor tools / external hardware
+   - Intel Power Gadget for Intel CPUs (Windows) offers CLI/API power readings.
+   - External power meters for ground-truth validation of profiler estimates.
+
+Quick validation commands
+- Dry-run the small wrapper (PowerShell), DB disabled, 10 iterations, 3 attempts:
+
+  powershell
+  $env:ENERGY_PROFILE_DB_MODE = "disabled";
+  $env:SMALL_RUN_ITERATIONS = "10";
+  $env:SMALL_RUN_MAX_ATTEMPTS = "3";
+  python .\small_batch_energy_profile_wrapper.py
+
+Files to review
+- `small_batch_energy_profile_wrapper.py` — wrapper that performs retries and inserts pre-launch sleep.
+- `benchmarks\matrix_multiply.cpp` — small benchmark updated with startup sleep.
+- `benchmark_runs_small.log` — master log produced by the wrapper; contains uProf stdout/stderr and parsed summaries.
+- `uprofile_output\AMDuProf-run_benchmark_small-Timechart_*` — timechart directories for each run.
+
+Next actionable steps (recommended)
+- Implement profiler-handshake: patch short-lived benchmarks to wait for `./start_run` (or equivalent) and update `small_batch_energy_profile_wrapper.py` to create that file only after uProf confirms readiness. Then run a validation (10–50 iterations) to confirm zero header-only CSVs.
+- Add `pynvml`-based GPU sampler in the wrapper to ensure independent GPU logs.
+- If deterministic detection is still an issue, increase the retry attempts or convert production runs to a log-and-backfill flow (store raw profiler outputs and ingest after validation).
+
+Notes and caveats
+- This investigation focused on the observed race condition on Windows using AMD uProf CLI and NVIDIA GPU sampling.
+- Some suggested tools are CPU-vendor or GPU-vendor specific and may not be available on all machines.
+
+Contact
+- Created: 2025-11-14
+- Location: `docs\profiler_investigation_summary_2025-11-14.txt`
+- Related logs: `benchmark_runs_small.log` in repo root.
+
+End of document
