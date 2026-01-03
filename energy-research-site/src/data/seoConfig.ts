@@ -122,14 +122,14 @@ export const seoConfig: Record<string, PageSEOConfig> = {
   colorlang: {
     title: 'ColorLang Visual Programming',
     description:
-      'Explore ColorLang, an innovative visual programming language using HSV color encoding for instructions. Experience machine-native programming through 2D color fields with interactive examples.',
+      'Explore ColorLang, an innovative visual programming language using HSV color encoding for instructions. Experience machine-native programming through 2D color fields.',
     keywords: [
       'ColorLang',
       'visual programming',
       'HSV encoding',
       'color programming',
-      'interactive programming',
       '2D color fields',
+      'machine-native programming',
     ],
     image: '/images/og-colorlang.jpg',
     type: 'article',
@@ -141,6 +141,41 @@ export const seoConfig: Record<string, PageSEOConfig> = {
       description:
         'Visual programming language using HSV color encoding for machine-native programming',
       applicationCategory: 'Programming Language',
+      operatingSystem: 'Web Browser',
+      author: {
+        '@type': 'Organization',
+        name: 'Energy Research Team',
+      },
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+    },
+  },
+
+  'colorlang/interactive': {
+    title: 'ColorLang Interactive Examples',
+    description:
+      'Experience ColorLang programs in action with our interactive visual interpreter. Modify color-encoded instructions, step through execution, and explore working examples from Hello World to neural networks.',
+    keywords: [
+      'ColorLang interactive',
+      'visual programming playground',
+      'color programming examples',
+      'HSV instructions',
+      'programming interpreter',
+      'visual debugging',
+    ],
+    image: '/images/og-colorlang-interactive.jpg',
+    type: 'article',
+    section: 'ColorLang',
+    structuredData: {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'ColorLang Interactive Playground',
+      description:
+        'Interactive visual interpreter for ColorLang programs with step-by-step execution and real-time editing',
+      applicationCategory: 'Programming Tool',
       operatingSystem: 'Web Browser',
       author: {
         '@type': 'Organization',

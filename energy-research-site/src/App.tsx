@@ -18,6 +18,9 @@ const FindingsPage = lazy(() =>
 const ColorLangPage = lazy(() =>
   import('./pages/ColorLangPage').then(module => ({ default: module.ColorLangPage }))
 )
+const ColorLangInteractivePage = lazy(() =>
+  import('./pages/ColorLangInteractivePage').then(module => ({ default: module.ColorLangInteractivePage }))
+)
 const MethodsPage = lazy(() =>
   import('./pages/MethodsPage').then(module => ({ default: module.MethodsPage }))
 )
@@ -56,6 +59,7 @@ function AppContent() {
           <Route path="/research" element={<ResearchPage />} />
           <Route path="/findings" element={<FindingsPage />} />
           <Route path="/colorlang" element={<ColorLangPage />} />
+          <Route path="/colorlang/interactive" element={<ColorLangInteractivePage />} />
           <Route path="/methods" element={<MethodsPage />} />
           <Route path="/lessons" element={<LessonsPage />} />
           <Route path="/impact" element={<ImpactPage />} />

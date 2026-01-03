@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Play, ArrowRight } from 'lucide-react'
 import {
   ColorLangConcepts,
   HSVInstructionMapping,
   CompressionFramework,
-  InteractiveExamples,
   ProgrammingGuide,
 } from '../components/colorlang'
 import { useProgressTracking } from '../hooks/useProgressTracking'
@@ -72,10 +73,49 @@ export function ColorLangPage() {
             <ProgrammingGuide />
           </div>
 
-          {/* Interactive Examples */}
-          <div onClick={() => handleConceptInteraction('interactive-examples')}>
-            <InteractiveExamples />
-          </div>
+          {/* Interactive Examples Call-to-Action */}
+          <section className="mb-12">
+            <div className="card bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 border-purple-200 dark:border-purple-700">
+              <div className="text-center">
+                <div className="flex justify-center mb-6">
+                  <div className="p-4 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-800/50 dark:to-blue-800/50 rounded-2xl">
+                    <Play className="w-12 h-12 text-purple-600 dark:text-purple-400" />
+                  </div>
+                </div>
+                
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                  Try ColorLang Interactive Examples
+                </h2>
+                <p className="text-body max-w-2xl mx-auto mb-6">
+                  Experience ColorLang programs in action with our interactive visual interpreter. 
+                  Explore working examples, modify color-encoded instructions, and watch 2D color 
+                  fields execute computational behavior in real-time.
+                </p>
+                
+                <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm">
+                  <div className="flex items-center gap-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 px-3 py-2 rounded-full">
+                    <Play size={16} />
+                    <span>Live Execution</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-2 rounded-full">
+                    <span>Step-by-Step Debugging</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 px-3 py-2 rounded-full">
+                    <span>Visual Programming</span>
+                  </div>
+                </div>
+                
+                <Link
+                  to="/colorlang/interactive"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-lg font-medium"
+                  onClick={() => handleConceptInteraction('interactive-cta')}
+                >
+                  <span>Launch Interactive Playground</span>
+                  <ArrowRight size={20} />
+                </Link>
+              </div>
+            </div>
+          </section>
 
           {/* Research Context */}
           <section className="mb-12">
