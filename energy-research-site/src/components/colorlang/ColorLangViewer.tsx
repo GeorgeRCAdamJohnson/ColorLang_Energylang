@@ -31,8 +31,8 @@ function ColorPixelDisplay({
 
   return (
     <div
-      className={`w-8 h-8 border cursor-pointer transition-all duration-200 ${
-        isActive ? 'border-2 border-blue-500 shadow-lg' : 'border-gray-300'
+      className={`w-12 h-12 sm:w-16 sm:h-16 border cursor-pointer transition-all duration-200 ${
+        isActive ? 'border-2 border-blue-500 shadow-lg' : 'border-gray-300 dark:border-gray-600'
       }`}
       style={{ backgroundColor: hslColor }}
       onClick={onClick}
@@ -53,7 +53,7 @@ function ProgramGrid({
   onPixelClick?: (x: number, y: number) => void
 }) {
   return (
-    <div className="inline-block border border-gray-400 bg-white">
+    <div className="inline-block border-2 border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm">
       {program.colorField.map((row, y) => (
         <div key={y} className="flex">
           {row.map((pixel, x) => (
@@ -84,10 +84,10 @@ function ExecutionControls({
   onStep: () => void
 }) {
   return (
-    <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+    <div className="flex flex-wrap items-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
       <button
         onClick={state.isRunning ? onPause : onPlay}
-        className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
       >
         {state.isRunning ? <Pause size={16} /> : <Play size={16} />}
         {state.isRunning ? 'Pause' : 'Run'}
@@ -96,25 +96,26 @@ function ExecutionControls({
       <button
         onClick={onStep}
         disabled={state.isRunning}
-        className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400 transition-colors"
+        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors"
       >
         Step
       </button>
 
       <button
         onClick={onReset}
-        className="flex items-center gap-2 px-3 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+        className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
       >
         <RotateCcw size={16} />
         Reset
       </button>
 
-      <div className="ml-4 text-sm text-gray-600">
-        Step: {state.currentStep} / {state.steps.length}
-      </div>
-
-      <div className="ml-4 text-sm text-gray-600">
-        PC: ({state.programCounter.x}, {state.programCounter.y})
+      <div className="flex flex-wrap items-center gap-4 ml-auto text-sm text-gray-600 dark:text-gray-400">
+        <div>
+          Step: {state.currentStep} / {state.steps.length}
+        </div>
+        <div>
+          PC: ({state.programCounter.x}, {state.programCounter.y})
+        </div>
       </div>
     </div>
   )
@@ -128,30 +129,30 @@ function ExecutionOutput({
   registers: Record<string, number>
 }) {
   return (
-    <div className="grid md:grid-cols-2 gap-4">
-      <div>
-        <h4 className="font-medium text-gray-900 mb-2">Output</h4>
-        <div className="bg-black text-green-400 p-3 rounded font-mono text-sm h-32 overflow-y-auto">
+    <div className="grid lg:grid-cols-2 gap-4">
+      <div className="min-w-0">
+        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Output</h4>
+        <div className="bg-black text-green-400 p-4 rounded-lg font-mono text-sm h-40 overflow-y-auto overflow-x-auto">
           {output.length > 0 ? (
-            output.map((line, index) => <div key={index}>{line}</div>)
+            output.map((line, index) => <div key={index} className="whitespace-pre-wrap break-all">{line}</div>)
           ) : (
             <div className="text-gray-500">No output yet...</div>
           )}
         </div>
       </div>
 
-      <div>
-        <h4 className="font-medium text-gray-900 mb-2">Registers</h4>
-        <div className="bg-gray-100 p-3 rounded text-sm h-32 overflow-y-auto">
+      <div className="min-w-0">
+        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Registers</h4>
+        <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm h-40 overflow-y-auto">
           {Object.entries(registers).length > 0 ? (
             Object.entries(registers).map(([reg, value]) => (
-              <div key={reg} className="flex justify-between">
-                <span className="font-mono">{reg}:</span>
-                <span className="font-mono">{value}</span>
+              <div key={reg} className="flex justify-between text-gray-900 dark:text-gray-100">
+                <span className="font-mono truncate">{reg}:</span>
+                <span className="font-mono ml-2">{value}</span>
               </div>
             ))
           ) : (
-            <div className="text-gray-500">No register values...</div>
+            <div className="text-gray-500 dark:text-gray-400">No register values...</div>
           )}
         </div>
       </div>
@@ -538,8 +539,8 @@ export function ColorLangViewer({
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">{program.name}</h3>
-          <p className="text-sm text-gray-600">{program.description}</p>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{program.name}</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{program.description}</p>
         </div>
 
         {interactive && (
@@ -559,11 +560,11 @@ export function ColorLangViewer({
         )}
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
-        <div className="flex-1">
+      <div className="flex flex-col xl:flex-row gap-6">
+        <div className="flex-1 min-w-0">
           <div className="mb-4">
-            <h4 className="font-medium text-gray-900 mb-2">Program Visualization</h4>
-            <div className="flex justify-center p-4 bg-gray-50 rounded-lg">
+            <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Program Visualization</h4>
+            <div className="flex justify-center p-6 bg-gray-50 dark:bg-gray-800 rounded-lg min-h-[200px] items-center overflow-x-auto">
               <ProgramGrid
                 program={program}
                 activePixel={activePixel}
@@ -571,7 +572,7 @@ export function ColorLangViewer({
               />
             </div>
             {viewMode === 'edit' && (
-              <p className="text-xs text-gray-500 mt-2 text-center">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
                 Click pixels to cycle through common instructions
               </p>
             )}
@@ -586,23 +587,23 @@ export function ColorLangViewer({
           />
         </div>
 
-        <div className="flex-1">
-          <h4 className="font-medium text-gray-900 mb-2">Execution State</h4>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Execution State</h4>
 
           {currentStep && (
-            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
               <div className="text-sm">
-                <div>
+                <div className="text-gray-900 dark:text-gray-100">
                   <strong>Current Instruction:</strong> {currentStep.instruction}
                 </div>
-                <div>
+                <div className="text-gray-900 dark:text-gray-100">
                   <strong>Position:</strong> ({currentStep.position.x}, {currentStep.position.y})
                 </div>
-                <div>
+                <div className="text-gray-900 dark:text-gray-100">
                   <strong>Data:</strong> {currentStep.data}
                 </div>
                 {currentStep.output && (
-                  <div>
+                  <div className="text-gray-900 dark:text-gray-100">
                     <strong>Output:</strong> {currentStep.output}
                   </div>
                 )}

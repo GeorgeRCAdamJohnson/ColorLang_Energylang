@@ -27,7 +27,7 @@ export function ColorLangInteractivePage() {
       
       <div className="section-padding">
         <div className="container-custom">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
             {/* Navigation */}
             <div className="mb-8">
               <Link

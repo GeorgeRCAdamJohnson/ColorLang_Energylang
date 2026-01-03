@@ -139,10 +139,10 @@ export function InteractiveExamples() {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid xl:grid-cols-4 lg:grid-cols-1 gap-6">
         {/* Program Selection */}
-        <div className="lg:col-span-1">
-          <div className="sticky top-4">
+        <div className="xl:col-span-1">
+          <div className="xl:sticky xl:top-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-gray-900 dark:text-gray-100">Example Programs</h3>
               <div className="flex items-center gap-1">
@@ -166,7 +166,7 @@ export function InteractiveExamples() {
               </div>
             </div>
 
-            <div className="space-y-3 max-h-96 overflow-y-auto">
+            <div className="space-y-3 xl:max-h-96 xl:overflow-y-auto">
               {programs.map((program, index) => (
                 <ExampleCard
                   key={program.id}
@@ -194,8 +194,8 @@ export function InteractiveExamples() {
         </div>
 
         {/* Program Viewer */}
-        <div className="lg:col-span-2">
-          <div className="card">
+        <div className="xl:col-span-3">
+          <div className="card overflow-hidden">
             <ColorLangViewer
               key={selectedProgram.id} // Force reset when program changes
               program={currentProgram}
