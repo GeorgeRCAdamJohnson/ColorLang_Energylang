@@ -166,8 +166,8 @@ export function InteractiveExamples() {
               </div>
             </div>
 
-            <div className="space-y-3 xl:max-h-96 xl:overflow-y-auto">
-              {programs.map((program, index) => (
+            <div className="space-y-3">
+              {programs.slice(0, 4).map((program, index) => (
                 <ExampleCard
                   key={program.id}
                   program={program}
@@ -175,6 +175,24 @@ export function InteractiveExamples() {
                   onClick={() => handleProgramSelection(index)}
                 />
               ))}
+              
+              {programs.length > 4 && (
+                <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 text-center mb-2">
+                    More Programs ({programs.length - 4} additional)
+                  </div>
+                  <div className="space-y-2">
+                    {programs.slice(4).map((program, index) => (
+                      <ExampleCard
+                        key={program.id}
+                        program={program}
+                        isActive={index + 4 === selectedProgramIndex}
+                        onClick={() => handleProgramSelection(index + 4)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {modifiedPrograms[selectedProgram.id] && (
