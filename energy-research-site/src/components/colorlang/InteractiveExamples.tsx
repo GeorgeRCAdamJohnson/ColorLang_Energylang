@@ -92,6 +92,17 @@ export function InteractiveExamples() {
   const selectedProgram = programs[selectedProgramIndex]
   const currentProgram = modifiedPrograms[selectedProgram.id] || selectedProgram
 
+  const handleProgramSelection = (index: number) => {
+    setSelectedProgramIndex(index)
+    // Clear any modifications for the newly selected program to ensure clean state
+    const newProgram = programs[index]
+    setModifiedPrograms(prev => {
+      const newPrograms = { ...prev }
+      delete newPrograms[newProgram.id]
+      return newPrograms
+    })
+  }
+
   const handleProgramChange = (program: ColorProgram) => {
     setModifiedPrograms(prev => ({
       ...prev,
@@ -100,11 +111,13 @@ export function InteractiveExamples() {
   }
 
   const handlePrevious = () => {
-    setSelectedProgramIndex(prev => (prev === 0 ? programs.length - 1 : prev - 1))
+    const newIndex = selectedProgramIndex === 0 ? programs.length - 1 : selectedProgramIndex - 1
+    handleProgramSelection(newIndex)
   }
 
   const handleNext = () => {
-    setSelectedProgramIndex(prev => (prev === programs.length - 1 ? 0 : prev + 1))
+    const newIndex = selectedProgramIndex === programs.length - 1 ? 0 : selectedProgramIndex + 1
+    handleProgramSelection(newIndex)
   }
 
   const resetProgram = () => {
@@ -159,7 +172,7 @@ export function InteractiveExamples() {
                   key={program.id}
                   program={program}
                   isActive={index === selectedProgramIndex}
-                  onClick={() => setSelectedProgramIndex(index)}
+                  onClick={() => handleProgramSelection(index)}
                 />
               ))}
             </div>
@@ -184,6 +197,7 @@ export function InteractiveExamples() {
         <div className="lg:col-span-2">
           <div className="card">
             <ColorLangViewer
+              key={selectedProgram.id} // Force reset when program changes
               program={currentProgram}
               onProgramChange={handleProgramChange}
               interactive={true}
